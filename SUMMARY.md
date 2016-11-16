@@ -2,5 +2,5 @@
 
 * [Introduction](README.md)
 * [什么是TripleO？](tripleo.md)
-    * test
+    * [test](test.md)
 
