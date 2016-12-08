@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * [什么是TripleO？](tripleo.md)
-* [使用TripleO安装Openstack](安装.md)
+* [部署 Openstack](安装.md)
     * [准备](准备.md)
     * [undercloud](安装undercloud.md)
     * [部署overcloud](部署overcloud.md)
