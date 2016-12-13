@@ -6,5 +6,5 @@
     * [准备](准备.md)
     * [undercloud](安装undercloud.md)
     * [部署overcloud](部署overcloud.md)
-    * [第一次安装测试记录](安装记录.md)
+    * [安装测试记录](安装记录.md)
 
