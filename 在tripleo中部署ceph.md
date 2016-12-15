@@ -17,7 +17,7 @@ $ cd swift-data
 $ export IRONIC_DISCOVERD_PASSWORD=`sudo grep admin_password /etc/ironic-inspector/inspector.conf | egrep -v '^#'  | awk '{print $NF}'`
 $ for node in $(ironic node-list | grep -v UUID| awk '{print $2}'); do swift -U service:ironic -K $IRONIC_DISCOVERD_PASSWORD download ironic-inspector inspector_data-$node; done
 ```
-所有节点的introspection的内存以各自的UUID结尾。
+所有节点的introspection的信息以各自的UUID结尾。
 ```
 $ ls -1
 inspector_data-15fc0edc-eb8d-4c7f-8dc0-a2a25d5e09e3
@@ -32,7 +32,7 @@ inspector_data-d376f613-bc3e-4c4b-ad21-847c4ec850f8
 
 2. 显示每个节点的磁盘信息
 ```
-for node in $(ironic node-list | grep -v UUID| awk '{print $2}'); do echo "NODE: $node" ; cat inspector_data-$node | jq '.inventory.disks' ; echo "-----" ; done
+$ for node in $(ironic node-list | grep -v UUID| awk '{print $2}'); do echo "NODE: $node" ; cat inspector_data-$node | jq '.inventory.disks' ; echo "-----" ; done
 ```
 输出类似于这样：
 ```
