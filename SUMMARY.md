@@ -11,4 +11,5 @@
     * [删除计算节点](删除计算节点.md)
 * [计算节点高可用配置](计算节点高可用配置.md)
 * [note](note.md)
+* [在TripleO中部署ceph](在tripleo中部署ceph.md)
 
