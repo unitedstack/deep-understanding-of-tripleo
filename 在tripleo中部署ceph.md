@@ -64,7 +64,7 @@ NODE: 46b90a4d-769b-4b26-bb93-50eaefcdb3f4
   },
 ]
 ```
-3. 为节点指定根磁盘
+3. 使用serial属性为节点指定根磁盘
 ```
 $ ironic node-update 97e3f7b3-5629-473e-a187-2193ebe0b5c7 \
 add properties/root_device='{"serial": "WD-000000000002"}'
