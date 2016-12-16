@@ -10,6 +10,7 @@
 * [添加、删除节点](控制集群数量.md)
     * [删除计算节点](删除计算节点.md)
 * [计算节点高可用配置](计算节点高可用配置.md)
-* [note](note.md)
 * [定义ceph节点的根磁盘](在tripleo中部署ceph.md)
+* [troubleshooting](troubleshooting.md)
+* [note](note.md)
 
