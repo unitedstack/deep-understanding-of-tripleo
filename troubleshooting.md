@@ -45,8 +45,54 @@ heat resource-list overcloud
 | allNodesConfig                    | cbd42692-fffa-4527-a519-bd4014ebf0fb          | OS::TripleO::AllNodes::SoftwareConfig             | CREATE_COMPLETE | 2015-04-06T21:15:20Z |
 +-----------------------------------+-----------------------------------------------+---------------------------------------------------+-----------------+----------------------+
 ```
-2. 
+这个示例中`ControllerNodesPostDeployment`部署失败了，这可能是overcloud的节点运行puppet时出了问题。
 
+2. 显示`ControllerNodesPostDeployment`资源的详细信息
+```
+$ heat resource-show overcloud ControllerNodesPostDeployment
+
++------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Property               | Value                                                                                                                                                               |
++------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| attributes             | {}                                                                                                                                                                  |
+| description            |                                                                                                                                                                     |
+| links                  | http://192.168.24.1:8004/v1/cea2a0c78d2447bc9a0f7caa35c9224c/stacks/overcloud/ec3e3251-f949-4df9-92be-dbd37c6992a1/resources/ControllerNodesPostDeployment (self)      |
+|                        | http://192.168.24.1:8004/v1/cea2a0c78d2447bc9a0f7caa35c9224c/stacks/overcloud/ec3e3251-f949-4df9-92be-dbd37c6992a1 (stack)                                             |
+|                        | http://192.168.24.1:8004/v1/cea2a0c78d2447bc9a0f7caa35c9224c/stacks/overcloud-ControllerNodesPostDeployment-6kcqm5zuymqu/e551e472-f2db-4468-b586-0374678d71a3 (nested) |
+| logical_resource_id    | ControllerNodesPostDeployment                                                                                                                                       |
+| physical_resource_id   | e551e472-f2db-4468-b586-0374678d71a3                                                                                                                                |
+| required_by            | BlockStorageNodesPostDeployment                                                                                                                                     |
+|                        | CephStorageNodesPostDeployment                                                                                                                                      |
+| resource_name          | ControllerNodesPostDeployment                                                                                                                                       |
+| resource_status        | CREATE_FAILED                                                                                                                                                       |
+| resource_status_reason | ResourceUnknownStatus: Resource failed - Unknown status FAILED due to "None"                                                                                        |
+| resource_type          | OS::TripleO::ControllerPostDeployment                                                                                                                               |
+| updated_time           | 2015-04-06T21:15:20Z                                                                                                                                                |
++------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+如果resource-show 没有明确是说明为什么会失败，那就logging到目标节点上去troubleshooting。
+
+3. 通过nova list 确定目标节点ip
+```
+$ nova list
+
++--------------------------------------+-------------------------------------------------------+--------+------------+-------------+---------------------+
+| ID                                   | Name                                                  | Status | Task State | Power State | Networks            |
++--------------------------------------+-------------------------------------------------------+--------+------------+-------------+---------------------+
+| 18014b02-b143-4ca2-aeb9-5553bec93cff | ov-4tvbtgpv7w-0-soqocxy2w4fr-NovaCompute-nlrxd3lgmmlt | ACTIVE | -          | Running     | ctlplane=192.168.24.13 |
+| 96a57a46-1e48-4c66-adaa-342ee4e98972 | ov-rf4hby6sblk-0-iso3zlqmyzfe-Controller-xm2imjkzalhi | ACTIVE | -          | Running     | ctlplane=192.168.24.14 |
++--------------------------------------+-------------------------------------------------------+--------+------------+-------------+---------------------+
+```
+
+4. 使用heat-admin 登录。
+`$ ssh heat-admin@192.168.24.14`
+
+
+5. 
+```
+$ sudo journalctl -u os-collect-config
+
+```
 
 
 REF：[Troubleshooting a Failed Overcloud Deployment](http://docs.openstack.org/developer/tripleo-docs/troubleshooting/troubleshooting-overcloud.html)
