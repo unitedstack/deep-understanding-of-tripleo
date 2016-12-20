@@ -70,7 +70,7 @@ instack-virt-setup
 ssh root@instack
 ```
 
-部署undercloud openstack
+# 部署undercloud openstack
 以下步骤在undercloud vm 中执行
 ## 1. 安装TripleOClient
 ```
