@@ -12,7 +12,7 @@
 
 
 
-虚拟环境的 instack.json 
+虚拟环境instack.json 
 ```
 {
   "arch": "x86_64",
