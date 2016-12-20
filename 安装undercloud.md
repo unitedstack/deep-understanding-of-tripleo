@@ -10,9 +10,9 @@ sudo yum -y install --enablerepo=extras centos-release-ceph-jewel
 sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' /etc/yum.repos.d/CentOS-Ceph-Jewel.repo
 ```
 
-安装 instack-undercloud
+安装 TripleO CLI
 ```
-sudo yum install -y instack-undercloud
+sudo yum install -y python-tripleoclient
 
 ```
 
