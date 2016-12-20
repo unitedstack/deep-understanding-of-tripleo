@@ -61,5 +61,31 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 instack-virt-setup
 ```
 
+进入undercloud
+---
+```
+ssh root@instack
+```
+
+以下步骤在undercloud vm 中执行
+## 1. 安装TripleOClient
+```
+sudo yum -y install yum-plugin-prioritiessudo
+sudo yum install -y python-tripleoclient
+```
+## 2. 编辑undercloud 配置文件
+注意使用的public API 使用的网卡
+```
+cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+vim ~/undercloud.conf
+```
+## 3. 部署undercloud
+```
+openstack undercloud install
+```
+##. 
+6. 编辑instack.json 文件，并导入。
+
+
 
 
