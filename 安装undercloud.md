@@ -2,7 +2,9 @@ undercloud 虚拟环境部署（公网）
 ---
 
 # 安装undercloud VM
-以下操作在物理机执行：
+
+**以下操作在物理机执行：**
+
 ## 1. 添加Newton的repo
 ```
 sudo curl -L -o /etc/yum.repos.d/delorean-newton.repo https://trunk.rdoproject.org/centos7-newton/current/delorean.repo
