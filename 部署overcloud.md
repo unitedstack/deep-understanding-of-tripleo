@@ -34,6 +34,7 @@ list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do iro
 ```
 #wwn
 $ properties/root_device='{"wwn": "xxx"}'
+
 #serial
 $ properties/root_device='{"serial": "xxx"}'
 ```
