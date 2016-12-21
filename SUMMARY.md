@@ -13,7 +13,7 @@
 * [TripleO 部署中的排错方法和思路](troubleshooting.md)
 * [note](note.md)
 * 探索
-    * 使用Docker部署overcloud
+    * [使用Docker部署overcloud](使用docker部署overcloud.md)
     * 整合ceph节点和compute节点
     * 分离网络节点
 
