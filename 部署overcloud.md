@@ -20,5 +20,22 @@ $ . stackrc
 $ openstack overcloud image upload
 ```
 
-附件：
 
+## 3. 定义根磁盘
+查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
+```
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+```
+如果sda是我们想要的根磁盘:
+```
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+```
+也可以使用serial或者wwn来定义根磁盘,
+```
+#wwn
+$ properties/root_device='{"wwn": "xxx"}'
+#serial
+$ properties/root_device='{"serial": "xxx"}'
+```
+
+## 4. 定义ceph
