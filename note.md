@@ -10,7 +10,7 @@
 
 
 
-虚拟环境instack.json 
+虚拟环境instackenv.json 
 ```
 {
   "arch": "x86_64",
