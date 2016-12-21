@@ -6,9 +6,7 @@
    3. 使用对象存储
 2. 如何配置计算节点HA
    1. 使用pacemaker remote
-   2. 集成rock
-3. 离线部署TripleO
-4. 集成halo 
+3. 集成halo 
 
 
 
