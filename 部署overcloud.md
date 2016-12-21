@@ -65,6 +65,13 @@ mkdir ~/templates
 ```
 cp /usr/share/openstack-tripleo-heat-templates/environments/storage-environment.yaml ~/templates/
 ```
+在storage-environment.yaml中添加一段ExtraConfig 的section，格式大致如下：
+```
+parameter_defaults:  #已存在的section
+  ExtraConfig:       #这是我们要添加的section
+    ceph::profile::params::osds:
+```
+
 
 
 
