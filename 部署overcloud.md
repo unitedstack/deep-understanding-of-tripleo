@@ -26,17 +26,36 @@ $ openstack overcloud image upload
 ```
 list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
 ```
-如果sda是我们想要的根磁盘:
+### 如果sda是我们想要的根磁盘:
 ```
 list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
 ```
-也可以使用serial或者wwn来定义根磁盘,
+
+
+### 如果sda不是我们想要的根磁盘
+那就需要使用serial或者wwn来定义根磁盘，手动对每一个node依次执行定义:
 ```
+
 #wwn
-properties/root_device='{"wwn": "xxx"}'
+ironic node-update $i add properties/root_device=properties/root_device='{"wwn": "xxx"}'
 
 #serial
-properties/root_device='{"serial": "xxx"}'
+ironic node-update $i add properties/root_device=properties/root_device='{"serial": "xxx"}'
+
 ```
 
 ## 4. 定义ceph
+在stack用户目录下建立`templates`目录
+```
+mkdir ~/templates
+```
+复制ceph 配置文件到templates目录中
+```
+cp /usr/share/openstack-tripleo-heat-templates/environments/storage-environment.yaml ~/templates/
+```
+
+
+
+
+
+
