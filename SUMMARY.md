@@ -14,6 +14,7 @@
 * [note](note.md)
 * 探索
     * [使用Docker部署overcloud](使用docker部署overcloud.md)
-    * 整合ceph节点和compute节点
-    * 分离网络节点
+    * [整合ceph节点和compute节点](整合ceph节点和compute节点.md)
+    * [分离网络节点](分离网络节点.md)
+* [自定义Ceph部署](自定义ceph部署.md)
 
