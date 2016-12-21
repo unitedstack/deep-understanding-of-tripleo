@@ -44,9 +44,15 @@ ironic node-update $i add properties/root_device=properties/root_device='{"seria
 
 ```
 
-修正logic_gb
+然后需要修正logic_gb，可以重新执行introspection或者手动指定logic_gb
+
+- 重新执行introspection
 ```
-a
+openstack baremetal introspection bulk start
+```
+- 或者更新logic_gb
+```
+ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
 ```
 
 
