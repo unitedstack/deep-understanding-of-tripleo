@@ -2,4 +2,4 @@
 ---
 
 
-[docker heat](https://github.com/openstack/tripleo-heat-templates/tree/master/docker)
+[TripleO docker heat](https://github.com/openstack/tripleo-heat-templates/tree/master/docker)
