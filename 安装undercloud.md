@@ -1,11 +1,11 @@
-undercloud 虚拟环境部署（公网）
----
+## undercloud虚拟环境部署（公网）
 
 # 安装undercloud VM
 
 **以下操作在物理机执行：**
 
 ## 1. 添加Newton的repo
+
 ```
 sudo curl -L -o /etc/yum.repos.d/delorean-newton.repo https://trunk.rdoproject.org/centos7-newton/current/delorean.repo
 
@@ -16,19 +16,19 @@ sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' /etc/yum.repos.d/CentOS-Ceph-Jewel.re
 ```
 
 ## 2. 安装yum-plugin-priorites
+
 ```
 sudo yum -y install yum-plugin-priorities
-
 ```
-
 
 ## 3. 安装 TripleO CLI
+
 ```
 sudo yum install -y python-tripleoclient
-
 ```
 
 ## 4. 通过环境变量定义安装参数
+
 ```
 export NODE_DIST=centos7
 
@@ -53,43 +53,55 @@ export TESTENV_ARGS="--baremetal-bridge-names 'brbm brbm1 brbm2'"
 export LIBVIRT_VOL_POOL=tripleo
 # If you want to specify an alternative target
 export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
-
-
 ```
 
+## 5. 安装undercloud vm
 
-## 5. 安装undercloud vm 
 （并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。）
+
 ```
 instack-virt-setup
 ```
 
-进入undercloud
----
+## 进入undercloud
+
 ```
 ssh root@instack
 ```
 
 # 部署undercloud openstack
+
 **以下步骤在undercloud vm 中执行**
+
 ## 1. 安装TripleOClient
+
 ```
 sudo yum -y install yum-plugin-prioritiessudo
 sudo yum install -y python-tripleoclient
 ```
+
 ## 2. 编辑undercloud 配置文件
-注意使用的public API 使用的网卡
+
+创建undercloud配置文件，并修改里面的配置。
 ```
-cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
-vim ~/undercloud.conf
+$ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+$ vim ~/undercloud.conf
 ```
+
 ## 3. 部署undercloud
+
 ```
 openstack undercloud install
 ```
-##. 
-6. 编辑instack.json 文件，并导入。
 
 
 
+
+## .
+
+1. 编辑instack.json 文件，并导入。
+
+## 遇到的问题
+1. 执行 `openstack undercloud install`，遇到mariadb包内冲突。我先卸载了mariadb-libs, 安装mariadb,安装 
+![](/assets/undercloud-marriadb.png)
 
