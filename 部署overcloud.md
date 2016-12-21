@@ -33,10 +33,10 @@ list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do iro
 也可以使用serial或者wwn来定义根磁盘,
 ```
 #wwn
-$ properties/root_device='{"wwn": "xxx"}'
+properties/root_device='{"wwn": "xxx"}'
 
 #serial
-$ properties/root_device='{"serial": "xxx"}'
+properties/root_device='{"serial": "xxx"}'
 ```
 
 ## 4. 定义ceph
