@@ -44,6 +44,12 @@ ironic node-update $i add properties/root_device=properties/root_device='{"seria
 
 ```
 
+修正logic_gb
+```
+a
+```
+
+
 ## 4. 定义ceph
 在stack用户目录下建立`templates`目录
 ```
