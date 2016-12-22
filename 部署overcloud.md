@@ -71,37 +71,34 @@ $ openstack overcloud image upload
 ```
 
 导入json
+
 ```
 openstack baremetal import instackenv.json
 ```
 
 进行introspection收集overcloud node 的信息
+
 ```
 openstack baremetal introspection bulk start
 ```
 
-
 ## 3. 定义根磁盘
 
 查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
-```
-list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
 
-```
+    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+
 ### 如果sda是我们想要的根磁盘:
-```
-list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
-```
+
+    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+
 ### 如果sda不是我们想要的根磁盘
 
-那就需要使用serial或者wwn来定义根磁盘，手动对每一个node依次执行定义:
+那就需要使用wwn来定义根磁盘，手动对每一个node依次执行定义:
 
 ```
 #wwn
 ironic node-update $i add properties/root_device=properties/root_device='{"wwn": "xxx"}'
-
-#serial
-ironic node-update $i add properties/root_device=properties/root_device='{"serial": "xxx"}'
 ```
 
 然后需要修正logic\_gb，可以重新执行introspection或者手动指定logic\_gb
@@ -115,7 +112,7 @@ ironic node-update $i add properties/root_device=properties/root_device='{"seria
   ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
   ```
 
-## 4. 定义ceph
+## 4. 配置 ceph osd
 
 在stack用户目录下建立`templates`目录
 
@@ -138,8 +135,9 @@ parameter_defaults:  #已存在的section
 ```
 
 分别存储journal 和 osd
+
 ```
-    ceph::profile::params::osds:
+ceph::profile::params::osds:
         '/dev/sdc':
           journal: '/dev/sdb'
         '/dev/sdd':
@@ -147,11 +145,27 @@ parameter_defaults:  #已存在的section
 ```
 
 将journal 和osd 数据放在一个硬盘内
+
 ```
-    ceph::profile::params::osds:
+ceph::profile::params::osds:
         '/dev/sdb': {}
         '/dev/sdc': {}
         '/dev/sdd': {}
 ```
+
+## 5. 给各类节点打类型标签
+
+```
+ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
+
+ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:compute,boot_option:local'
+
+ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
+```
+
+
+## 6. 定义网络
+
+## 6. 安装overcloud
 
 
