@@ -17,7 +17,4 @@
     * [OverCloud](overcloud.md)
 * [TripleO 部署中的排错方法和思路](troubleshooting.md)
 * [note](note.md)
-* [Heat模板分析](heat模板分析.md)
-    * [UnderCloud](undercloud.md)
-    * [OverCloud](overcloud.md)
 

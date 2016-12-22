@@ -105,12 +105,3 @@ openstack undercloud install
 
 
 
-
-## .
-
-1. 编辑instack.json 文件，并导入。
-
-## 遇到的问题
-1. 执行 `openstack undercloud install`，遇到mariadb包内冲突。我先卸载了mariadb-libs, 安装mariadb,安装 
-![](/assets/undercloud-marriadb.png)
-
