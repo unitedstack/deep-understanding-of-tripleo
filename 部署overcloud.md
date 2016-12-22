@@ -69,10 +69,15 @@ $ openstack overcloud image upload
   ]
 }
 ```
+
 导入json
 ```
-a
+openstack baremetal import instackenv.json
+```
 
+进行introspection收集overcloud node 的信息
+```
+openstack baremetal introspection bulk start
 ```
 
 
@@ -80,12 +85,13 @@ a
 
 查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
 ```
-    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+
 ```
 ### 如果sda是我们想要的根磁盘:
-
-    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
-
+```
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+```
 ### 如果sda不是我们想要的根磁盘
 
 那就需要使用serial或者wwn来定义根磁盘，手动对每一个node依次执行定义:
