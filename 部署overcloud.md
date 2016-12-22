@@ -1,11 +1,13 @@
-部署overcloud
----
+## 部署overcloud
+
 ## 1. 准备overcloud 镜像
+
 Overcloud 镜像可以自己制作也可以下载现成的。这里的演示使用下载的镜像。
 
 [Overcloud 镜像下载地址](http://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/)
 
 将这些文件放到stack用户的根目录底下
+
 ```
 ironic-python-agent.initramfs
 ironic-python-agent.kernel
@@ -15,18 +17,20 @@ overcloud-full.vmlinuz
 ```
 
 ## 2. 上传镜像
+
 ```
 $ . stackrc
 $ openstack overcloud image upload
 ```
 
-
 ## 3. 收集物理机信息
+
 示例中使用的是虚拟环境，虚拟环境与物理环境使用的ironic驱动不同。
 
 将overcloud vm的信息写入instackenv.json。参照以下格式：
 
-虚拟环境instackenv.json 
+虚拟环境instackenv.json
+
 ```
 {
   "arch": "x86_64",
@@ -64,64 +68,67 @@ $ openstack overcloud image upload
     }
   ]
 }
+```
+导入json
+```
 
 ```
 
 
 ## 3. 定义根磁盘
-查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
-```
-list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
-```
-### 如果sda是我们想要的根磁盘:
-```
-list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
-```
 
+查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
+
+    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+
+### 如果sda是我们想要的根磁盘:
+
+    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
 
 ### 如果sda不是我们想要的根磁盘
-那就需要使用serial或者wwn来定义根磁盘，手动对每一个node依次执行定义:
-```
 
+那就需要使用serial或者wwn来定义根磁盘，手动对每一个node依次执行定义:
+
+```
 #wwn
 ironic node-update $i add properties/root_device=properties/root_device='{"wwn": "xxx"}'
 
 #serial
 ironic node-update $i add properties/root_device=properties/root_device='{"serial": "xxx"}'
-
 ```
 
-然后需要修正logic_gb，可以重新执行introspection或者手动指定logic_gb
+然后需要修正logic\_gb，可以重新执行introspection或者手动指定logic\_gb
 
-- 重新执行introspection
-```
-openstack baremetal introspection bulk start
-```
-- 或者更新logic_gb
-```
-ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
-```
-
+* 重新执行introspection
+  ```
+  openstack baremetal introspection bulk start
+  ```
+* 或者更新logic\_gb
+  ```
+  ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
+  ```
 
 ## 4. 定义ceph
+
 在stack用户目录下建立`templates`目录
+
 ```
 mkdir ~/templates
 ```
+
 复制ceph 配置文件到templates目录中
+
 ```
 cp /usr/share/openstack-tripleo-heat-templates/environments/storage-environment.yaml ~/templates/
 ```
+
 在storage-environment.yaml中添加一段ExtraConfig 的section，格式大致如下：
+
 ```
 parameter_defaults:  #已存在的section
   ExtraConfig:       #这是我们要添加的section
     ceph::profile::params::osds:
 ```
-
-
-
-
 
 
 
