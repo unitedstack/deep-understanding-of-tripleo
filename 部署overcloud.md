@@ -137,5 +137,21 @@ parameter_defaults:  #已存在的section
     ceph::profile::params::osds:
 ```
 
+分别存储journal 和 osd
+```
+    ceph::profile::params::osds:
+        '/dev/sdc':
+          journal: '/dev/sdb'
+        '/dev/sdd':
+          journal: '/dev/sdb'
+```
+
+将journal 和osd 数据放在一个硬盘内
+```
+    ceph::profile::params::osds:
+        '/dev/sdb': {}
+        '/dev/sdc': {}
+        '/dev/sdd': {}
+```
 
 
