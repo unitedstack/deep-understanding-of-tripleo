@@ -37,21 +37,22 @@ sudo yum install -y python-tripleoclient
 
 ## 4. 通过环境变量定义安装参数
 
-```
+```vim
+#指定undercloud vm 使用centos7
 export NODE_DIST=centos7
 
-
+#指定有多少个overcloud vm，以及他们的配置
 export NODE_COUNT=2
 export NODE_CPU=1
 export NODE_MEM=6144
 export NODE_DISK=40
 
-
+#undercloud的配置
 export UNDERCLOUD_NODE_CPU=4
 export UNDERCLOUD_NODE_MEM=8192
 export UNDERCLOUD_NODE_DISK=30
 
-
+#指定
 export DIB_LOCAL_IMAGE=rhel-guest-image-7.1-20150224.0.x86_64.qcow2
 
 

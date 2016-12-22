@@ -12,9 +12,12 @@
     * [计算节点高可用配置](计算节点高可用配置.md)
 * [添加、删除节点](控制集群数量.md)
     * [删除计算节点](删除计算节点.md)
+* [Heat模板分析](heat模板分析.md)
+    * [UnderCloud](undercloud.md)
+    * [OverCloud](overcloud.md)
 * [TripleO 部署中的排错方法和思路](troubleshooting.md)
 * [note](note.md)
-* 探索
-    * [使用Docker部署overcloud](使用docker部署overcloud.md)
-    * [分离网络节点](分离网络节点.md)
+* [Heat模板分析](heat模板分析.md)
+    * [UnderCloud](undercloud.md)
+    * [OverCloud](overcloud.md)
 
