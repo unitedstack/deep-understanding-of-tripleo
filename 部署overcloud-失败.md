@@ -15,3 +15,5 @@ Feb 22 23:06:28 overcloud-controller-0.localdomain os-collect-config[10347]: 201
 Feb 22 23:06:28 overcloud-controller-0.localdomain os-collect-config[10347]: 2016-02-22 23:06:28.295 10347 WARNING os_collect_config.zaqar [-] No auth_url 
 ```
 最终查到其中有一台计算节点2，与其他节点网络不通（部署网络除外）。
+
+参考:[overcloud deployment failed](https://bugzilla.redhat.com/show_bug.cgi?id=1310956)
