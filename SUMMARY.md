@@ -16,5 +16,6 @@
     * [UnderCloud](undercloud.md)
     * [OverCloud](overcloud.md)
 * [TripleO 部署中的排错方法和思路](troubleshooting.md)
+* [部署Overcloud 失败](部署overcloud-失败.md)
 * [note](note.md)
 
