@@ -1,5 +1,5 @@
 ## 部署overcloud
-假设我们已经完成了undercloud的部署。
+假设我们已经完成了undercloud的部署。下面开始部署overcloud。
 
 ## 1. 准备overcloud 镜像
 
@@ -7,7 +7,7 @@ Overcloud 镜像可以自己制作也可以下载现成的。这里的演示使�
 
 [Overcloud 镜像下载地址](http://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/)
 
-将这些文件放到stack用户的根目录底下
+下载后解压，将这些文件放到stack用户的根目录底下：
 
 ```
 ironic-python-agent.initramfs
@@ -16,6 +16,8 @@ overcloud-full.initrd
 overcloud-full.qcow2
 overcloud-full.vmlinuz
 ```
+
+> 如果要修改镜像的root密码： `virt-customize -a overcloud-full.qcow2 --root-password password:<my_root_password>`
 
 ## 2. 上传镜像
 
