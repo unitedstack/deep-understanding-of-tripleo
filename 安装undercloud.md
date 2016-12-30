@@ -72,7 +72,7 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 instack-virt-setup
 ```
 
-## 进入undercloud os
+## ssh 进入undercloud os
 
 ```
 ssh root@instack
