@@ -66,13 +66,13 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 
 ## 5. 安装undercloud vm
 
-（并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。）
+（这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。）
 
 ```
 instack-virt-setup
 ```
 
-## 进入undercloud
+## 进入undercloud os
 
 ```
 ssh root@instack
