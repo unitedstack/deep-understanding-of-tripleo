@@ -156,8 +156,10 @@ ceph::profile::params::osds:
         '/dev/sdd': {}
 ```
 
-## 5. 给各类节点打类型标签
+## 5. 为物理机定义节点类型
 
+在规划时
+直接为物理机定义
 ```
 ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
 
