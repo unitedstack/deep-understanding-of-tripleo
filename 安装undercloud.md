@@ -52,15 +52,15 @@ export UNDERCLOUD_NODE_CPU=4
 export UNDERCLOUD_NODE_MEM=8192
 export UNDERCLOUD_NODE_DISK=30
 
-#指定
+#指定undercloud 虚拟机的模板
 export DIB_LOCAL_IMAGE=rhel-guest-image-7.1-20150224.0.x86_64.qcow2
 
-
+## 需要创建哪几个网桥
 export TESTENV_ARGS="--baremetal-bridge-names 'brbm brbm1 brbm2'"
 
-# If you wish to specify an alternative pool name:
+# （可选）指定使用哪个virt pool 
 export LIBVIRT_VOL_POOL=tripleo
-# If you want to specify an alternative target
+# 
 export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 ```
 
