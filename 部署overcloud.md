@@ -1,4 +1,5 @@
 ## 部署overcloud
+
 假设我们已经完成了undercloud的部署。下面开始部署overcloud。
 
 ## 1. 准备overcloud 镜像
@@ -158,8 +159,9 @@ ceph::profile::params::osds:
 
 ## 5. 为物理机定义节点类型
 
-在规划时
+在规划节点时，希望特定的物理机作为特定的角色。比如有一台物理机，我们在ironic 配置文件里将它定义为overcloud 中ceph节点，不要任性的变成计算节点或者控制节点。这样，我们就需要为这些节点定义类型。  
 直接为物理机定义
+
 ```
 ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
 
@@ -169,12 +171,12 @@ ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} a
 ```
 
 ## 6. 定义网络
-overcloud 中的所有API 地址，都需要通过undercloud neutron 分配，所以，undercloud需要可以访问overcloud 中所有的网络。
-查看网卡顺序
-```
 
-```
+overcloud 中的所有API 地址，都需要通过undercloud neutron 分配，所以，undercloud需要可以访问overcloud 中所有的网络。  
+查看网卡顺序  
+\`\`\`
 
+\`\`\`
 
 ## 6. 安装overcloud
 
