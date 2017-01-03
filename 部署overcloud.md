@@ -170,7 +170,7 @@ ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {
 ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
 ```
 
-第二周
+
 
 ## 6. 定义网络
 

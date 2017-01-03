@@ -47,7 +47,8 @@ heat resource-list overcloud
 ```
 这个示例中`ControllerNodesPostDeployment`部署失败了，这可能是overcloud的节点运行puppet时出了问题。
 
-2. 显示`ControllerNodesPostDeployment`资源的详细信息
+2. 显示**ControllerNodesPostDeployment** 资源的详细信息
+
 ```
 $ heat resource-show overcloud ControllerNodesPostDeployment
 
@@ -70,9 +71,11 @@ $ heat resource-show overcloud ControllerNodesPostDeployment
 | updated_time           | 2015-04-06T21:15:20Z                                                                                                                                                |
 +------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ```
+
 如果resource-show 没有明确是说明为什么会失败，那就logging到目标节点上去troubleshooting。
 
 3. 通过nova list 确定目标节点ip
+
 ```
 $ nova list
 
@@ -89,9 +92,9 @@ $ nova list
 
 
 5. 
+
 ```
 $ sudo journalctl -u os-collect-config
-
 ```
 
 
