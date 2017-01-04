@@ -12,7 +12,7 @@
     * [定义ceph节点的根磁盘](定义根磁盘.md)
 * [添加、删除节点](控制集群数量.md)
     * [删除计算节点](删除计算节点.md)
-* [TripleO 部署中的排错方法和思路](troubleshooting.md)
+* [TripleO 部署中的排错方法和思路](KB/TripleO部署Overcloud排错方法和思路.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](部署overcloud-失败.md)
