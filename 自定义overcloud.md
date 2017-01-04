@@ -43,10 +43,11 @@ openstack overcloud deploy ....
   --control-flavor baremetal  \
   --compute-flavor baremetal \
   --ceph-storage-flavor baremetal
-...
+  ...
 ```
 
 
+共有这些Hints可以选择。
 ```
 ControllerSchedulerHints for Controller nodes.
 NovaComputeSchedulerHints for Compute nodes.
