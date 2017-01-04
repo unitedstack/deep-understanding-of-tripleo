@@ -17,6 +17,6 @@
     * [升级Overcloud](Upgrade/升级overcloud.md)
 
 ## KnowledgeBase
-* [部署Overcloud 失败](部署overcloud-失败.md)
+* [部署Overcloud 失败](KB/部署overcloud-失败.md)
 * [TripleO 部署中的排错方法和思路](KB/TripleO部署Overcloud排错方法和思路.md)
 
