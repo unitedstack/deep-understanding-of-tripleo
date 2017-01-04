@@ -6,7 +6,7 @@
     * [undercloud](部署Openstack\安装undercloud.md)
     * [overcloud](部署Openstack\部署overcloud.md)
 * [自定义Overcloud部署](自定义Overcloud部署)
-    * [自定义overcloud](自定义Overcloud部署\自定义overcloud.md)
+    * [自定义overcloud](自定义Overcloud部署\定义主机.md)
 * [自定义Ceph部署](自定义ceph部署.md)
     * [整合ceph节点和compute节点](整合ceph节点和compute节点.md)
     * [定义ceph节点的根磁盘](在tripleo中部署ceph.md)
