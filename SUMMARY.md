@@ -12,6 +12,8 @@
     * [定义ceph节点的根磁盘](定义根磁盘.md)
 * [添加、删除节点](SCALING/添加、删除节点.md)
     * [删除计算节点](SCALING/删除计算节点.md)
+* [升级](Upgrade/升级.md)
+    * [升级Undercloud](Upgrade/升级undercloud.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](部署overcloud-失败.md)
