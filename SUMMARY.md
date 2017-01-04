@@ -15,7 +15,6 @@
 * [升级](Upgrade/升级.md)
     * [升级Undercloud](Upgrade/升级undercloud.md)
     * [升级Overcloud](Upgrade/升级overcloud.md)
-* [Instance HA](Instance HA/计算节点高可用配置.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](部署overcloud-失败.md)
