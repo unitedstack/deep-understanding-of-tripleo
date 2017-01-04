@@ -6,7 +6,7 @@
 openstack stack resource list overcloud -n 5|grep -vi "complete"
 ```
 
-通过`heat resource-show <physical_resource_id>` 查看输出。
+通过`heat deployment-show <physical_resource_id>` 查看输出。
 ```
 [stack@undercloud-0 ~]$ [stack@undercloud-0 ~]$ heat deployment-show 001bbb95-cbc8-4779-92ae-bbe19b148b49
 WARNING (shell) "heat deployment-show" is deprecated, please use "openstack software deployment show" instead
