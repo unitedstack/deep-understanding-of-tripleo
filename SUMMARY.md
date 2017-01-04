@@ -10,10 +10,10 @@
     * [定义主机](自定义Overcloud部署//定义主机.md)
 * [自定义Ceph部署](自定义ceph部署.md)
     * [定义ceph节点的根磁盘](定义根磁盘.md)
-* [添加、删除节点](控制集群数量.md)
-    * [删除计算节点](删除计算节点.md)
-* [TripleO 部署中的排错方法和思路](KB/TripleO部署Overcloud排错方法和思路.md)
+* [添加、删除节点](SCALING/添加、删除节点.md)
+    * [删除计算节点](SCALING/删除计算节点.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](部署overcloud-失败.md)
+* [TripleO 部署中的排错方法和思路](KB/TripleO部署Overcloud排错方法和思路.md)
 
