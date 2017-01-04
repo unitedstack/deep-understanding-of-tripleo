@@ -1,4 +1,4 @@
-TripleO 部署 Overcloud  排错方法和思路
+TripleO部署Overcloud排错方法和思路
 ---
 如果在部署overcloud的过程中失败了，可以利用openstack cient ， openstack service log 查找定位问题。
 这篇文章主要讨论在使用heat 部署时失败的排错方法。
