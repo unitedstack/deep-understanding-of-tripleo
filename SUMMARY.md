@@ -9,9 +9,9 @@
         * [overcloud](部署Openstack/部署overcloud.md)
 * [TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
     * [自定义主机](自定义Overcloud部署/定义主机.md)
+    * 自定义网络
     * [自定义Ceph存储部署](Customization Ceph/自定义ceph部署.md)
         * [定义ceph节点的根磁盘](Customization Ceph/定义根磁盘.md)
-    * 自定义网络
 * [TripleO变更实践](SCALING/添加、删除节点.md)
     * [节点伸缩](SCALING/删除计算节点.md)
     * 配置变更
