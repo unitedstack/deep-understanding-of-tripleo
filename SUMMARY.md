@@ -1,22 +1,25 @@
 # Summary
 
-## TripleO部署专题
+## 深入理解TripleO部署
+* 前言
 * [TripleO介绍](README.md)
-* [部署 Openstack](安装.md)
-    * [undercloud](部署Openstack/安装undercloud.md)
-    * [overcloud](部署Openstack/部署overcloud.md)
-* [自定义Overcloud部署](自定义Overcloud部署/自定义Overcloud部署.md)
-    * [定义主机](自定义Overcloud部署/定义主机.md)
-* [自定义Ceph部署](Customization Ceph/自定义ceph部署.md)
-    * [定义ceph节点的根磁盘](Customization Ceph/定义根磁盘.md)
-* [添加、删除节点](SCALING/添加、删除节点.md)
-    * [删除计算节点](SCALING/删除计算节点.md)
-* [升级](Upgrade/升级.md)
-    * [升级Undercloud](Upgrade/升级undercloud.md)
-    * [升级Overcloud](Upgrade/升级overcloud.md)
-* [Automation](Automation/automation.md)
-    * [TripleO CI](Automation/tripleo-ci.md)
-    * [TripleO quickstart](Automation/tripleo-quickstart.md)
+* [TripleO部署实践](安装.md)
+    * [虚拟环境部署](虚拟环境部署.md)
+        * [undercloud](部署Openstack/安装undercloud.md)
+        * [overcloud](部署Openstack/部署overcloud.md)
+* [TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
+    * [自定义主机](自定义Overcloud部署/定义主机.md)
+    * [自定义Ceph存储部署](Customization Ceph/自定义ceph部署.md)
+        * [定义ceph节点的根磁盘](Customization Ceph/定义根磁盘.md)
+    * 自定义网络
+* [TripleO变更实践](SCALING/添加、删除节点.md)
+    * [节点伸缩](SCALING/删除计算节点.md)
+    * 配置变更
+* [TripleO升级实践](Upgrade/升级.md)
+    * [N版本升级O版](Upgrade/升级undercloud.md)
+* [TripleO自动化流程](Automation/automation.md)
+    * [TripleO Quickstart自动化部署](Automation/tripleo-quickstart.md)
+    * [TripleO CI实践](Automation/tripleo-ci.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)
