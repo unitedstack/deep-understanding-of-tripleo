@@ -172,8 +172,6 @@ ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {
 ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
 ```
 
-
-
 ## 6. 定义网络
 
 overcloud 中的所有API 地址，都需要通过undercloud neutron 分配，所以，undercloud需要可以访问overcloud 中所有的网络。  
