@@ -1,6 +1,7 @@
 # Summary
 
 ## 深入理解TripleO部署
+* [封面](封面.md)
 * [前言](前言.md)
 * [第零章 - TripleO介绍](README.md)
 * [第一章 - TripleO部署实践](安装.md)
