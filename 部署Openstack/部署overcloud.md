@@ -20,7 +20,9 @@ overcloud-full.qcow2
 overcloud-full.vmlinuz
 ```
 
-> 如果要修改镜像的root密码： `virt-customize -a overcloud-full.qcow2 --root-password password:<my_root_password>`
+> 如果要修改镜像的root密码：
+
+  `virt-customize -a overcloud-full.qcow2 --root-password password:<my_root_password>`
 
 ## 2. 上传镜像
 
