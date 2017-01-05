@@ -11,12 +11,11 @@
 
 ```
 sudo curl -L -o /etc/yum.repos.d/delorean-newton.repo https://trunk.rdoproject.org/centos7-newton/current/delorean.repo
-
 sudo curl -L -o /etc/yum.repos.d/delorean-deps-newton.repo http://trunk.rdoproject.org/centos7-newton/delorean-deps.repo
-
 sudo yum -y install --enablerepo=extras centos-release-ceph-jewel
 sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' /etc/yum.repos.d/CentOS-Ceph-Jewel.repo
 ```
+
 
 如果通过内网安装，需要有这些repository
 - CentOS Base
@@ -54,15 +53,14 @@ export UNDERCLOUD_NODE_CPU=4
 export UNDERCLOUD_NODE_MEM=8192
 export UNDERCLOUD_NODE_DISK=30
 
-#指定undercloud 虚拟机的模板
+#指定undercloud 虚拟机的模板,这个是镜像的目录
 export DIB_LOCAL_IMAGE=rhel-guest-image-7.1-20150224.0.x86_64.qcow2
 
-## 需要创建哪几个网桥
+# 需要创建哪几个网桥
 export TESTENV_ARGS="--baremetal-bridge-names 'brbm brbm1 brbm2'"
 
 # （可选）指定使用哪个virt pool 
 export LIBVIRT_VOL_POOL=tripleo
-# 
 export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 ```
 
@@ -96,7 +94,25 @@ sudo yum install -y python-tripleoclient
 创建undercloud配置文件，并修改里面的配置。
 ```
 $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+```
+然后去修改我们的配置
+```
 $ vim ~/undercloud.conf
+[DEFAULT]
+local_ip = 192.168.0.1/24
+network_gateway = 192.168.0.1
+undercloud_public_vip = 192.168.0.2
+undercloud_admin_vip = 192.168.0.3
+local_interface = eth1
+network_cidr = 192.168.0.0/24
+masquerade_network = 192.168.0.0/24
+dhcp_start = 192.168.0.5
+dhcp_end = 192.168.0.24
+inspection_interface = br-ctlplane
+inspection_iprange = 192.168.0.100,192.168.0.120
+inspection_extras = true
+undercloud_debug = true
+[auth]
 ```
 
 ### 3. 部署undercloud
@@ -104,6 +120,3 @@ $ vim ~/undercloud.conf
 ```
 openstack undercloud install
 ```
-
-
-
