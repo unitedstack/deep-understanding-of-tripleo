@@ -1,7 +1,7 @@
 # Summary
 
 ## 深入理解TripleO部署
-* 前言
+* [前言](前言.md)
 * [TripleO介绍](README.md)
 * [TripleO部署实践](安装.md)
     * [虚拟环境部署](virtualenv.md)

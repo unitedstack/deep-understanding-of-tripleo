@@ -1,10 +1,12 @@
-## undercloud虚拟环境部署
+# undercloud虚拟环境部署
 
-# 安装undercloud VM
+---
+
+## 安装undercloud VM
 
 **以下操作在物理机执行：**
 
-## 1. 添加Newton的repo
+### 1. 添加Newton的repo
 如果通过公网安装：
 
 ```
@@ -23,19 +25,19 @@ sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' /etc/yum.repos.d/CentOS-Ceph-Jewel.re
 - Newton Delorean Deps repository
 - Ceph jewel repository
 
-## 2. 安装yum-plugin-priorites
+### 2. 安装yum-plugin-priorites
 
 ```
 sudo yum -y install yum-plugin-priorities
 ```
 
-## 3. 安装 TripleO CLI
+### 3. 安装 TripleO CLI
 
 ```
 sudo yum install -y python-tripleoclient
 ```
 
-## 4. 通过环境变量定义安装参数
+### 4. 通过环境变量定义安装参数
 
 ```vim
 #指定undercloud vm 使用centos7
@@ -64,7 +66,7 @@ export LIBVIRT_VOL_POOL=tripleo
 export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 ```
 
-## 5. 安装undercloud vm
+### 5. 安装undercloud vm
 
 （这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。）
 
@@ -78,18 +80,18 @@ instack-virt-setup
 ssh root@instack
 ```
 
-# 部署undercloud openstack
+## 部署undercloud openstack
 
 **以下步骤在undercloud vm 中执行**
 
-## 1. 安装TripleOClient
+### 1. 安装TripleOClient
 
 ```
 sudo yum -y install yum-plugin-prioritiessudo
 sudo yum install -y python-tripleoclient
 ```
 
-## 2. 编辑undercloud 配置文件
+### 2. 编辑undercloud 配置文件
 
 创建undercloud配置文件，并修改里面的配置。
 ```
@@ -97,7 +99,7 @@ $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 $ vim ~/undercloud.conf
 ```
 
-## 3. 部署undercloud
+### 3. 部署undercloud
 
 ```
 openstack undercloud install
