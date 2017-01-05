@@ -2,7 +2,7 @@
 
 ## 深入理解TripleO部署
 * [前言](前言.md)
-* [TripleO介绍](README.md)
+* [第零章 - TripleO介绍](README.md)
 * [第一章 - TripleO部署实践](安装.md)
     * [虚拟环境部署](virtualenv.md)
         * [undercloud](部署Openstack/安装undercloud.md)
