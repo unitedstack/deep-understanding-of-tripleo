@@ -15,7 +15,9 @@
 * [升级](Upgrade/升级.md)
     * [升级Undercloud](Upgrade/升级undercloud.md)
     * [升级Overcloud](Upgrade/升级overcloud.md)
-* [TripleO CI](tripleo-ci.md)
+* [Automation](Automation/automation.md)
+    * [TripleO CI](Automation/tripleo-ci.md)
+    * [TripleO quickstart](Automation/tripleo-quickstart.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)
