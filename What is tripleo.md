@@ -9,9 +9,10 @@ TripleO 是社区开发的一组基于Openstack 部署 Openstack的工具集。
 ![](/assets/logical_view.png)
 
 TripleO 优点：
-- 由社区维护，代码结构优良，文档资源丰富。TripleO基于openstack，学习成本低。
-- 可以与puppet 或者 bash 脚本集成。
-- 更容易与 CI & CD 系统集成。
+
+* 由社区维护，代码结构优良，文档资源丰富。TripleO基于openstack，学习成本低。
+* 可以与puppet 或者 bash 脚本集成。
+* 更容易与 CI & CD 系统集成。
 
 
 

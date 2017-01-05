@@ -1,7 +1,7 @@
 # Summary
 
-## ICM
-* [Introduction](README.md)
+## TripleO部署专题
+* [TripleO介绍](README.md)
 * [什么是TripleO？](What is tripleo.md)
 * [部署 Openstack](安装.md)
     * [undercloud](部署Openstack/安装undercloud.md)
