@@ -8,7 +8,8 @@
     * [虚拟环境部署](virtualenv.md)
         * [undercloud](部署Openstack/安装undercloud.md)
         * [overcloud](部署Openstack/部署overcloud.md)
-    * [物理环境部署](物理环境部署.md)
+    * [物理环境部署](第一章-TripleO部署实践/物理环境部署.md)
+        * 部署前准备
 * [第二章 - TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
     * [自定义主机](自定义Overcloud部署/定义主机.md)
     * [自定义网络](自定义Overcloud部署/自定义网络.md)
