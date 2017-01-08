@@ -11,6 +11,7 @@
     * [物理环境部署](第一章-TripleO部署实践/物理环境部署/物理环境部署.md)
         * [部署前准备](第一章-TripleO部署实践/物理环境部署/部署前准备.md)
         * [部署Overcloud](第一章-TripleO部署实践/物理环境部署/部署overcloud.md)
+    * [TripleO UI](第一章-TripleO部署实践/tripleo-ui.md)
 * [第二章 - TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
     * [自定义主机](自定义Overcloud部署/定义主机.md)
     * [自定义网络](自定义Overcloud部署/自定义网络.md)
