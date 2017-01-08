@@ -13,6 +13,14 @@
 enable_ui = true
 ```
 
+部署undercloud
+```
+openstack undercloud install
+```
+
+
+
+
 ## 登录
 
 TripleO UI 的端口号是3000,通过浏览器访问undercloud controlplane IP 的3000端口号即可。
