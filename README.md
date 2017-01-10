@@ -4,9 +4,8 @@
 
 按照[这个链接](https://access.redhat.com/documentation/en/red-hat-openstack-platform/10/paged/partner-integration/chapter-2-architecture)重新整理
 
-
-
 ## 什么是TripleO?
+
 tripleO是RedHat推出的OpenStack部署工具，目前RedHat主推的OpenStack部署工具，已经发了4个版本。相对来说，tripleO比起其他社区的部署工具更加的灵活方便。TripelO部署时需要先准备一个OpenStack控制器的镜像，然后用Ironic再去部署裸机，再通过heat在裸机上部署OpenStack。架构上分为undercloud和overcloud，基本的部署概念如下：
 
 ![](/assets/overview.png)
@@ -29,8 +28,8 @@ tripleO是RedHat推出的OpenStack部署工具，目前RedHat主推的OpenStack�
 
 在实际部署的时候，我们往往需要一次性部署好几个节点。这时候就需要一个编排工具，包括线上变更和集群部署都需要Heat的参与，所以说Heat在TripleO中非常重要。
 
-
 ## 小结
+
 TripleO的实际部署细节文档可参考官方文档，官方文档的一些细节都讲的非常的到位：
 
 * [《TripleO的官方部署》](http://docs.openstack.org/developer/tripleo-docs/)
@@ -38,4 +37,6 @@ TripleO的实际部署细节文档可参考官方文档，官方文档的一些�
 当然，TripleO还有quickstart模块，专门用来安装undercloud的：
 
 * [《TripleO的Quickstart》](http://docs.openstack.org/developer/tripleo-quickstart/)
+
+
 
