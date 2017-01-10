@@ -7,6 +7,7 @@
 **以下操作在物理机执行：**
 
 ### 1. 添加Newton的repo
+
 如果通过公网安装：
 
 ```
@@ -16,13 +17,13 @@ sudo yum -y install --enablerepo=extras centos-release-ceph-jewel
 sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' /etc/yum.repos.d/CentOS-Ceph-Jewel.repo
 ```
 
-
 如果通过内网安装，需要有这些repository
-- CentOS Base
-- CentOS EPEL
-- RDO Trunk Delorean repository
-- Newton Delorean Deps repository
-- Ceph jewel repository
+
+* CentOS Base
+* CentOS EPEL
+* RDO Trunk Delorean repository
+* Newton Delorean Deps repository
+* Ceph jewel repository
 
 ### 2. 安装yum-plugin-priorites
 
@@ -92,10 +93,13 @@ sudo yum install -y python-tripleoclient
 ### 2. 编辑undercloud 配置文件
 
 创建undercloud配置文件，并修改里面的配置。
+
 ```
 $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 ```
+
 然后去修改我们的配置
+
 ```
 $ vim ~/undercloud.conf
 [DEFAULT]
@@ -103,7 +107,7 @@ local_ip = 192.168.0.1/24
 network_gateway = 192.168.0.1
 undercloud_public_vip = 192.168.0.2
 undercloud_admin_vip = 192.168.0.3
-local_interface = eth1
+local_interface = eth1 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
 network_cidr = 192.168.0.0/24
 masquerade_network = 192.168.0.0/24
 dhcp_start = 192.168.0.5
@@ -120,3 +124,6 @@ undercloud_debug = true
 ```
 openstack undercloud install
 ```
+
+
+
