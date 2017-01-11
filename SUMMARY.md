@@ -16,7 +16,6 @@
     * [自定义主机](自定义Overcloud部署/定义主机.md)
     * [自定义网络](自定义Overcloud部署/自定义网络.md)
     * [自定义Ceph存储](Customization Ceph/自定义ceph部署.md)
-        * [定义ceph节点的根磁盘](Customization Ceph/定义根磁盘.md)
     * [自定义Role](自定义Overcloud部署/自定义role.md)
 * [第三章 - TripleO变更实践](SCALING/添加、删除节点.md)
     * [配置变更](SCALING/配置变更.md)

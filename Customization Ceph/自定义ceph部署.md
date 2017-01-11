@@ -3,6 +3,8 @@
 ---
 
 
+
+
 # 4. 配置 ceph osd
 
 在stack用户目录下建立`templates`目录
@@ -43,3 +45,65 @@ ceph::profile::params::osds:
 '/dev/sdc': {}
 '/dev/sdd': {}
 ```
+
+---
+
+
+**wipe-disks.yaml**
+```yaml
+heat_template_version: 2014-10-16
+
+description: >
+  Wipe and convert all disks to GPT (except the disk containing the root file system)
+
+resources:
+  userdata:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+      - config: {get_resource: wipe_disk}
+
+  wipe_disk:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config: {get_file: wipe-disk.sh}
+
+outputs:
+  OS::stack_id:
+    value: {get_resource: userdata}
+```
+
+
+**wipe-disk.sh**
+```yaml
+#!/bin/bash
+if [[ `hostname` = *"ceph"* ]]
+then
+  echo "Number of disks detected: $(lsblk -no NAME,TYPE,MOUNTPOINT | grep "disk" | awk '{print $1}' | wc -l)"
+  for DEVICE in `lsblk -no NAME,TYPE,MOUNTPOINT | grep "disk" | awk '{print $1}'`
+  do
+    ROOTFOUND=0
+    echo "Checking /dev/$DEVICE..."
+    echo "Number of partitions on /dev/$DEVICE: $(expr $(lsblk -n /dev/$DEVICE | awk '{print $7}' | wc -l) - 1)"
+    for MOUNTS in `lsblk -n /dev/$DEVICE | awk '{print $7}'`
+    do
+      if [ "$MOUNTS" = "/" ]
+      then
+        ROOTFOUND=1
+      fi
+    done
+    if [ $ROOTFOUND = 0 ]
+    then
+      echo "Root not found in /dev/${DEVICE}"
+      echo "Wiping disk /dev/${DEVICE}"
+      sgdisk -Z /dev/${DEVICE}
+      sgdisk -g /dev/${DEVICE}
+    else
+      echo "Root found in /dev/${DEVICE}"
+    fi
+  done
+fi
+```
+
+
+
