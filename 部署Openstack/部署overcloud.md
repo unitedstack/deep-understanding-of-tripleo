@@ -92,9 +92,23 @@ openstack baremetal introspection bulk start
 
 ## 3. 定义根磁盘
 
+在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义ceph 节点的根磁盘。  
+根磁盘可以通过以下参数来指定。
+```
+model (String): Device identifier.
+vendor (String): Device vendor.
+serial (String): Disk serial number.
+wwn (String): Unique storage identifier.
+size (Integer): Size of the device in GB.
+```
+
+
 查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
 
-    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+```
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do openstack baremetal introspection data save $i | jq ".inventory.disks" ;done
+```
+
 
 ### 如果sda是我们想要的根磁盘:
 
