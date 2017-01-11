@@ -106,13 +106,19 @@ size (Integer): Size of the device in GB.
 查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
 
 ```bash
+
 list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do openstack baremetal introspection data save $i | jq ".inventory.disks" ;done
+
 ```
 
 
 ### 如果sda是我们想要的根磁盘:
 
-    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+```bash
+
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+
+```
 
 ### 如果sda不是我们想要的根磁盘
 
