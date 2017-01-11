@@ -28,6 +28,7 @@
 * [第五章 - TripleO自动化流程](Automation/automation.md)
     * [TripleO Quickstart自动化部署](Automation/tripleo-quickstart.md)
     * [TripleO CI实践](Automation/tripleo-ci.md)
+* [第六章 - TroubleShooting](第六章 - TroubleShooting/第六章---troubleshooting.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)
