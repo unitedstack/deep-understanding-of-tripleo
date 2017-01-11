@@ -120,6 +120,15 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
   ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
   ```
 
+
+
+## 4. 部署
+
+最简单的部署
+
+
+---
+ 
 ## 4. 配置 ceph osd
 
 在stack用户目录下建立`templates`目录
