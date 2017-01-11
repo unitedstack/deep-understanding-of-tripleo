@@ -12,6 +12,22 @@ sudo journalctl -u openstack-ironic-inspector -u openstack-ironic-inspector-dnsm
 ```
 
 
-## 如何替换ironic node 的mac地址
+## 如何修改 ironic node 注册时的mac地址
+
+1. 查出node的port的UUID。
+```
+ironic node-port-list <NODE UUID>
+```
+
+2. 执行port-update 更行mac地址
+```
+ironic port-update <PORT UUID> replace address=<NEW MAC>
+```
+
+
+## 修改注册node时注册的ipmi 地址
+```
+ironic node-update <NODE UUID> replace driver_info/ipmi_address=<NEW IPMI ADDRESS>
+```
 
 ref:[Troubleshooting Node Management Failures](http://docs.openstack.org/developer/tripleo-docs/troubleshooting/troubleshooting.html#troubleshooting-node-management-failures)
