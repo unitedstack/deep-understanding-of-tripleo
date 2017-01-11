@@ -124,7 +124,7 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
 
 ## 4. 部署
 
-最简单的部署：
+开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 ```
 openstack overcloud deploy --template
 ```
