@@ -38,7 +38,23 @@ overcloud-full.vmlinuz
 $ . stackrc
 $ openstack overcloud image upload
 ```
-默认情况下，我们的glance使用的是swift的存储后端，所以在进行这个步骤时必须保证你的swift的服务是可以使用的。
+> 默认情况下，我们的glance使用的是swift的存储后端，所以在进行这个步骤时必须保证你的swift的服务是可以使用的。
+
+上传完成之后，查看镜像：
+```
+$ openstack image list
++--------------------------------------+------------------------+
+| ID | Name |
++--------------------------------------+------------------------+
+| 765a46af-4417-4592-91e5-a300ead3faf6 | bm-deploy-ramdisk      |
+| 09b40e3d-0382-4925-a356-3a4b4f36b514 | bm-deploy-kernel       |
+| ef793cd0-e65c-456a-a675-63cd57610bd5 | overcloud-full         |
+| 9a51a6cb-4670-40de-b64b-b70f4dd44152 | overcloud-full-initrd  |
+| 4f7e33f4-d617-47c1-b36f-cbe90f132e5d | overcloud-full-vmlinuz |
++--------------------------------------+------------------------+
+```
+
+这个会显示在收集物理机信息的时候使用的PXE镜像，上传的时候会把这些镜像都拷贝到/httpboot这个目录下面
 
 
 ## 3. 收集物理机信息
