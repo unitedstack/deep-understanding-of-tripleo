@@ -2,6 +2,7 @@
 
 ---
 ## 1. 修改主机名
+你可以自己定义你的undercloud的主机名
 ```
 [root@zhaozhilong ~]# hostname director.ustack.com
 [root@zhaozhilong ~]# echo "director.ustack.com" > /etc/hostanme
