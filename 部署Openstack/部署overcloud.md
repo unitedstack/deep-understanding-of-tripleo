@@ -92,13 +92,33 @@ openstack baremetal introspection bulk start
 
 ## 3. 定义根磁盘
 
+在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义ceph 节点的根磁盘。  
+根磁盘可以通过以下参数来指定。
+```
+model (String): Device identifier.
+vendor (String): Device vendor.
+serial (String): Disk serial number.
+wwn (String): Unique storage identifier.
+size (Integer): Size of the device in GB.
+```
+
+
 查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
 
-    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in  ${list[*]} ;do openstack baremetal introspection data save $i | jq '.inventory.disks' ;done
+```bash
+
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do openstack baremetal introspection data save $i | jq ".inventory.disks" ;done
+
+```
+
 
 ### 如果sda是我们想要的根磁盘:
 
-    list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+```bash
+
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+
+```
 
 ### 如果sda不是我们想要的根磁盘
 
@@ -120,6 +140,19 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
   ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
   ```
 
+
+
+## 4. 部署
+
+开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
+```
+openstack overcloud deploy --template
+```
+
+
+
+---
+ 
 ## 4. 配置 ceph osd
 
 在stack用户目录下建立`templates`目录
@@ -178,11 +211,9 @@ ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} a
 
 overcloud 中的所有API 地址，都需要通过undercloud neutron 分配，所以，undercloud需要可以访问overcloud 中所有的网络。  
 查看网卡顺序  
-\`\`\`
-
-\`\`\`
-
-## 6. 安装overcloud
+```
+a
+```
 
 
 

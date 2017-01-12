@@ -16,7 +16,6 @@
     * [自定义主机](自定义Overcloud部署/定义主机.md)
     * [自定义网络](自定义Overcloud部署/自定义网络.md)
     * [自定义Ceph存储](Customization Ceph/自定义ceph部署.md)
-        * [定义ceph节点的根磁盘](Customization Ceph/定义根磁盘.md)
     * [自定义Role](自定义Overcloud部署/自定义role.md)
 * [第三章 - TripleO变更实践](SCALING/添加、删除节点.md)
     * [配置变更](SCALING/配置变更.md)
@@ -27,6 +26,8 @@
 * [第五章 - TripleO自动化流程](Automation/automation.md)
     * [TripleO Quickstart自动化部署](Automation/tripleo-quickstart.md)
     * [TripleO CI实践](Automation/tripleo-ci.md)
+* [第六章 - TroubleShooting](第六章 - TroubleShooting/第六章---troubleshooting.md)
+    * [TroubleShooting ironic](第六章 - TroubleShooting/troubleshooting-ironic.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)
