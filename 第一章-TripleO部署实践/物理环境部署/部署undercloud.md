@@ -86,7 +86,7 @@ local_ip = 10.0.130.31/24
 network_gateway = 10.0.130.31
 undercloud_public_vip = 10.0.130.2
 undercloud_admin_vip = 10.0.130.3
-local_interface = em3 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
+local_interface = em3 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan下面
 network_cidr = 10.0.130.0/24
 masquerade_network = 10.0.130.0/24
 dhcp_start = 10.0.130.5
@@ -98,6 +98,11 @@ undercloud_debug = true
 [auth]
 ```
 
+## 7. 开始部署undercloud
+编写完我们的配置文件之后,我们就可以开始部署我们的undercloud了。
+```
+$ openstack undercloud install
+```
 
 
 
