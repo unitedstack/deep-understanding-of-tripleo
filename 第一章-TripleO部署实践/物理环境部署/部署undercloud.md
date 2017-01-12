@@ -103,6 +103,7 @@ undercloud_debug = true
 ```
 $ openstack undercloud install
 ```
+大概15分钟，之后就可以安装成功了。
 
 
 
