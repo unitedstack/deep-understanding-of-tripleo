@@ -1,4 +1,4 @@
-# N版本升级O版
+# M版本升级N版
 
 ---
 
@@ -65,3 +65,11 @@ $ openstack overcloud image upload --update-existing --image-path ~/images/.
 
 ## 升级 overcloud
 
+在升级过程中，需要多次运行之前安装 overcloud 的命令，且每次加入一个不同的 environment 文件，这些文件包括：
+
+1. major-upgrade-ceilometer-wsgi-mitaka-newton.yaml 
+2.
+3.
+4.
+5.
+6.
