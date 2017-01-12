@@ -53,6 +53,24 @@ http://mirror.centos.org/centos/7/cloud/x86_64/openstack-newton/
 gpgcheck = 0
 ```
 
+## 4. 更新undercloud
+为了确保undercloud的kernel版本和上游版本一直，还有一些边缘组件也需要和上游同步，我们需要更新我们的系统：
+```
+[stack@director ~]$ sudo yum update -y
+```
+完成之后，就可以重启系统了
+```
+[stack@director ~]$ sudo reboot
+```
+
+## 5. 安装tripleO
+上面的过程都是在准备我们的基础环境，现在我们需要安装我们的tripleO.
+```
+[stack@director ~]$ sudo yum install -y python-tripleoclient
+```
+
+
+## 6. 编写undercloud的配置文件
 
 
 
