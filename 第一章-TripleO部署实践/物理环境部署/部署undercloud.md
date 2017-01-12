@@ -71,6 +71,33 @@ gpgcheck = 0
 
 
 ## 6. 编写undercloud的配置文件
+创建undercloud配置文件，并修改里面的配置。
+
+```
+$ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+```
+
+然后去修改我们的配置
+
+```
+$ vim ~/undercloud.conf
+[DEFAULT]
+local_ip = 10.0.130.31/24
+network_gateway = 10.0.130.31
+undercloud_public_vip = 10.0.130.2
+undercloud_admin_vip = 10.0.130.3
+local_interface = em3 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
+network_cidr = 10.0.130.0/24
+masquerade_network = 10.0.130.0/24
+dhcp_start = 10.0.130.5
+dhcp_end = 10.0.130.24
+inspection_interface = br-ctlplane
+inspection_iprange = 10.0.130.100,10.0.130.180
+inspection_extras = true
+undercloud_debug = true
+[auth]
+```
+
 
 
 
