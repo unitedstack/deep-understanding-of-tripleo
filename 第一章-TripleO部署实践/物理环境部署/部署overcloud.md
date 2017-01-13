@@ -359,6 +359,26 @@ resources:
 
 
 ## 10. 指定主机名
+我们这里也需要指定我们的主机的名字：
+```
+$ vim templates/environments/scheduler_hints_env.yaml
+
+parameter_defaults:
+  ControllerSchedulerHints:
+    'capabilities:node': 'controller-%index%'
+  NovaComputeSchedulerHints:
+    'capabilities:node': 'compute-%index%'
+  CephStorageSchedulerHints:
+    'capabilities:node': 'ceph-storage-%index%'
+  HostnameMap:
+    overcloud-controller-0: overcloud-controller-1-1
+    overcloud-controller-1: overcloud-controller-1-2
+    overcloud-controller-2: overcloud-controller-1-3
+    overcloud-novacompute-0: overcloud-compute-1-1
+    overcloud-novacompute-1: overcloud-compute-1-2
+    overcloud-novacompute-2: overcloud-compute-1-3
+```
+
 
 ## 11. 指定主机IP
 
