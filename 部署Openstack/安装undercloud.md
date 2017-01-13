@@ -67,16 +67,21 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 
 ### 5. 安装undercloud vm
 
-（这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。）
+这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。运行安装命令时，我们需要建立一个普通用户，用以运行安装undercloud。
+```
+# useradd zhao
+# echo "zhao ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/zhao
+```
 
 ```
-instack-virt-setup
+$ su - zhao
+$ instack-virt-setup
 ```
 
 ## ssh 进入undercloud os
 
 ```
-ssh root@instack
+$ ssh root@instack
 ```
 
 ## 部署undercloud openstack
@@ -86,8 +91,9 @@ ssh root@instack
 ### 1. 安装TripleOClient
 
 ```
-sudo yum -y install yum-plugin-prioritiessudo
-sudo yum install -y python-tripleoclient
+$ su - stack
+$ sudo yum -y install yum-plugin-prioritiessudo
+$ sudo yum install -y python-tripleoclient
 ```
 
 ### 2. 编辑undercloud 配置文件
@@ -122,7 +128,7 @@ undercloud_debug = true
 ### 3. 部署undercloud
 
 ```
-openstack undercloud install
+$ openstack undercloud install
 ```
 
 
