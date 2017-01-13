@@ -200,6 +200,8 @@ $ openstack  baremetal introspection data save <UUID> > ironic_data.save
 ironic node-update <UUID> add properties/root_device='{"name": "/dev/sda"}'
 ```
 
+## 6. 定义网卡顺序
+
 
 
 
