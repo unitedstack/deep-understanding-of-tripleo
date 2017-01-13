@@ -210,6 +210,23 @@ list=(`ironic node-list|grep control|awk '{print $2}'`);for i in {0..2};do ironi
 list=(`ironic node-list|grep compute|awk '{print $2}'`);for i in {0..2};do ironic node-update ${list[$i]} replace properties/capabilities="node:compute-$i,boot_option:local";done
 ```
 
+## 8. 定义tripleo-heat-template配置文件
+我们这边下载ustack的内部配置文件，用来替换社区的配置文件：
+```
+$ lftp tripleo.ustack.com:/pub
+cd ok, cwd=/pub
+lftp tripleo.ustack.com:/pub> ls
+-rw-r--r--    1 0        0         1955840 Jan 12 00:09 deploy_template.tar
+drwxr-xr-x    3 0        0              19 Jan 07 10:10 images
+lftp tripleo.ustack.com:/pub> get deploy_template.tar
+```
+
+```
+$ rm -fr /usr/share/openstack-tripleo-heat-templates/
+$ cp -r deploy_template/openstack-tripleo-heat-templates  /usr/share/
+```
+
+
 ## 8. 定义网卡顺序
 
 
