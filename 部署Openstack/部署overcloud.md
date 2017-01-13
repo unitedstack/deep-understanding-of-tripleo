@@ -207,6 +207,10 @@ ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {
 ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
 ```
 
+> 在定义节点类型的时候，需要我们注意，如定义为:profile:compute时，就说明你希望使用compute这个flavor来部署节点，那么
+
+
+
 ## 6. 定义网络
 
 overcloud 中的所有API 地址，都需要通过undercloud neutron 分配，所以，undercloud需要可以访问overcloud 中所有的网络。  
