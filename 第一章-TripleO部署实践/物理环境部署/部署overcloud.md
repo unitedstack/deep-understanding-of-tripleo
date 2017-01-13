@@ -223,6 +223,44 @@ $ cp -r deploy_template/openstack-tripleo-heat-templates  /usr/share/
 ```
 
 ## 8. 划分网络
+接下来我们根据前面定义的网络架构进行网络规划,我们需要修改我们的配置文件network-environment.yaml：
+```
+resource_registry:
+  OS::TripleO::Compute::Net::SoftwareConfig:
+    ../nic-configs/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig:
+    ../nic-configs/controller.yaml
+
+parameter_defaults:
+  ControlPlaneSubnetCidr: '24'
+  ControlPlaneDefaultRoute: 10.0.130.1
+  EC2MetadataIp: 10.0.130.31  # Generally the IP of the Undercloud
+  StorageNetCidr: 10.0.132.0/24
+  StorageMgmtNetCidr: 10.0.133.0/24
+  TenantNetCidr: 10.0.134.0/24
+  ExternalNetCidr: 10.0.135.0/24
+  InternalApiNetCidr: 10.0.136.0/24
+  StorageNetworkVlanID: 4002
+  StorageMgmtNetworkVlanID: 4003
+  TenantNetworkVlanID: 4004
+  ExternalNetworkVlanID: 4005
+  InternalApiNetworkVlanID: 4006
+  StorageAllocationPools: [{'start': '10.0.132.40', 'end': '10.0.132.80'}]
+  StorageMgmtAllocationPools: [{'start': '10.0.133.40', 'end': '10.0.133.80'}]
+  TenantAllocationPools: [{'start': '10.0.134.40', 'end': '10.0.134.80'}]
+  ExternalAllocationPools: [{'start': '10.0.135.40', 'end': '10.0.135.80'}]
+  InternalApiAllocationPools: [{'start': '10.0.136.40', 'end': '10.0.136.80'}]
+  ExternalInterfaceDefaultRoute: 10.0.135.1
+  DnsServers: ["119.29.29.29","8.8.4.4"]
+  NeutronExternalNetworkBridge: "''"
+  NeutronTunnelTypes: 'vxlan'
+  NeutronNetworkType: 'vxlan,vlan'
+
+  BondInterfaceOvsOptions: "bond_mode=active-backup"
+  NeutronNetworkVLANRanges: "datacentre:4008:4015"
+  NeutronVniRanges: "1:1000"
+  NeutronBridgeMappings: "datacentre:br-ex"
+```
 
 
 
