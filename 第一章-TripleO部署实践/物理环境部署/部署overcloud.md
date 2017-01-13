@@ -57,7 +57,7 @@ $ openstack image list
 这个会显示在收集物理机信息的时候使用的PXE镜像，上传的时候会把这些镜像都拷贝到/httpboot这个目录下面
 
 
-## 3. 收集物理机信息
+## 3. 定义物理机列表
 
 我们现在已经有了镜像，紧接着就是定义我们overcloud主机了。我们将overcloud vm的信息写入instackenv.json。参照以下格式：
 ```
@@ -152,6 +152,20 @@ $ vim instackenv.json:
 }
 
 ```
+
+## 4. 收集物理机信息
+我们已经把物理机的列表全部写在我们的instackenv.json文件中了，那么下一步就是要让ironic去收集这些物理机的信息了。首先我们需要先注册虚拟机：
+
+```
+$ . stackrc
+$ openstack baremetal import instackenv.json
+```
+这一步，只是注册了我们的物理机，我们可以在ironic中看到：
+```
+$ ironic node-list
+```
+
+
 
 
 
