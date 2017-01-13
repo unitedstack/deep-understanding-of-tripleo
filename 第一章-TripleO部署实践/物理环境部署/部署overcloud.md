@@ -160,22 +160,37 @@ $ vim instackenv.json:
 $ . stackrc
 $ openstack baremetal import instackenv.json
 ```
-这一步，只是注册了我们的物理机，我们可以在ironic中看到：
+这一步，只是注册了我们的物理机，我们可以在ironic中看到,我们注册的物理机：
 ```
 $ ironic node-list
 +--------------------------------------+----------------------+--------------------------------------+-------------+--------------------+-------------+
 | UUID                                 | Name                 | Instance UUID                        | Power State | Provisioffing State| Maintenance |
 +--------------------------------------+----------------------+--------------------------------------+-------------+--------------------+-------------+
-| 7a14b906-5810-4c50-b06d-3f6a532ff05b | 10.0.108.122_cofftrol| None                                 | power off   | available          | False       |
+| 7a14b906-5810-4c50-b06d-3f6a532ff05b | 10.0.108.122_control | None                                 | power off   | available          | False       |
 | b6101189-44bb-4133-8186-1dc9758c1d0e | 10.0.10.113_compute  | None                                 | power off   | available          | False       |
-| 689fbaf6-186b-4ee0-921e-02ea611f02d5 | 10.0.108.171_cofftrol| None                                 | power off   | available          | False       |
+| 689fbaf6-186b-4ee0-921e-02ea611f02d5 | 10.0.108.171_control | None                                 | power off   | available          | False       |
 | 147d03d4-1a98-4898-9aca-5fd6a46f6a2c | 10.0.10.126_compute  | None                                 | power off   | available          | False       |
-| 8279e339-11d5-4117-afd7-581293215d61 | 10.0.10.106_cofftrol | None                                 | power off   | available          | False       |
+| 8279e339-11d5-4117-afd7-581293215d61 | 10.0.10.106_control  | None                                 | power off   | available          | False       |
 | 2c7205f1-7002-4678-843f-eaa1743d85b4 | 10.0.108.123_compute | None                                 | power off   | available          | False       |
 +--------------------------------------+----------------------+--------------------------------------+-------------+--------------------+-------------+
 
 ```
+接着我们需要去收集我们物理机的信息，我们把这个过程固化成脚本：
+```
+#!/bin/bash
 
+node=`ironic node-list | grep "power" | awk -F\| '{print $2}'`
+for i in ${node[*]}
+do
+   openstack baremetal node manage $i
+   nohup openstack overcloud node introspect $i --provide  &
+done
+```
+我们使用把收集信息的进程打到后台，你可以使用`ps ax | grep openstack`来查看任务的情况。在收集物理机信息的时候，会尝试开启物理机，然后进入PXE引导，之会安装一个带有ironic的镜像，然后由ironic去收集物理机的信息。所以，在这时候必须保证你的PXE网络是OK的。在收集完我们的物理机的信息之后，我们可以通过下面的命令来检查收集到的物理机信息：
+
+```
+$ openstack  baremetal introspection data save cc592fe9-b9e5-492a-b05c-9c766b505acf > cc592fe9-b9e5-492a-b05c-9c766b505acf.save
+```
 
 
 
