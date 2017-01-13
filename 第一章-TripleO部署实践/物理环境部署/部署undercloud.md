@@ -39,7 +39,7 @@ $ hostname -f # 查看完成的主机名
 name = openstack-newton
 baseurl = http://tripleO.ustack.com/repo/openstack-newton
 gpgcheck = 0
-
+priority=1
 ```
 你也可以使用Centos社区的源:
 ```
@@ -47,9 +47,19 @@ gpgcheck = 0
 name = tripleO-centos
 http://mirror.centos.org/centos/7/cloud/x86_64/openstack-newton/
 gpgcheck = 0
+priority=1
 ```
 
+**！！ 请务必确保openstack-newton源的priority=1**
+
+
+
 ## 4. 更新undercloud
+安装 yum-plugin-priorities
+```
+sudo yum -y install yum-plugin-priorities
+```
+
 为了确保undercloud的kernel版本和上游版本一直，还有一些边缘组件也需要和上游同步，我们需要更新我们的系统：
 ```
 [stack@director ~]$ sudo yum update -y
