@@ -78,7 +78,7 @@ $ openstack overcloud image upload
 }
 ```
 
-导入json
+将json数据导入到我们的ironic中:
 
 ```
 openstack baremetal import instackenv.json
@@ -92,29 +92,34 @@ openstack baremetal introspection bulk start
 
 
 ## 3. 为物理机定义节点类型
-在规划节点时，希望特定的物理机作为特定的角色。比如有一台物理机，我们在ironic 配置文件里将它定义为overcloud 中ceph节点，不要任性的变成计算节点或者控制节点。这样，我们就需要为这些节点定义类型。  
-定义类型有两种方法，比如我只需要ceph节点，安装在ceph host 上\(在ironic 配置文件中叫做ceph\)，nova 节点安装在nova host 上，控制节点安装在controller host 上。
+我们现在有了2台虚拟机，但是我们并不知道哪一个虚拟机是什么节点。所以我们需要给虚拟机分配对应的角色。
+我们这里希望一台虚拟机是control节点，另一台虚拟机是compute节点。可以这样写:
 
-正常写法：
 ```
 openstack baremetal node set --property capabilities='profile:compute,boot_option:local <compute node uuid>'
 openstack baremetal node set --property capabilities='profile:control,boot_option:local <control node uuid>'
-openstack baremetal node set --property capabilities='profile:ceph-storage,boot_option:local <ceph node uuid>'
+```
+这个节点属性不是自己随便定义的，关键还是要看nova的flavor中的选项,如compuet节点:
+```
+$ nova flavor-show compute
++----------------------------+--------------------------------------------------------------------------+
+| Property                   | Value                                                                    |
++----------------------------+--------------------------------------------------------------------------+
+| OS-FLV-DISABLED:disabled   | False                                                                    |
+| OS-FLV-EXT-DATA:ephemeral  | 0                                                                        |
+| disk                       | 40                                                                       |
+| extra_specs                | {"capabilities:boot_option": "local", "capabilities:profile": "compute"} |
+| id                         | a273eb70-0ca1-44a1-b691-fce527db13e5                                     |
+| name                       | compute                                                                  |
+| os-flavor-access:is_public | True                                                                     |
+| ram                        | 4096                                                                     |
+| rxtx_factor                | 1.0                                                                      |
+| swap                       |                                                                          |
+| vcpus                      | 1                                                                        |
++----------------------------+--------------------------------------------------------------------------+
 
 ```
-一句话写法：
-```
-ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
-
-ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:compute,boot_option:local'
-
-ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
-```
-
-这样 ，为物理机打完标签以后，在部署时请跟上flavor 参数
-```
-a
-```
+我们添加的属性必须和使用的flavor的extra_specs属性一致，这样才能使用这个镜像。
 
 
 ## 4. 定义根磁盘
