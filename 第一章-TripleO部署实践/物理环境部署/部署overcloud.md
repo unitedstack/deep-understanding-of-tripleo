@@ -196,9 +196,9 @@ $ openstack  baremetal introspection data save <UUID> > ironic_data.save
 ## 5. 定义根磁盘
 我们必须为机器定义一个根磁盘，以供后续装机过程的使用。很多时候，/dev/sda是我们的根磁盘，但也有根磁盘不是它的时候。所谓的根磁盘就是你的系统盘，BIOS中可以设置开机从哪一个磁盘启动，你选了哪一个盘，哪一个盘就是你的根磁盘。我们这里默认的根磁盘就是/dev/sda。
 
+```bash
+ironic node-update <UUID> add properties/root_device='{"name": "/dev/sda"}'
 ```
-```
-
 
 
 
