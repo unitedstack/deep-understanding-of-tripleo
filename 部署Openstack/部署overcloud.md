@@ -168,8 +168,24 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
   ```
 
 
+## 4. 获取配置文件
+获取UnitedStack上游的template文件:
+```
+$ wget http://tripleo.ustack.com/template/tripleo/newton/deploy_template.tar
+$ tar xvf deploy_template.tar
+```
+替换掉当前的tripleo所使用的template文件
+```
+$ rm -fr /usr/share/openstack-tripleo-heat-templates/
+$ cp -r deploy_template/openstack-tripleo-heat-templates  /usr/share/
+```
 
-## 4. 部署
+
+## 5. 划分网络
+我们根据前面划分的网络结构对我们的网络拓扑进行划分：
+
+
+## 6. 部署
 
 开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 ```
