@@ -163,6 +163,17 @@ $ openstack baremetal import instackenv.json
 这一步，只是注册了我们的物理机，我们可以在ironic中看到：
 ```
 $ ironic node-list
++--------------------------------------+----------------------+--------------------------------------+-------------+--------------------+-------------+
+| UUID                                 | Name                 | Instance UUID                        | Power State | Provisioffing State| Maintenance |
++--------------------------------------+----------------------+--------------------------------------+-------------+--------------------+-------------+
+| 7a14b906-5810-4c50-b06d-3f6a532ff05b | 10.0.108.122_cofftrol| None                                 | power off   | available          | False       |
+| b6101189-44bb-4133-8186-1dc9758c1d0e | 10.0.10.113_compute  | None                                 | power off   | available          | False       |
+| 689fbaf6-186b-4ee0-921e-02ea611f02d5 | 10.0.108.171_cofftrol| None                                 | power off   | available          | False       |
+| 147d03d4-1a98-4898-9aca-5fd6a46f6a2c | 10.0.10.126_compute  | None                                 | power off   | available          | False       |
+| 8279e339-11d5-4117-afd7-581293215d61 | 10.0.10.106_cofftrol | None                                 | power off   | available          | False       |
+| 2c7205f1-7002-4678-843f-eaa1743d85b4 | 10.0.108.123_compute | None                                 | power off   | available          | False       |
++--------------------------------------+----------------------+--------------------------------------+-------------+--------------------+-------------+
+
 ```
 
 
