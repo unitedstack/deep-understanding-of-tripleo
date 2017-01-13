@@ -201,9 +201,20 @@ ironic node-update <UUID> add properties/root_device='{"name": "/dev/sda"}'
 ```
 
 ## 7. 定义主机角色
+首先为我们的控制节点定义我们的节点类型：
+```
+list=(`ironic node-list|grep control|awk '{print $2}'`);for i in {0..2};do ironic node-update ${list[$i]} replace properties/capabilities="node:controller-$i,boot_option:local";done
+```
+接下来是我们的计算节点
+```
+list=(`ironic node-list|grep compute|awk '{print $2}'`);for i in {0..2};do ironic node-update ${list[$i]} replace properties/capabilities="node:compute-$i,boot_option:local";done
+```
 
-## 7. 
+## 8. 定义网卡顺序
 
+
+
+## 9. 
 
 
 部署步骤
