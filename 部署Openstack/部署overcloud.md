@@ -173,7 +173,7 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
   ```
 
 
-## 4. 获取配置文件
+## 5. 获取配置文件
 获取UnitedStack上游的template文件:
 ```
 $ wget http://tripleo.ustack.com/template/tripleo/newton/deploy_virt_template.tar
@@ -186,7 +186,7 @@ $ cp -r deploy_virt_template/openstack-tripleo-heat-templates  /usr/share/
 ```
 
 
-## 5. 划分网络
+## 6. 划分网络
 我们根据前面划分的网络结构对我们的网络拓扑进行划分,所有的部署需要用到的配置都在我们的deploy_template/templates里面。包括网络，我们接下来定制我们的网络结构：
 
 ```
@@ -216,7 +216,7 @@ parameter_defaults:
 ```
 
 
-## 6. 部署
+## 7. 部署
 
 开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 ```
