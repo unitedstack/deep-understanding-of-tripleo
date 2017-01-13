@@ -550,7 +550,7 @@ parameter_defaults:
   HostnameFormatDefault: '%stackname%-novacompute-%index%'
   ServicesDefault:
     - OS::TripleO::Services::CACerts
-    - OS::TripleO::Services::CephOSD # 把cephd
+    - OS::TripleO::Services::CephOSD # 把ceph的role加入到我们的compute节
     - OS::TripleO::Services::CephClient
     - OS::TripleO::Services::CephExternal
     - OS::TripleO::Services::Timezone
@@ -571,11 +571,22 @@ parameter_defaults:
     - OS::TripleO::Services::SensuClient
     - OS::TripleO::Services::FluentdClient
     - OS::TripleO::Services::VipHosts
-
-
 ```
 
-
+## 开始部署overcloud
+```
+openstack overcloud deploy --templates \
+  -r /home/stack/templates/roles/roles_data.yaml \
+  -e /home/stack/templates/environments/network-environment.yaml \
+  -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation.yaml \
+  -e /home/stack/templates/environments/storage-environment.yaml \
+  -e /home/stack/templates/environments/ips-from-pool-all.yaml \
+  --control-flavor baremetal\
+  --compute-flavor baremetal\
+  --control-scale 3 \
+  --compute-scale 3 \
+  --ntp-server 0.pool.ntp.org 
+```
 
 部署步骤
 
