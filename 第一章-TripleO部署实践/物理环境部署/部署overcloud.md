@@ -226,7 +226,6 @@ $ rm -fr /usr/share/openstack-tripleo-heat-templates/
 $ cp -r deploy_template/openstack-tripleo-heat-templates  /usr/share/
 ```
 
-
 ## 8. 定义网卡顺序
 
 
