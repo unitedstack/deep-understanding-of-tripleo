@@ -35,15 +35,11 @@ $ hostname -f # 查看完成的主机名
 
 我们这边使用ustack公司内部源:
 ```
-[tripleO]
-name = tripleO
-baseurl = http://tripleO.ustack.com/repo/Newton
+[openstack-newton]
+name = openstack-newton
+baseurl = http://tripleO.ustack.com/repo/openstack-newton
 gpgcheck = 0
 
-[tripleO-dep]
-name = tripleO-dep
-baseurl = http://tripleO.ustack.com/repo/Newton-dep
-gpgcheck = 0
 ```
 你也可以使用Centos社区的源:
 ```
