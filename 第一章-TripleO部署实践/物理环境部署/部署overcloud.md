@@ -33,7 +33,7 @@ overcloud-full.vmlinux
 
 ## 2. 上传镜像
 
-镜像可以从[社区下载](http://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/)现成的，也可以自己制作：如需自己制作，请见“镜像制作”章节。
+镜像可以从[社区下载](http://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/)现成的，也可以自己制作：如需自己制作，请见“镜像制作”章节。第一次部署推荐使用社区镜像，以后PoC 环境和生产环境一定要自己制作镜像。
 
 ```
 $ . stackrc
