@@ -378,9 +378,203 @@ parameter_defaults:
     overcloud-novacompute-1: overcloud-compute-1-2
     overcloud-novacompute-2: overcloud-compute-1-3
 ```
+这里有必要解释一下，`'capabilities:node': 'controller-%index%'`中` %index% `是一直从0往上递增的。也就是匹配到了`ironic node-show <uuid> `中我们定义的角色内，如:`properties/capabilities="node:controller-0,boot_option:local" `。
 
 
 ## 11. 指定主机IP
+我们在上面定义了主机名字，紧接着就是我们的主机IP了：
+```
+resource_registry:
+  OS::TripleO::Controller::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::Controller::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::Controller::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::Controller::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt_from_pool.yaml
+  OS::TripleO::Controller::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  # Management network is optional and disabled by default
+  #OS::TripleO::Controller::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management_from_pool.yaml
+
+  OS::TripleO::Compute::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+  OS::TripleO::Compute::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::Compute::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::Compute::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+  OS::TripleO::Compute::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management_from_pool.yaml
+
+  OS::TripleO::Network::Ports::NetVipMap: /usr/share/openstack-tripleo-heat-templates/network/ports/net_vip_map_external.yaml
+  OS::TripleO::Network::Ports::ExternalVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+  OS::TripleO::Network::Ports::InternalApiVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+  OS::TripleO::Network::Ports::StorageVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+  OS::TripleO::Network::Ports::StorageMgmtVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+  OS::TripleO::Network::Ports::RedisVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/from_service.yaml
+
+parameter_defaults:
+  ControllerIPs:
+    # Each controller will get an IP from the lists below, first controller, first IP
+    external:
+    - 10.0.135.31
+    - 10.0.135.32
+    - 10.0.135.33
+    internal_api:
+    - 10.0.136.31
+    - 10.0.136.32
+    - 10.0.136.33
+    storage:
+    - 10.0.132.31
+    - 10.0.132.32
+    - 10.0.132.33
+    storage_mgmt:
+    - 10.0.133.31
+    - 10.0.133.32
+    - 10.0.133.33
+    tenant:
+    - 10.0.134.31
+    - 10.0.134.32
+    - 10.0.134.33
+    #management:
+    #- 172.16.4.251
+  NovaComputeIPs:
+    # Each compute will get an IP from the lists below, first compute, first IP
+    internal_api:
+    - 10.0.136.34
+    - 10.0.136.35
+    - 10.0.136.36
+    storage:
+    - 10.0.132.34
+    - 10.0.132.35
+    - 10.0.132.36
+    storage_mgmt:
+    - 10.0.133.34
+    - 10.0.133.35
+    - 10.0.133.36
+    tenant:
+    - 10.0.134.34
+    - 10.0.134.35
+    - 10.0.134.36
+    #management:
+    #- 172.16.4.252
+    #
+  ExternalNetworkVip: 10.0.135.70
+  InternalApiNetworkVip: 10.0.136.70
+  StorageNetworkVip: 10.0.132.70
+  StorageMgmtNetworkVip: 10.0.133.70
+  ServiceVips:
+    redis: 10.0.136.71
+
+```
+所有的定义都是按着节点数目来排序的。
+
+## 12. 定义节点role
+
+我们这边需要做计算节点和存储结点的融合，所以需要小小的调整：
+```
+- name: Controller
+  CountDefault: 1
+  ServicesDefault:
+    - OS::TripleO::Services::CACerts
+    - OS::TripleO::Services::CephMon
+    - OS::TripleO::Services::CephExternal
+    - OS::TripleO::Services::CephRgw
+    - OS::TripleO::Services::CinderApi
+    - OS::TripleO::Services::CinderBackup
+    - OS::TripleO::Services::CinderScheduler
+    - OS::TripleO::Services::CinderVolume
+    - OS::TripleO::Services::Core
+    - OS::TripleO::Services::Kernel
+    - OS::TripleO::Services::Keystone
+    - OS::TripleO::Services::GlanceApi
+    - OS::TripleO::Services::GlanceRegistry
+    - OS::TripleO::Services::HeatApi
+    - OS::TripleO::Services::HeatApiCfn
+    - OS::TripleO::Services::HeatApiCloudwatch
+    - OS::TripleO::Services::HeatEngine
+    - OS::TripleO::Services::MySQL
+    - OS::TripleO::Services::NeutronDhcpAgent
+    - OS::TripleO::Services::NeutronL3Agent
+    - OS::TripleO::Services::NeutronMetadataAgent
+    - OS::TripleO::Services::NeutronApi
+    - OS::TripleO::Services::NeutronCorePlugin
+    - OS::TripleO::Services::NeutronOvsAgent
+    - OS::TripleO::Services::RabbitMQ
+    - OS::TripleO::Services::HAproxy
+    - OS::TripleO::Services::Keepalived
+    - OS::TripleO::Services::Memcached
+    - OS::TripleO::Services::Pacemaker
+    - OS::TripleO::Services::Redis
+    - OS::TripleO::Services::NovaConductor
+    - OS::TripleO::Services::MongoDb
+    - OS::TripleO::Services::NovaApi
+    - OS::TripleO::Services::NovaMetadata
+    - OS::TripleO::Services::NovaScheduler
+    - OS::TripleO::Services::NovaConsoleauth
+    - OS::TripleO::Services::NovaVncProxy
+    - OS::TripleO::Services::Ntp
+    - OS::TripleO::Services::SwiftProxy
+    - OS::TripleO::Services::SwiftStorage
+    - OS::TripleO::Services::SwiftRingBuilder
+    - OS::TripleO::Services::Snmp
+    - OS::TripleO::Services::Timezone
+    - OS::TripleO::Services::CeilometerApi
+    - OS::TripleO::Services::CeilometerCollector
+    - OS::TripleO::Services::CeilometerExpirer
+    - OS::TripleO::Services::CeilometerAgentCentral
+    - OS::TripleO::Services::CeilometerAgentNotification
+    - OS::TripleO::Services::Horizon
+    - OS::TripleO::Services::GnocchiApi
+    - OS::TripleO::Services::GnocchiMetricd
+    - OS::TripleO::Services::GnocchiStatsd
+    - OS::TripleO::Services::ManilaApi
+    - OS::TripleO::Services::ManilaScheduler
+    - OS::TripleO::Services::ManilaBackendGeneric
+    - OS::TripleO::Services::ManilaBackendNetapp
+    - OS::TripleO::Services::ManilaBackendCephFs
+    - OS::TripleO::Services::ManilaShare
+    - OS::TripleO::Services::AodhApi
+    - OS::TripleO::Services::AodhEvaluator
+    - OS::TripleO::Services::AodhNotifier
+    - OS::TripleO::Services::AodhListener
+    - OS::TripleO::Services::SaharaApi
+    - OS::TripleO::Services::SaharaEngine
+    - OS::TripleO::Services::IronicApi
+    - OS::TripleO::Services::IronicConductor
+    - OS::TripleO::Services::NovaIronic
+    - OS::TripleO::Services::TripleoPackages
+    - OS::TripleO::Services::TripleoFirewall
+    - OS::TripleO::Services::OpenDaylightApi
+    - OS::TripleO::Services::OpenDaylightOvs
+    - OS::TripleO::Services::SensuClient
+    - OS::TripleO::Services::FluentdClient
+    - OS::TripleO::Services::VipHosts
+
+- name: Compute
+  CountDefault: 1
+  HostnameFormatDefault: '%stackname%-novacompute-%index%'
+  ServicesDefault:
+    - OS::TripleO::Services::CACerts
+    - OS::TripleO::Services::CephOSD # 把cephd
+    - OS::TripleO::Services::CephClient
+    - OS::TripleO::Services::CephExternal
+    - OS::TripleO::Services::Timezone
+    - OS::TripleO::Services::Ntp
+    - OS::TripleO::Services::Snmp
+    - OS::TripleO::Services::NovaCompute
+    - OS::TripleO::Services::NovaLibvirt
+    - OS::TripleO::Services::Kernel
+    - OS::TripleO::Services::ComputeNeutronCorePlugin
+    - OS::TripleO::Services::ComputeNeutronOvsAgent
+    - OS::TripleO::Services::ComputeCeilometerAgent
+    - OS::TripleO::Services::ComputeNeutronL3Agent
+    - OS::TripleO::Services::ComputeNeutronMetadataAgent
+    - OS::TripleO::Services::TripleoPackages
+    - OS::TripleO::Services::TripleoFirewall
+    - OS::TripleO::Services::NeutronSriovAgent
+    - OS::TripleO::Services::OpenDaylightOvs
+    - OS::TripleO::Services::SensuClient
+    - OS::TripleO::Services::FluentdClient
+    - OS::TripleO::Services::VipHosts
+
+
+```
+
 
 
 部署步骤
