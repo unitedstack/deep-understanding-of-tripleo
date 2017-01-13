@@ -29,6 +29,7 @@
     * [TripleO CI实践](Automation/tripleo-ci.md)
 * [第六章 - TroubleShooting](第六章 - TroubleShooting/第六章---troubleshooting.md)
     * [TroubleShooting ironic](第六章 - TroubleShooting/troubleshooting-ironic.md)
+* [TroubleShooting Deploy Overcloud](troubleshooting-deploy-overcloud.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)

@@ -90,7 +90,34 @@ openstack baremetal import instackenv.json
 openstack baremetal introspection bulk start
 ```
 
-## 3. 定义根磁盘
+
+## 3. 为物理机定义节点类型
+在规划节点时，希望特定的物理机作为特定的角色。比如有一台物理机，我们在ironic 配置文件里将它定义为overcloud 中ceph节点，不要任性的变成计算节点或者控制节点。这样，我们就需要为这些节点定义类型。  
+定义类型有两种方法，比如我只需要ceph节点，安装在ceph host 上\(在ironic 配置文件中叫做ceph\)，nova 节点安装在nova host 上，控制节点安装在controller host 上。
+
+正常写法：
+```
+openstack baremetal node set --property capabilities='profile:compute,boot_option:local <compute node uuid>'
+openstack baremetal node set --property capabilities='profile:control,boot_option:local <control node uuid>'
+openstack baremetal node set --property capabilities='profile:ceph-storage,boot_option:local <ceph node uuid>'
+
+```
+一句话写法：
+```
+ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
+
+ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:compute,boot_option:local'
+
+ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
+```
+
+这样 ，为物理机打完标签以后，在部署时请跟上flavor 参数
+```
+a
+```
+
+
+## 4. 定义根磁盘
 
 在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义ceph 节点的根磁盘。  
 根磁盘可以通过以下参数来指定。
@@ -194,18 +221,7 @@ ceph::profile::params::osds:
         '/dev/sdd': {}
 ```
 
-## 5. 为物理机定义节点类型
 
-在规划节点时，希望特定的物理机作为特定的角色。比如有一台物理机，我们在ironic 配置文件里将它定义为overcloud 中ceph节点，不要任性的变成计算节点或者控制节点。这样，我们就需要为这些节点定义类型。  
-定义类型有两种方法，比如我只需要ceph节点，安装在ceph host 上\(在ironic 配置文件中叫做ceph\)，nova 节点安装在nova host 上，控制节点安装在controller host 上。那只需要这样：
-
-```
-ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
-
-ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:compute,boot_option:local'
-
-ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
-```
 
 ## 6. 定义网络
 
