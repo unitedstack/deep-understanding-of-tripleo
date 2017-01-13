@@ -13,7 +13,7 @@ $ lftp tripleo.ustack.com:/pub/images/newton/
 cd ok, cwd=/pub/images/newton
 lftp tripleo.ustack.com:/pub/images/newton> ls
 -rw-r--r--    1 0        0        1670748160 Jan 08 10:49 overcloud_image.tar
-lftp tripleo.ustack.com:/pub/images/newton> get overcloud_image.tar 
+lftp tripleo.ustack.com:/pub/images/newton> get overcloud_image.tar
 ```
 
 这里的演示使用下载的镜像。[Overcloud 镜像下载地址](http://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/)
@@ -25,12 +25,11 @@ $ ls ~/images/
 ironic-python-agent.initramfs
 ironic-python-agent.kernel
 overcloud-full.initrd
-aaovercloud-full.qcow2aaa
-overcloud-full.vmlinuaak
+aaovercloud-full.qcow2
+overcloud-full.vmlinux
 ```
 
 > 如果要修改镜像的root密码： `$ virt-customize -a overcloud-full.qcow2 --root-password password:<my_root_password>`
-
 
 ## 2. 上传镜像
 
@@ -38,9 +37,11 @@ overcloud-full.vmlinuaak
 $ . stackrc
 $ openstack overcloud image upload --image-path /home/stack/images
 ```
+
 > 默认情况下，我们的glance使用的是swift的存储后端，所以在进行这个步骤时必须保证你的swift的服务是可以使用的。
 
 上传完成之后，查看镜像：
+
 ```
 $ openstack image list
 +--------------------------------------+------------------------+
@@ -56,10 +57,10 @@ $ openstack image list
 
 这个会显示在收集物理机信息的时候使用的PXE镜像，上传的时候会把这些镜像都拷贝到/httpboot这个目录下面
 
-
 ## 3. 收集物理机信息
 
 我们现在已经有了镜像，紧接着就是定义我们overcloud主机了。我们将overcloud vm的信息写入instackenv.json。参照以下格式：
+
 ```
 $ vim instackenv.json:
 {
@@ -114,7 +115,7 @@ $ vim instackenv.json:
       "pm_password": "XXXX",
       "pm_type": "pxe_ipmitool",
       "mac": [
-	"EC:F4:BB:D9:7F:1C"
+    "EC:F4:BB:D9:7F:1C"
       ],
       "cpu": "32",
       "memory": "8192",
@@ -150,15 +151,7 @@ $ vim instackenv.json:
     }
   ]
 }
-
 ```
-
-
-
-
-
-
-
 
 部署步骤
 
