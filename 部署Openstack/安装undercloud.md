@@ -8,6 +8,16 @@
 
 ### 1. 添加Newton的repo
 
+我们默认使用UniedStack的内部源:
+```
+[openstack-newton]
+name=openstack-newton
+baseurl=http://tripleo.ustack.com/repo/openstack-newton/
+enabled=1
+gpgcheck=0
+priority=1
+```
+
 如果通过公网安装：
 
 ```
