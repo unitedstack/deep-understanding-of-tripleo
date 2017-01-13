@@ -8,6 +8,16 @@
 
 ### 1. 添加Newton的repo
 
+我们默认使用UniedStack的内部源:
+```
+[openstack-newton]
+name=openstack-newton
+baseurl=http://tripleo.ustack.com/repo/openstack-newton/
+enabled=1
+gpgcheck=0
+priority=1
+```
+
 如果通过公网安装：
 
 ```
@@ -67,16 +77,22 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 
 ### 5. 安装undercloud vm
 
-（这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。）
+这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。运行安装命令时，我们需要建立一个普通用户，用以运行安装undercloud。
+```
+# useradd zhao
+# echo "zhao ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/zhao
+```
+切换到这个普通用户下面开始安装：
+```
+$ su - zhao
+$ instack-virt-setup
+```
 
-```
-instack-virt-setup
-```
 
 ## ssh 进入undercloud os
 
 ```
-ssh root@instack
+$ ssh root@instack
 ```
 
 ## 部署undercloud openstack
@@ -86,8 +102,9 @@ ssh root@instack
 ### 1. 安装TripleOClient
 
 ```
-sudo yum -y install yum-plugin-prioritiessudo
-sudo yum install -y python-tripleoclient
+$ su - stack
+$ sudo yum -y install yum-plugin-prioritiessudo
+$ sudo yum install -y python-tripleoclient
 ```
 
 ### 2. 编辑undercloud 配置文件
@@ -103,17 +120,17 @@ $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 ```
 $ vim ~/undercloud.conf
 [DEFAULT]
-local_ip = 192.168.0.1/24
-network_gateway = 192.168.0.1
-undercloud_public_vip = 192.168.0.2
-undercloud_admin_vip = 192.168.0.3
-local_interface = eth1 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
-network_cidr = 192.168.0.0/24
-masquerade_network = 192.168.0.0/24
-dhcp_start = 192.168.0.5
-dhcp_end = 192.168.0.24
+local_ip = 192.0.2.1/24
+network_gateway = 192.0.2.1
+undercloud_public_vip = 192.0.2.2
+undercloud_admin_vip = 192.0.2.3
+local_interface = eth0 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
+network_cidr = 192.0.2.0/24
+masquerade_network = 192.0.2.0/24
+dhcp_start = 192.0.2.5
+dhcp_end = 192.0.2.24
 inspection_interface = br-ctlplane
-inspection_iprange = 192.168.0.100,192.168.0.120
+inspection_iprange = 192.0.2.100,192.0.2.120
 inspection_extras = true
 undercloud_debug = true
 [auth]
@@ -122,7 +139,7 @@ undercloud_debug = true
 ### 3. 部署undercloud
 
 ```
-openstack undercloud install
+$ openstack undercloud install
 ```
 
 

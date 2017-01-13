@@ -25,8 +25,8 @@ $ ls ~/images/
 ironic-python-agent.initramfs
 ironic-python-agent.kernel
 overcloud-full.initrd
-overcloud-full.qcow2
-overcloud-full.vmlinuz
+aaovercloud-full.qcow2aaa
+overcloud-full.vmlinuaak
 ```
 
 > 如果要修改镜像的root密码： `$ virt-customize -a overcloud-full.qcow2 --root-password password:<my_root_password>`
