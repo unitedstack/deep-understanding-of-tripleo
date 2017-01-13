@@ -143,7 +143,6 @@ list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do op
 
 ```
 
-
 ### 如果sda是我们想要的根磁盘:
 
 ```bash
@@ -218,7 +217,7 @@ parameter_defaults:
 
 ## 7. 部署
 
-开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
+接下来我们就可以部署我们的overcloud的了。
 ```
 openstack overcloud deploy --templates \
   -e /home/stack/deploy_template/templates/environments/network-environment.yaml \
