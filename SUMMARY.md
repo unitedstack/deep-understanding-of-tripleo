@@ -6,6 +6,7 @@
 * [第零章 - TripleO介绍](README.md)
 * [第一章 - TripleO部署实践](安装.md)
     * [虚拟环境部署](virtualenv.md)
+        * [部署前准备](部署前准备.md)
         * [部署UnderCloud](部署Openstack/安装undercloud.md)
         * [部署OverCloud](部署Openstack/部署overcloud.md)
     * [物理环境部署](第一章-TripleO部署实践/物理环境部署/物理环境部署.md)
