@@ -14,6 +14,7 @@
         * [部署UnderCloud](第一章-TripleO部署实践/物理环境部署/部署undercloud.md)
         * [部署OverCloud](第一章-TripleO部署实践/物理环境部署/部署overcloud.md)
     * [TripleO UI](第一章-TripleO部署实践/tripleo-ui.md)
+    * [镜像制作](镜像制作.md)
 * [第二章 - TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
     * [自定义主机](自定义Overcloud部署/定义主机.md)
     * [自定义网络](自定义Overcloud部署/自定义网络.md)
@@ -30,7 +31,7 @@
     * [TripleO CI实践](Automation/tripleo-ci.md)
 * [第六章 - TroubleShooting](第六章 - TroubleShooting/第六章---troubleshooting.md)
     * [TroubleShooting ironic](第六章 - TroubleShooting/troubleshooting-ironic.md)
-* [TroubleShooting Deploy Overcloud](troubleshooting-deploy-overcloud.md)
+    * [TroubleShooting Deploy Overcloud](第六章 - TroubleShooting/troubleshooting-deploy-overcloud.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)

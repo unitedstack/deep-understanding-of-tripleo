@@ -78,7 +78,7 @@ $ openstack overcloud image upload
 }
 ```
 
-将json数据导入到我们的ironic中:
+导入json
 
 ```
 openstack baremetal import instackenv.json
@@ -90,42 +90,40 @@ openstack baremetal import instackenv.json
 openstack baremetal introspection bulk start
 ```
 
-
 ## 3. 为物理机定义节点类型
-我们现在有了2台虚拟机，但是我们并不知道哪一个虚拟机是什么节点。所以我们需要给虚拟机分配对应的角色。
-我们这里希望一台虚拟机是control节点，另一台虚拟机是compute节点。可以这样写:
+
+在规划节点时，希望特定的物理机作为特定的角色。比如有一台物理机，我们在ironic 配置文件里将它定义为overcloud 中ceph节点，不要任性的变成计算节点或者控制节点。这样，我们就需要为这些节点定义类型。  
+定义类型有两种方法，比如我只需要ceph节点，安装在ceph host 上\(在ironic 配置文件中叫做ceph\)，nova 节点安装在nova host 上，控制节点安装在controller host 上。
+
+正常写法：
 
 ```
 openstack baremetal node set --property capabilities='profile:compute,boot_option:local <compute node uuid>'
 openstack baremetal node set --property capabilities='profile:control,boot_option:local <control node uuid>'
+openstack baremetal node set --property capabilities='profile:ceph-storage,boot_option:local <ceph node uuid>'
 ```
-这个节点属性不是自己随便定义的，关键还是要看nova的flavor中的选项,如compuet节点:
-```
-$ nova flavor-show compute
-+----------------------------+--------------------------------------------------------------------------+
-| Property                   | Value                                                                    |
-+----------------------------+--------------------------------------------------------------------------+
-| OS-FLV-DISABLED:disabled   | False                                                                    |
-| OS-FLV-EXT-DATA:ephemeral  | 0                                                                        |
-| disk                       | 40                                                                       |
-| extra_specs                | {"capabilities:boot_option": "local", "capabilities:profile": "compute"} |
-| id                         | a273eb70-0ca1-44a1-b691-fce527db13e5                                     |
-| name                       | compute                                                                  |
-| os-flavor-access:is_public | True                                                                     |
-| ram                        | 4096                                                                     |
-| rxtx_factor                | 1.0                                                                      |
-| swap                       |                                                                          |
-| vcpus                      | 1                                                                        |
-+----------------------------+--------------------------------------------------------------------------+
+
+一句话写法：
 
 ```
-我们添加的属性必须和使用的flavor的extra_specs属性一致，这样才能使用这个镜像。
+ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
 
+ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:compute,boot_option:local'
+
+ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
+```
+
+这样 ，为物理机打完标签以后，在部署时请跟上flavor 参数
+
+```
+a
+```
 
 ## 4. 定义根磁盘
 
 在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义ceph 节点的根磁盘。  
 根磁盘可以通过以下参数来指定。
+
 ```
 model (String): Device identifier.
 vendor (String): Device vendor.
@@ -134,21 +132,16 @@ wwn (String): Unique storage identifier.
 size (Integer): Size of the device in GB.
 ```
 
-
 查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
 
 ```bash
-
 list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do openstack baremetal introspection data save $i | jq ".inventory.disks" ;done
-
 ```
 
 ### 如果sda是我们想要的根磁盘:
 
 ```bash
-
 list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
-
 ```
 
 ### 如果sda不是我们想要的根磁盘
@@ -171,69 +164,16 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
   ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
   ```
 
+## 4. 部署
 
-## 5. 获取配置文件
-获取UnitedStack上游的template文件:
-```
-$ wget http://tripleo.ustack.com/template/tripleo/newton/deploy_virt_template.tar
-$ tar xvf deploy_virt_template.tar
-```
-替换掉当前的tripleo所使用的template文件
-```
-$ rm -fr /usr/share/openstack-tripleo-heat-templates/
-$ cp -r deploy_virt_template/openstack-tripleo-heat-templates  /usr/share/
-```
-
-
-## 6. 划分网络
-我们根据前面划分的网络结构对我们的网络拓扑进行划分,所有的部署需要用到的配置都在我们的deploy_template/templates里面。包括网络，我们接下来定制我们的网络结构：
+开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 
 ```
-$ vim deploy_virt_template/templates/environments/network-environment.yaml
-resource_registry:
-  OS::TripleO::Compute::Net::SoftwareConfig:
-    ../nic-configs/compute.yaml
-  OS::TripleO::Controller::Net::SoftwareConfig:
-    ../nic-configs/controller.yaml
-
-parameter_defaults:
-  ControlPlaneSubnetCidr: '24'
-  ControlPlaneDefaultRoute: 192.0.2.1
-  EC2MetadataIp:  192.0.2.1 # Generally the IP of the Undercloud
-  InternalApiNetCidr: 10.0.131.0/24
-  StorageNetCidr: 10.0.133.0/24
-  StorageMgmtNetCidr: 10.0.132.0/24
-  TenantNetCidr: 10.0.136.0/24
-  ExternalNetCidr: 192.168.122.1/24
-  InternalApiAllocationPools: [{'start': '10.0.131.40', 'end': '10.0.131.50'}]
-  StorageAllocationPools: [{'start': '10.0.133.40', 'end': '10.0.133.50'}]
-  StorageMgmtAllocationPools: [{'start': '10.0.132.40', 'end': '10.0.132.50'}]
-  TenantAllocationPools: [{'start': '10.0.136.40', 'end': '10.0.136.50'}]
-  ExternalAllocationPools: [{'start': '192.168.122.30', 'end': '192.168.122.100'}]
-  ExternalInterfaceDefaultRoute: 192.168.122.1
-  DnsServers: ["8.8.8.8","8.8.4.4"]
+openstack overcloud deploy --template
 ```
-
-
-## 7. 部署
-
-接下来我们就可以部署我们的overcloud的了。
-```
-openstack overcloud deploy --templates \
-  -e /home/stack/deploy_template/templates/environments/network-environment.yaml \
-  -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation.yaml \
-  --control-flavor control \
-  --compute-flavor compute \
-  --control-scale 1 \
-  --compute-scale 1 \
-  --ntp-server 0.pool.ntp.org \
-  --libvirt-type qemu
-```
-
-
 
 ---
- 
+
 ## 4. 配置 ceph osd
 
 在stack用户目录下建立`templates`目录
@@ -275,16 +215,11 @@ ceph::profile::params::osds:
         '/dev/sdd': {}
 ```
 
-
-
-> 在定义节点类型的时候，需要我们注意，如定义为:profile:compute时，就说明你希望使用compute这个flavor来部署节点，那么
-
-
-
 ## 6. 定义网络
 
 overcloud 中的所有API 地址，都需要通过undercloud neutron 分配，所以，undercloud需要可以访问overcloud 中所有的网络。  
-查看网卡顺序  
+查看网卡顺序
+
 ```
 a
 ```
