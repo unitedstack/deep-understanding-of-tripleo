@@ -72,11 +72,12 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 # useradd zhao
 # echo "zhao ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/zhao
 ```
-切换到这个普通用户下面：
+切换到这个普通用户下面开始安装：
 ```
 $ su - zhao
 $ instack-virt-setup
 ```
+
 
 ## ssh 进入undercloud os
 
