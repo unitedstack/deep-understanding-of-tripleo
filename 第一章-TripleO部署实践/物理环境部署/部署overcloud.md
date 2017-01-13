@@ -33,6 +33,8 @@ overcloud-full.vmlinux
 
 ## 2. 上传镜像
 
+镜像可以从[社区下载](http://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/)现成的，也可以自己制作：如需自己制作，请见“镜像制作”章节。
+
 ```
 $ . stackrc
 $ openstack overcloud image upload --image-path /home/stack/images
