@@ -110,17 +110,17 @@ $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 ```
 $ vim ~/undercloud.conf
 [DEFAULT]
-local_ip = 192.168.0.1/24
-network_gateway = 192.168.0.1
-undercloud_public_vip = 192.168.0.2
-undercloud_admin_vip = 192.168.0.3
-local_interface = eth1 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
-network_cidr = 192.168.0.0/24
-masquerade_network = 192.168.0.0/24
-dhcp_start = 192.168.0.5
-dhcp_end = 192.168.0.24
+local_ip = 192.0.2.1/24
+network_gateway = 192.0.2.1
+undercloud_public_vip = 192.0.2.2
+undercloud_admin_vip = 192.0.2.3
+local_interface = eth0 # pxe装机的网桥，必须和你的overcloud的pxe网卡在同一个vlan或者说同一个桥下面
+network_cidr = 192.0.2.0/24
+masquerade_network = 192.0.2.0/24
+dhcp_start = 192.0.2.5
+dhcp_end = 192.0.2.24
 inspection_interface = br-ctlplane
-inspection_iprange = 192.168.0.100,192.168.0.120
+inspection_iprange = 192.0.2.100,192.0.2.120
 inspection_extras = true
 undercloud_debug = true
 [auth]
