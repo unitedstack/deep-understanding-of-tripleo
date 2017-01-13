@@ -171,25 +171,59 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
 ## 4. 获取配置文件
 获取UnitedStack上游的template文件:
 ```
-$ wget http://tripleo.ustack.com/template/tripleo/newton/deploy_template.tar
-$ tar xvf deploy_template.tar
+$ wget http://tripleo.ustack.com/template/tripleo/newton/deploy_virt_template.tar
+$ tar xvf deploy_virt_template.tar
 ```
 替换掉当前的tripleo所使用的template文件
 ```
 $ rm -fr /usr/share/openstack-tripleo-heat-templates/
-$ cp -r deploy_template/openstack-tripleo-heat-templates  /usr/share/
+$ cp -r deploy_virt_template/openstack-tripleo-heat-templates  /usr/share/
 ```
 
 
 ## 5. 划分网络
-我们根据前面划分的网络结构对我们的网络拓扑进行划分：
+我们根据前面划分的网络结构对我们的网络拓扑进行划分,所有的部署需要用到的配置都在我们的deploy_template/templates里面。包括网络，我们接下来定制我们的网络结构：
+
+```
+$ vim deploy_virt_template/templates/environments/network-environment.yaml
+resource_registry:
+  OS::TripleO::Compute::Net::SoftwareConfig:
+    ../nic-configs/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig:
+    ../nic-configs/controller.yaml
+
+parameter_defaults:
+  ControlPlaneSubnetCidr: '24'
+  ControlPlaneDefaultRoute: 192.0.2.1
+  EC2MetadataIp:  192.0.2.1 # Generally the IP of the Undercloud
+  InternalApiNetCidr: 10.0.131.0/24
+  StorageNetCidr: 10.0.133.0/24
+  StorageMgmtNetCidr: 10.0.132.0/24
+  TenantNetCidr: 10.0.136.0/24
+  ExternalNetCidr: 192.168.122.1/24
+  InternalApiAllocationPools: [{'start': '10.0.131.40', 'end': '10.0.131.50'}]
+  StorageAllocationPools: [{'start': '10.0.133.40', 'end': '10.0.133.50'}]
+  StorageMgmtAllocationPools: [{'start': '10.0.132.40', 'end': '10.0.132.50'}]
+  TenantAllocationPools: [{'start': '10.0.136.40', 'end': '10.0.136.50'}]
+  ExternalAllocationPools: [{'start': '192.168.122.30', 'end': '192.168.122.100'}]
+  ExternalInterfaceDefaultRoute: 192.168.122.1
+  DnsServers: ["8.8.8.8","8.8.4.4"]
+```
 
 
 ## 6. 部署
 
 开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 ```
-openstack overcloud deploy --template
+openstack overcloud deploy --templates \
+  -e /home/stack/deploy_template/templates/environments/network-environment.yaml \
+  -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation.yaml \
+  --control-flavor control \
+  --compute-flavor compute \
+  --control-scale 1 \
+  --compute-scale 1 \
+  --ntp-server 0.pool.ntp.org \
+  --libvirt-type qemu
 ```
 
 
