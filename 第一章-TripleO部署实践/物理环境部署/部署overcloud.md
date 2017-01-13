@@ -36,7 +36,7 @@ overcloud-full.vmlinuz
 
 ```
 $ . stackrc
-$ openstack overcloud image upload
+$ openstack overcloud image upload --image-path /home/stack/images
 ```
 > 默认情况下，我们的glance使用的是swift的存储后端，所以在进行这个步骤时必须保证你的swift的服务是可以使用的。
 
