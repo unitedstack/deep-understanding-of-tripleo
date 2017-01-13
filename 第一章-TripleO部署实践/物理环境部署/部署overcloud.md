@@ -225,6 +225,8 @@ $ cp -r deploy_template/openstack-tripleo-heat-templates  /usr/share/
 ## 8. 划分网络
 接下来我们根据前面定义的网络架构进行网络规划,我们需要修改我们的配置文件network-environment.yaml：
 ```
+$ vim deploy_template/templates/environments/network-environment.yaml
+
 resource_registry:
   OS::TripleO::Compute::Net::SoftwareConfig:
     ../nic-configs/compute.yaml
@@ -261,9 +263,6 @@ parameter_defaults:
   NeutronVniRanges: "1:1000"
   NeutronBridgeMappings: "datacentre:br-ex"
 ```
-
-
-
 
 ## 9. 定义网卡
 
