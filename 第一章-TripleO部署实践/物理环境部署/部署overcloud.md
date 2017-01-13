@@ -189,11 +189,15 @@ done
 我们使用把收集信息的进程打到后台，你可以使用`ps ax | grep openstack`来查看任务的情况。在收集物理机信息的时候，会尝试开启物理机，然后进入PXE引导，之会安装一个带有ironic的镜像，然后由ironic去收集物理机的信息。所以，在这时候必须保证你的PXE网络是OK的。在收集完我们的物理机的信息之后，我们可以通过下面的命令来检查收集到的物理机信息：
 
 ```
-$ openstack  baremetal introspection data save cc592fe9-b9e5-492a-b05c-9c766b505acf > cc592fe9-b9e5-492a-b05c-9c766b505acf.save
+$ openstack  baremetal introspection data save <UUID> > ironic_data.save
 ```
+正常情况下，我们可以在导出的文件里看到很多的物理机定制信息。
 
+## 5. 定义根磁盘
+我们必须为机器定义一个根磁盘，以供后续装机过程的使用。很多时候，/dev/sda是我们的根磁盘，但也有根磁盘不是它的时候。所谓的根磁盘就是你的系统盘，BIOS中可以设置开机从哪一个磁盘启动，你选了哪一个盘，哪一个盘就是你的根磁盘。我们这里默认的根磁盘就是/dev/sda。
 
-
+```
+```
 
 
 
