@@ -153,7 +153,107 @@ $ vim instackenv.json:
     }
   ]
 }
+
 ```
+
+## 4. 导入overcloud信息
+
+
+```
+openstack baremetal import instackenv.json
+```
+
+进行introspection收集overcloud node 的信息
+
+```
+openstack baremetal introspection bulk start
+```
+
+
+## 5. 为物理机定义节点类型
+
+在规划节点时，希望特定的物理机作为特定的角色。比如有一台物理机，我们在ironic 配置文件里将它定义为overcloud 中ceph节点，不要任性的变成计算节点或者控制节点。这样，我们就需要为这些节点定义类型。  
+定义类型有两种方法，比如我只需要ceph节点，安装在ceph host 上\(在ironic 配置文件中叫做ceph\)，nova 节点安装在nova host 上，控制节点安装在controller host 上。
+
+正常写法：
+
+```
+openstack baremetal node set --property capabilities='profile:compute,boot_option:local <compute node uuid>'
+openstack baremetal node set --property capabilities='profile:control,boot_option:local <control node uuid>'
+openstack baremetal node set --property capabilities='profile:ceph-storage,boot_option:local <ceph node uuid>'
+```
+
+一句话写法：
+
+```
+ironic node-list|grep 'controller'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:control,boot_option:local'
+
+ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:compute,boot_option:local'
+
+ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
+```
+
+这样 ，为物理机打完标签以后，在部署时请跟上flavor 参数
+
+```
+a
+```
+
+
+## 4. 定义根磁盘
+
+在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义ceph 节点的根磁盘。
+根磁盘可以通过以下参数来指定。
+
+```
+model (String): Device identifier.
+vendor (String): Device vendor.
+serial (String): Disk serial number.
+wwn (String): Unique storage identifier.
+size (Integer): Size of the device in GB.
+```
+
+查看introspection得到的磁盘信息，确认sda是不是我们想要的根磁盘。
+
+```bash
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do openstack baremetal introspection data save $i | jq ".inventory.disks" ;done
+```
+
+### 如果sda是我们想要的根磁盘:
+
+```bash
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+```
+
+### 如果sda不是我们想要的根磁盘
+
+那就需要使用wwn来定义根磁盘，手动对每一个node依次执行定义:
+
+```
+#wwn
+ironic node-update $i add properties/root_device=properties/root_device='{"wwn": "xxx"}'
+```
+
+然后需要修正logic\_gb，可以重新执行introspection或者手动指定logic\_gb
+
+* 重新执行introspection
+```
+openstack baremetal introspection bulk start
+```
+* 或者更新logic\_gb
+```
+ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
+```
+
+## 4. 部署
+
+开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
+
+```
+openstack overcloud deploy --template
+```
+
+
 
 部署步骤
 
