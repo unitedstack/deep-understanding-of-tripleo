@@ -247,7 +247,8 @@ ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
 
 ## 4. 部署
 
-开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
+在进行自定义部署之前，应该使用简单部署验证以上步骤都没有问题，确定主机可以被正常部署出来。
+现在开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 
 ```
 openstack overcloud deploy --template
