@@ -9,6 +9,7 @@
 ### 1. 添加Newton的repo
 
 我们默认使用UniedStack的内部源:
+
 ```
 [openstack-newton]
 name=openstack-newton
@@ -17,6 +18,11 @@ enabled=1
 gpgcheck=0
 priority=1
 ```
+添加内网解析
+```
+10.0.100.250 tripleo.ustack.com
+```
+
 
 如果通过公网安装：
 
@@ -78,16 +84,18 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 ### 5. 安装undercloud vm
 
 这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。运行安装命令时，我们需要建立一个普通用户，用以运行安装undercloud。
+
 ```
 # useradd zhao
 # echo "zhao ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/zhao
 ```
+
 切换到这个普通用户下面开始安装：
+
 ```
 $ su - zhao
 $ instack-virt-setup
 ```
-
 
 ## ssh 进入undercloud os
 
