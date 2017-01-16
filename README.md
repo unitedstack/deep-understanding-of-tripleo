@@ -2,7 +2,7 @@
 
 ---
 
-按照[这个链接](https://access.redhat.com/documentation/en/red-hat-openstack-platform/10/paged/partner-integration/chapter-2-architecture)重新整理
+按照[这个链接](https://access.redhat.com/documentation/en/red-hat-openstack-platform/10/paged/partner-integration/chapter-2-architecture)重新整理.
 
 ## 什么是TripleO?
 
