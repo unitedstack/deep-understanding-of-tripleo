@@ -2,6 +2,17 @@
 
 ---
 
+overcloud 部署步骤
+
+1. 收集物理机的pxe网卡 mac地址。 ipmi地址、用户名、密码。
+2. 定义overcloud 节点配置文件,填入上一步收集的overcloud所有节点的ipmi地址、用户名密码 、pxe mac 。
+3. 上传overcloud镜像
+4. 导入 节点
+5. inspection node
+6. 定义根磁盘
+7. 定义节点类型
+8. 部署overcloud
+
 在这一步，我们已经完成了undercloud的部署。现在要开始部署overcloud。
 
 ## 1. 准备overcloud 镜像
@@ -153,11 +164,9 @@ $ vim instackenv.json:
     }
   ]
 }
-
 ```
 
 ## 4. 导入overcloud信息
-
 
 ```
 openstack baremetal import instackenv.json
@@ -168,7 +177,6 @@ openstack baremetal import instackenv.json
 ```
 openstack baremetal introspection bulk start
 ```
-
 
 ## 5. 为物理机定义节点类型
 
@@ -193,10 +201,9 @@ ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {
 ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
 ```
 
-
 ## 4. 定义根磁盘
 
-在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义overcloud节点的根磁盘。
+在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义overcloud节点的根磁盘。  
 根磁盘可以通过以下参数来指定。
 
 ```
@@ -231,37 +238,22 @@ ironic node-update $i add properties/root_device=properties/root_device='{"wwn":
 然后需要修正logic\_gb，可以重新执行introspection或者手动指定logic\_gb
 
 * 重新执行introspection
-```
-openstack baremetal introspection bulk start
-```
+  ```
+  openstack baremetal introspection bulk start
+  ```
 * 或者更新logic\_gb
-```
-ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
-```
+  ```
+  ironic node-update <UUID> add properties/local_gb=<NEW VALUE>
+  ```
 
 ## 4. 部署
 
-在进行自定义部署之前，应该使用简单部署验证以上步骤都没有问题，确保主机可以被正常部署出来。
+在进行自定义部署之前，应该使用简单部署验证以上步骤都没有问题，确保主机可以被正常部署出来。  
 现在开始我们的部署之旅 -- 最简单的部署，等待一杯咖啡的时间。
 
 ```
 openstack overcloud deploy --template
 ```
 
-
-
-部署步骤
-
-1. 写overcloud 节点配置文件,定义overcloud所有节点的ipmi地址、用户名密码。pxe mac 
-2. inspection node
-3. 定义根磁盘
-4. 定义网卡顺序
-5. 定义capabilities hint
-6. 定义 network-environment
-7. 定义 各节点nic配置文件
-8. 定义 Network-isolation 
-9. 指定各节点IP地址
-10. 自定义role
-11. 
 
 
