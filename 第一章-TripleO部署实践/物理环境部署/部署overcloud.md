@@ -193,16 +193,10 @@ ironic node-list|grep 'compute'|awk '{print $2}'|xargs -I{} ironic node-update {
 ironic node-list|grep 'ceph'|awk '{print $2}'|xargs -I{} ironic node-update {} add properties/capabilities='profile:ceph-storage,boot_option:local'
 ```
 
-这样 ，为物理机打完标签以后，在部署时请跟上flavor 参数
-
-```
-a
-```
-
 
 ## 4. 定义根磁盘
 
-在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义ceph 节点的根磁盘。
+在执行完`openstack baremetal introspection bulk start`之后，根据得到的信息来定义overcloud节点的根磁盘。
 根磁盘可以通过以下参数来指定。
 
 ```
