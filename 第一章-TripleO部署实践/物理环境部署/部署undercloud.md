@@ -13,6 +13,13 @@ $ hostname -f # 查看完成的主机名
 [root@zhaozhilong ~]# hostnamectl set-hostname --transient director.ustack.com
 ```
 
+在`/etc/hosts` 中添加 当前主机名的解析
+```
+127.0.0.1   undercloud.ustack undercloud localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+```
+
+
 ## 2. 创建undercloud的部署用户
 
 ```
@@ -21,8 +28,7 @@ $ hostname -f # 查看完成的主机名
 ```
 上面创建了这个用户，然后我们就需要赋予这个用户sudo的权限
 ```
-[root@director ~]# echo "stack ALL=(root) NOPASSWD:ALL" | tee -a
-/etc/sudoers.d/stack
+[root@director ~]# echo "stack ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/stack
 [root@director ~]# chmod 0440 /etc/sudoers.d/stack
 ```
 尝试使用stack这个用户进行登陆
@@ -36,22 +42,30 @@ $ hostname -f # 查看完成的主机名
 我们这边使用ustack公司内部源:
 ```
 [openstack-newton]
-name=openstack-newton
-baseurl=http://tripleo.ustack.com/repo/openstack-newton/
-enabled=1
-gpgcheck=0
+name = openstack-newton
+baseurl = http://tripleO.ustack.com/repo/openstack-newton
+gpgcheck = 0
 priority=1
 ```
-
 你也可以使用Centos社区的源:
 ```
 [tripleO-centos]
 name = tripleO-centos
 http://mirror.centos.org/centos/7/cloud/x86_64/openstack-newton/
 gpgcheck = 0
+priority=1
 ```
 
+**！！ 请务必确保openstack-newton源的priority=1**
+
+
+
 ## 4. 更新undercloud
+安装 yum-plugin-priorities
+```
+sudo yum -y install yum-plugin-priorities
+```
+
 为了确保undercloud的kernel版本和上游版本一直，还有一些边缘组件也需要和上游同步，我们需要更新我们的系统：
 ```
 [stack@director ~]$ sudo yum update -y
@@ -102,3 +116,7 @@ undercloud_debug = true
 $ openstack undercloud install
 ```
 大概15分钟，之后就可以安装成功了。
+
+
+
+
