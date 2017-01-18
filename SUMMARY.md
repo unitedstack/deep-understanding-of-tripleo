@@ -16,7 +16,7 @@
     * [TripleO UI](第一章-TripleO部署实践/tripleo-ui.md)
     * [镜像制作](镜像制作.md)
 * [第二章 - TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
-    * [基本配置参数](自定义Overcloud部署/基本配置参数定义.md)
+    * [参数配置](自定义Overcloud部署/基本配置参数定义.md)
     * [Hook设置](自定义Overcloud部署/hook设置.md)
     * [SSL\/TLS配置](自定义Overcloud部署/ssltls配置.md)
     * [主机配置](自定义Overcloud部署/定义主机.md)
