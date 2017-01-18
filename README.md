@@ -6,7 +6,7 @@
 
 ## 什么是TripleO?
 
-tripleO是RedHat推出的OpenStack部署工具，目前RedHat主推的OpenStack部署工具，已经发了4个版本。相对来说，tripleO比起其他社区的部署工具更加的灵活方便。TripelO部署时需要先准备一个OpenStack控制器的镜像，然后用Ironic再去部署裸机，再通过heat在裸机上部署OpenStack。架构上分为undercloud和overcloud，基本的部署概念如下：
+tripleO是社区推出的OpenStack部署工具，目前RedHat主推的OpenStack部署工具，已经发了4个版本。相对来说，tripleO比起其他社区的部署工具更加的灵活方便。TripelO部署时需要先准备一个OpenStack控制器的镜像，然后用Ironic再去部署裸机，再通过heat在裸机上部署OpenStack。架构上分为undercloud和overcloud，基本的部署概念如下：
 
 ![](/assets/ARCHITECTURE-1.png)
 
