@@ -35,6 +35,7 @@
 * [第六章 - TroubleShooting](第六章 - TroubleShooting/第六章---troubleshooting.md)
     * [TroubleShooting ironic](第六章 - TroubleShooting/troubleshooting-ironic.md)
     * [TroubleShooting Deploy Overcloud](第六章 - TroubleShooting/troubleshooting-deploy-overcloud.md)
+    * [Deleting TripleO](第六章 - TroubleShooting/deleting-tripleo.md)
 
 ## KnowledgeBase
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)
