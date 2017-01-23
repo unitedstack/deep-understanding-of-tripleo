@@ -2,9 +2,12 @@
 
 ---
 
-按照[这个链接](https://access.redhat.com/documentation/en/red-hat-openstack-platform/10/paged/partner-integration/chapter-2-architecture)重新整理.
 
 ## 什么是TripleO?
+
+TripleO is a project aimed at installing, upgrading and operating OpenStack clouds using OpenStack’s own cloud facilities as the foundation - building on Nova, Ironic, Neutron and Heat to automate cloud management at datacenter scale.
+
+TriplO 是使用openstack(undercloud)来部署、升级、运维openstack(overcloud)的一个项目。
 
 tripleO是社区推出的OpenStack部署工具，目前RedHat主推的OpenStack部署工具，已经发了4个版本。相对来说，tripleO比起其他社区的部署工具更加的灵活方便。TripelO部署时需要先准备一个OpenStack控制器的镜像，然后用Ironic再去部署裸机，再通过heat在裸机上部署OpenStack。架构上分为undercloud和overcloud，基本的部署概念如下：
 
