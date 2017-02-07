@@ -2,6 +2,8 @@
 
 ---
 
+
+
 ## 安装undercloud VM
 
 **以下操作在物理机执行：**
@@ -18,11 +20,12 @@ enabled=1
 gpgcheck=0
 priority=1
 ```
+
 添加内网解析
+
 ```
 10.0.100.250 tripleo.ustack.com
 ```
-
 
 如果通过公网安装：
 
