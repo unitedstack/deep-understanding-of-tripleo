@@ -22,3 +22,10 @@ dpt:80 redir ports 8775
 1. 检查节点是否定义了根磁盘
 2. 检查node的profile标签，比如profile:compute
 
+
+## 部署物理机时，只有少数机器可以安装上系统，其余的机器无法安装系统
+故障描述：
+在ironic部署系统时，所有机器都可以拿到ipxe的地址，并且进去ipxe，但是进入ipxe的系统之后，无法和ironic-api 通信。导致无法系统
+
+
+
