@@ -25,7 +25,18 @@ dpt:80 redir ports 8775
 
 ## 部署物理机时，只有少数机器可以安装上系统，其余的机器无法安装系统
 故障描述：
-在ironic部署系统时，所有机器都可以拿到ipxe的地址，并且进去ipxe，但是进入ipxe的系统之后，无法和ironic-api 通信。导致无法系统
+在ironic部署系统时，所有机器都可以拿到ipxe的地址，并且进去ipxe，但是进入ipxe的系统之后，无法和ironic-api 通信。导致无法系统。
+
+使用ironic node-list查看node状态，发现出问题的机器的Provisioning State全部hang在wait call-back状态
+
+问题分析:
+ironic-dnsmasq服务bug。
+
+解决方法：
+重启所有ironic服务
+```
+systemctl restart openstack-ironic*
+```
 
 
 
