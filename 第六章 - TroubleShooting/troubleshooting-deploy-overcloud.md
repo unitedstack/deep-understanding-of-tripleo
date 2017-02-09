@@ -2,7 +2,7 @@
 
 ---
 
-## 1. overcloud 无法访问169.254.169.254
+## overcloud 无法访问169.254.169.254
 部署overcloud 时，在进入step1之前卡住，ssh 登录overcloud ，执行`journalctl -u os-collect-config` 发现，os-collect-config 无法连接169.254.169.254. 
 手动运行 `curl http://169.254.169.254` 连接超时。
 在undercloud 上执行`sudo iptables -nL PREROUTING -t nat` 发现正常。
@@ -18,5 +18,7 @@ dpt:80 redir ports 8775
 
 
 
-
+## 部署时提示 Message: No valid host was found. There are not enough hosts available
+1. 检查节点是否定义了根磁盘
+2. 检查node的profile标签，比如profile:compute
 
