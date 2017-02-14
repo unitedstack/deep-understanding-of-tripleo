@@ -15,8 +15,10 @@ $ hostname -f # 查看完成的主机名
 
 在`/etc/hosts` 中添加 当前主机名的解析
 ```
-127.0.0.1   undercloud.ustack undercloud localhost localhost.localdomain localhost4 localhost4.localdomain4
+127.0.0.1  localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+127.0.0.1   undercloud.ustack undercloud 
 ```
 
 
