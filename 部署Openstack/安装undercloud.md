@@ -2,8 +2,6 @@
 
 ---
 
-
-
 ## 安装undercloud VM
 
 **以下操作在物理机执行：**
@@ -89,14 +87,14 @@ export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。运行安装命令时，我们需要建立一个普通用户，用以运行安装undercloud。
 
 ```
-# useradd zhao
-# echo "zhao ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/zhao
+# useradd stack
+# echo "stack ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/stack
 ```
 
 切换到这个普通用户下面开始安装：
 
 ```
-$ su - zhao
+$ su - stack
 $ instack-virt-setup
 ```
 
