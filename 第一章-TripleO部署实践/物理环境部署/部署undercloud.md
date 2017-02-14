@@ -18,7 +18,7 @@ $ hostname -f # 查看完成的主机名
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-127.0.0.1   undercloud.ustack undercloud 
+127.0.0.1   undercloud.ustack.com undercloud 
 ```
 
 
