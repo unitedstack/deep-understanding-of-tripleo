@@ -13,7 +13,7 @@ $ hostname -f # 查看完成的主机名
 [root@zhaozhilong ~]# hostnamectl set-hostname --transient director.ustack.com
 ```
 
-在`/etc/hosts` 中添加 当前主机名的解析
+在`/etc/hosts` 中添加 当前主机名的解析,一定要有短域名解析，否则mq等服务会起不来。
 ```
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
