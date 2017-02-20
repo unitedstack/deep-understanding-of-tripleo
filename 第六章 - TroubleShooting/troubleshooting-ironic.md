@@ -31,3 +31,22 @@ ironic node-update <NODE UUID> replace driver_info/ipmi_address=<NEW IPMI ADDRES
 ```
 
 ref:[Troubleshooting Node Management Failures](http://docs.openstack.org/developer/tripleo-docs/troubleshooting/troubleshooting.html#troubleshooting-node-management-failures)
+
+
+## introspection 单个node
+1. 将node设为 manage 状态
+```
+ironic node-set-provision-state UUID manage
+```
+2. 开始introspection
+```
+openstack baremetal introspection start UUID
+```
+3. 查询introspection状态
+```
+openstack baremetal introspection status UUID
+```
+4. 将node改为available
+```
+ironic node-set-provision-state UUID provide
+```
