@@ -34,6 +34,8 @@ ref:[Troubleshooting Node Management Failures](http://docs.openstack.org/develop
 
 
 ## introspection 单个node
+除了bulk introspection 之外，还可以对单个ironic node进行introspection。
+首先要将node设为manage状态，
 1. 将node设为 manage 状态
 ```
 ironic node-set-provision-state UUID manage
