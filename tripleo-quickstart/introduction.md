@@ -20,5 +20,5 @@ TripeO-Quickstart-Extras中还包含了很多验证部署结果的playbook，对
 * validate-ha，验证HA功能，通过关停一些节点和服务来验证HA的功能
 * validate-undercloud，通过重装undercloud或者是跑一些常用OpenStack命令来验证undercloud功能
 
-TripleO-Quickstart使用方便，环境要求简单，可以用来搭建开发测试环境，并且适合新手快速上手TripleO。
+TripleO-Quickstart使用方便，环境要求简单，可以用来搭建开发测试环境，并且适合新手快速上手TripleO和OpenStack。
 
