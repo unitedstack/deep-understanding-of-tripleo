@@ -4,5 +4,14 @@
 
 和tripleo-quickstart相关的还有一个叫做[tripleo-quickstart-extras](https://github.com/openstack/tripleo-quickstart-extras)的项目，它是tripleo-quickstart功能的扩展，其实tripleo-quickstart本身只包含搭建虚拟测试环境的功能，包括环境检查，网络/存储/虚拟机的建立等等，而具体的搭建undercloud，overcloud的功能则是在tripleo-quickstart-extras中实现的，还包括测试检查，这些功能都被抽象成了ansible中的role。其实tripleo-quickstart-extras对tripleo-quickstart是没有依赖关系的，只要有环境，tripleo-quickstart-extras就用来部署undercloud/overcloud，不论是否是虚拟环境，因此在部署生产环境时也可以使用tripleo-quickstart-extras。其实本身tripleo的部署步骤就不复杂，tripleo-quickstart-extras只是将其中一些需要手动执行的命令编排了一下，让部署变得更加简单高效了。
 
-TripleO-Quickstart
+TripleO-Quickstart默认定义很多的部署模式，主要有以下几种：
+
+* Minimal，只部署一台controller和一台compute节点
+* HA，部署三台controller和一台compute节点，三台controller的HA使用pacemaker管理
+* HA\_BIG，部署三台controller和三台compute，三台controller的HA使用pacemaker管理
+* Ceph，支持部署Ceph的Storage节点
+
+其实这些都是通过简单的配置文件来设置的，tripleo-quickstart底层已经进行了很好的抽象，上层只需要简单的定义就可以支持多种部署模式了。
+
+
 
