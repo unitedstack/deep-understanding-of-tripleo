@@ -12,6 +12,7 @@
     * [部署OverCloud](部署Openstack/部署overcloud.md)
   * [TripleO-Quickstart部署](tripleo-quickstart/README.md)
     * [介绍](tripleo-quickstart/introduction.md)
+    * [解析](tripleo-quickstart/analysis.md)
     * [部署](tripleo-quickstart/deploy.md)
   * [物理环境部署](第一章-TripleO部署实践/物理环境部署/物理环境部署.md)
     * [部署前准备](第一章-TripleO部署实践/物理环境部署/部署前准备.md)
