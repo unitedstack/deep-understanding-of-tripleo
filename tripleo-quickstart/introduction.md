@@ -13,5 +13,12 @@ TripleO-Quickstart默认定义很多的部署模式，主要有以下几种：
 
 其实这些都是通过简单的配置文件来设置的，tripleo-quickstart底层已经进行了很好的抽象，上层只需要简单的定义就可以支持多种部署模式了。
 
+TripeO-Quickstart-Extras中还包含了很多验证的playbook，对部署完的集群功能是否正常进行有效验证，目前实现的主要有下面几种：
+
+* validate-simple，简单验证，通过执行一系列OpenStack命令，比如创建网络，建虚拟机，创建stack，来验证基本的功能是否OK
+* validate-tempest，功能验证，通过对overcloud来跑tempest测试来进行API层面的全面验证
+* validate-ha，验证HA功能，通过关停一些节点和服务来验证HA的功能
+* validate-undercloud，通过重装undercloud或者是跑一些常用OpenStack命令来验证undercloud功能
+
 TripleO-Quickstart使用方便，环境要求简单，可以用来搭建开发测试环境，并且适合新手快速上手TripleO。
 
