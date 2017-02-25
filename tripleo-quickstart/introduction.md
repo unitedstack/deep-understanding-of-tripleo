@@ -13,5 +13,5 @@ TripleO-Quickstart默认定义很多的部署模式，主要有以下几种：
 
 其实这些都是通过简单的配置文件来设置的，tripleo-quickstart底层已经进行了很好的抽象，上层只需要简单的定义就可以支持多种部署模式了。
 
-
+TripleO-Quickstart使用方便，环境要求简单，可以用来搭建开发测试环境，并且适合新手快速上手TripleO。
 
