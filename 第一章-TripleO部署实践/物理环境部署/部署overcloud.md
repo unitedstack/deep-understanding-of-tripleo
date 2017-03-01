@@ -36,7 +36,7 @@ $ ls ~/images/
 ironic-python-agent.initramfs
 ironic-python-agent.kernel
 overcloud-full.initrd
-aaovercloud-full.qcow2
+overcloud-full.qcow2
 overcloud-full.vmlinux
 ```
 

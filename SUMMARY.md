@@ -27,6 +27,7 @@
   * [主机配置](自定义Overcloud部署/定义主机.md)
   * [网络配置](自定义Overcloud部署/自定义网络.md)
   * [存储配置](Customization Ceph/自定义ceph部署.md)
+  * [在overcloud中部署ironic](自定义Overcloud部署/overcloudironic.md)
 * [第三章 - TripleO变更实践](SCALING/添加、删除节点.md)
   * [配置变更](SCALING/配置变更.md)
   * [节点伸缩](SCALING/删除计算节点.md)
