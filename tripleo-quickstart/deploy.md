@@ -15,7 +15,7 @@ TripleO-Quickstart的部署要求必须有一台物理服务器，在quickstart�
 
 在quickstart中，基本上为每一个task都通过tag做了分类，可以通过--tags来选择执行某些task，上面使用all即执行所有的task，也就是要搭建一个完整的环境。使用--config可以指定部署模式，这里选择的是ha模式，此外还有多种模式可以选择，该配置文件还定义了一些其他参数，比如虚拟机的配置，是否跑tempest等。因为在安装过程中要去装各种包，而且要下载undercloud的镜像，国外的网络环境较好，会遇到比较少的坑。
 
-如果要使用上次下载好的镜像，需要加上force\_cached\_images参数：
+如果要使用上次下载好的镜像，需要加上force\_cached\_images参数，否则它每次都会去下载最新的镜像：
 
 ```
 bash ./quickstart.sh --tags all --extra-vars force_cached_images=true --config ~/.quickstart/tripleo-quickstart/config/general_config/ha.yml $VIRTHOST
