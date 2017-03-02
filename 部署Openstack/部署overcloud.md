@@ -25,9 +25,13 @@ overcloud-full.vmlinuz
 `virt-customize -a overcloud-full.qcow2 --root-password password:<my_root_password>`
 
 ## 2. 上传镜像
-
+进入到镜像所在目录
 ```
-$ . stackrc
+cd ~/images
+```
+
+上传镜像
+```
 $ openstack overcloud image upload
 ```
 
