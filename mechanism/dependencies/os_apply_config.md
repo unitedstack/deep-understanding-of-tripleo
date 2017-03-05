@@ -86,7 +86,7 @@ output/etc/nova.conf内容如下：
 connection=mysql://nova:unset@localhost/nova
 ```
 
-可见，使用os-apply-config可以方便的生成一组配置文件，这在部署undercloud和overcloud时都会被用到。
+可见，使用os-apply-config可以方便的生成一组配置文件，默认的output是根目录，就会将etc等配置文件全部配置到相应的位置，这在部署undercloud和overcloud时都会被用到。
 
 os-apply-config还有一个作用就是指定key值，然后输出对应的value值，如下：
 
