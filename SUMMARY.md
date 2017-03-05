@@ -47,6 +47,7 @@
     * [os-apply-config](mechanism/dependencies/os_apply_config.md)
     * [os-refresh-config](mechanism/dependencies/os_refresh_config.md)
     * [os-net-config](mechanism/dependencies/os_net_config.md)
+    * [instack](mechanism/dependencies/instack.md)
     * [diskimage-builder](mechanism/dependencies/dib.md)
   * [UnderCloud](mechanism/undercloud/README.md)
   * [OverCloud](mechanism/overcloud/README.md)
