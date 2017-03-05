@@ -42,10 +42,12 @@
   * [TroubleShooting ironic](第六章 - TroubleShooting/troubleshooting-ironic.md)
   * [TroubleShooting Deploy Overcloud](第六章 - TroubleShooting/troubleshooting-deploy-overcloud.md)
   * [Deleting TripleO](第六章 - TroubleShooting/deleting-tripleo.md)
-* [第七章 - TripleO原理分析](Mechanism/README.md)
-  * [依赖组件](Dependencies/README.md)
-    * [os-apply-config](Dependencies/os_apply_config.md)
-    * [os-refresh-config](Dependencies/os_refresh_config.md)
+* [第七章 - TripleO原理分析](mechanism/README.md)
+  * [依赖组件](mechanism/dependencies/README.md)
+    * [os-apply-config](mechanism/dependencies/os_apply_config.md)
+    * [os-refresh-config](mechanism/dependencies/os_refresh_config.md)
+  * [UnderCloud](mechanism/undercloud/README.md)
+  * [OverCloud](mechanism/overcloud/README.md)
 
 ## KnowledgeBase
 
