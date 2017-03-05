@@ -46,6 +46,7 @@
   * [依赖组件](mechanism/dependencies/README.md)
     * [os-apply-config](mechanism/dependencies/os_apply_config.md)
     * [os-refresh-config](mechanism/dependencies/os_refresh_config.md)
+    * [diskimage-builder](mechanism/dependencies/dib.md)
   * [UnderCloud](mechanism/undercloud/README.md)
   * [OverCloud](mechanism/overcloud/README.md)
 
