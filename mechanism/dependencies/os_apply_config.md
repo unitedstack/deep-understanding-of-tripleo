@@ -13,5 +13,89 @@ os-apply-config是一个配置工具，它主要是从多个json格式的配置�
    * `/var/lib/heat-cfntools/cfn-init-data`
    * `/var/lib/cloud/data/cfn-init-data`
 
+这些json配置文件中的配置项最终都会被合并到一个dict对象中，用来渲染模板。
+
+os-apply-config的模板由配置项`--templates`指定，这个配置项默认值由以下方式确定：
+
+1. 由`OS_CONFIG_APPLIER_TEMPLATES`环境变量指定，默认为None
+2. `/opt/stack/os-apply-config/templates`
+3. `/opt/stack/os-config-applier/templates`
+4. `/usr/libexec/os-apply-config/templates`，该值为默认值
+
+生成的最终的配置文件，放置的位置由`--output`配置项指定，默认为根目录"/"。
+
+举个例子，有如下的文件：
+
+```
+[root@localhost os-apply-config]# tree
+.
+├── config
+│   └── os_config_files.json
+├── output
+└── templates
+    └── etc
+        └── nova.conf
+```
+
+templates/etc/nova.conf内容如下：
+
+```
+[database]
+{{#nova.db}}
+connection={{nova.db}}
+{{/nova.db}}
+```
+
+config/os\__config\_files.json内容如下：_
+
+```
+{
+  "nova":{
+    "db": "mysql://nova:unset@localhost/nova"
+  }
+}
+```
+
+执行下面的命令：
+
+```
+# os-apply-config -t templates/ -m config/os_config_files.json -o output/
+[2017/03/05 11:59:07 PM] [INFO] writing output/etc/nova.conf
+[2017/03/05 11:59:07 PM] [INFO] success
+```
+
+在output目录下就会生成相应的配置文件：
+
+```
+[root@localhost os-apply-config]# tree
+.
+├── config
+│   └── os_config_files.json
+├── output
+│   └── etc
+│       └── nova.conf
+└── templates
+    └── etc
+        └── nova.conf
+```
+
+output/etc/nova.conf内容如下：
+
+```
+[database]
+connection=mysql://nova:unset@localhost/nova
+```
+
+可见，使用os-apply-config可以方便的生成一组配置文件，这在部署undercloud和overcloud时都会被用到。
+
+os-apply-config还有一个作用就是指定key值，然后输出对应的value值，如下：
+
+```
+# os-apply-config -t templates/ -m config/os_config_files.json --key nova --type raw
+{"db": "mysql://nova:unset@localhost/nova"}
+# os-apply-config -t templates/ -m config/os_config_files.json --key nova.db --type raw
+mysql://nova:unset@localhost/nova
+```
+
 
 
