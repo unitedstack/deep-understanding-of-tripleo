@@ -30,7 +30,7 @@ os-apply-config的模板由配置项`--templates`指定，这个配置项默认�
 [root@localhost os-apply-config]# tree
 .
 ├── config
-│   └── os_config_files.json
+│   └── os_config_files.json
 ├── output
 └── templates
     └── etc
@@ -70,10 +70,10 @@ config/os\__config\_files.json内容如下：_
 [root@localhost os-apply-config]# tree
 .
 ├── config
-│   └── os_config_files.json
+│   └── os_config_files.json
 ├── output
-│   └── etc
-│       └── nova.conf
+│   └── etc
+│       └── nova.conf
 └── templates
     └── etc
         └── nova.conf
