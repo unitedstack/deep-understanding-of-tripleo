@@ -42,6 +42,15 @@
   * [TroubleShooting ironic](第六章 - TroubleShooting/troubleshooting-ironic.md)
   * [TroubleShooting Deploy Overcloud](第六章 - TroubleShooting/troubleshooting-deploy-overcloud.md)
   * [Deleting TripleO](第六章 - TroubleShooting/deleting-tripleo.md)
+* [第七章 - TripleO原理分析](mechanism/README.md)
+  * [依赖组件](mechanism/dependencies/README.md)
+    * [os-apply-config](mechanism/dependencies/os_apply_config.md)
+    * [os-refresh-config](mechanism/dependencies/os_refresh_config.md)
+    * [os-net-config](mechanism/dependencies/os_net_config.md)
+    * [instack](mechanism/dependencies/instack.md)
+    * [diskimage-builder](mechanism/dependencies/dib.md)
+  * [UnderCloud](mechanism/undercloud/README.md)
+  * [OverCloud](mechanism/overcloud/README.md)
 
 ## KnowledgeBase
 

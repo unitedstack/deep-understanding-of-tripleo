@@ -1,6 +1,6 @@
 # TripleO-Quickstart部署
 
-TripleO-Quickstart的部署要求必须有一台物理服务器，在quickstart中称作VIRTHOST，因为要建多台虚拟机，所以配置至少是16G内存，32G更好，对网络没有特殊要求，能通公网就行。本次测试所使用的物理服务器为64G内存，CPU型号为Intel\(R\) Xeon\(R\) CPU E5-2620 v3 @ 2.40GHz，是在Softlayer上申请的一台物理机。[Softlayer](http://www.softlayer.com/)在2013年被IBM收购，被整合到IBM的[Bluemix](https://console.ng.bluemix.net/)中，Softlayer除了提供多种云服务外，也是唯一一家提供裸机服务的公有云，使用体验非常不错。
+TripleO-Quickstart的部署要求必须有一台物理服务器，在quickstart中称作VIRTHOST，因为要建多台虚拟机，所以配置至少是16G内存，32G更好，对网络没有特殊要求，能通公网就行。本次测试所使用的物理服务器为64G内存，CPU型号为Intel\(R\) Xeon\(R\) CPU E5-2620 v3 @ 2.40GHz，是在Softlayer上申请的一台物理机。[Softlayer](http://www.softlayer.com/\)在2013年被IBM收购，被整合到IBM的[Bluemix]\(https://console.ng.bluemix.net/)中，Softlayer除了提供多种云服务外，也是唯一一家提供裸机服务的公有云，使用体验非常不错。
 
 除了有一台物理服务器外，还需要有一个客户端机器，能够ssh到物理服务器，操作系统需要是RedHat系的，在quickstart中称为localhost，需要将quickstart的程序放到localhost中，然后ssh到物理服务器上执行相应的ansible程序。
 
@@ -14,6 +14,12 @@ TripleO-Quickstart的部署要求必须有一台物理服务器，在quickstart�
 ```
 
 在quickstart中，基本上为每一个task都通过tag做了分类，可以通过--tags来选择执行某些task，上面使用all即执行所有的task，也就是要搭建一个完整的环境。使用--config可以指定部署模式，这里选择的是ha模式，此外还有多种模式可以选择，该配置文件还定义了一些其他参数，比如虚拟机的配置，是否跑tempest等。因为在安装过程中要去装各种包，而且要下载undercloud的镜像，国外的网络环境较好，会遇到比较少的坑。
+
+如果要使用上次下载好的镜像，需要加上force\_cached\_images参数，否则它每次都会去下载最新的镜像：
+
+```
+bash ./quickstart.sh --tags all --extra-vars force_cached_images=true --config ~/.quickstart/tripleo-quickstart/config/general_config/ha.yml $VIRTHOST
+```
 
 等待一杯咖啡的时间，一个具备HA的OpenStack虚拟环境就部署好了，包含三个控制节点，一个计算节点。
 

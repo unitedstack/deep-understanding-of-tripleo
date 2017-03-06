@@ -1,0 +1,2 @@
+本章介绍TripleO的原理，TripleO是应用OpenStack本身的一些功能来部署管理OpenStack，但是仍然需要做很多的额外工作才能很好的把各种组件结合起来，TripleO不是一个单独的项目，是一组项目的集合，本章重点在介绍这些项目在TripleO中的作用，以期分析清楚TripleO的原理。
+
