@@ -232,7 +232,7 @@ list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do iro
 
 ```
 #wwn
-ironic node-update $i add properties/root_device=properties/root_device='{"wwn": "xxx"}'
+ironic node-update $i add properties/root_device='{"wwn": "xxx"}'
 ```
 
 然后需要修正logic\_gb，可以重新执行introspection或者手动指定logic\_gb
