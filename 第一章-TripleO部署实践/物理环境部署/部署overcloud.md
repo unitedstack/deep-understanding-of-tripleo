@@ -186,9 +186,9 @@ openstack baremetal introspection bulk start
 正常写法：
 
 ```
-openstack baremetal node set --property capabilities='profile:compute,boot_option:local <compute node uuid>'
-openstack baremetal node set --property capabilities='profile:control,boot_option:local <control node uuid>'
-openstack baremetal node set --property capabilities='profile:ceph-storage,boot_option:local <ceph node uuid>'
+openstack baremetal node set --property capabilities='profile:compute,boot_option:local' <compute node uuid>
+openstack baremetal node set --property capabilities='profile:control,boot_option:local' <control node uuid>
+openstack baremetal node set --property capabilities='profile:ceph-storage,boot_option:local' <ceph node uuid>
 ```
 
 一句话写法：
