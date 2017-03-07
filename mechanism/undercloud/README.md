@@ -10,11 +10,15 @@
     └── python-tripleoclient
         └── instack-undercloud
             ├── instack
-            ├── os-refresh-config
-            └── puppet
+            └── os-refresh-config
+                └── puppet
 ```
 
-instack和os-refresh-config的具体细节请参见本章“依赖组件”一节中的内容，
+instack和os-refresh-config的具体细节请参见本章“依赖组件”一节中的内容，instack里主要应用了dib elements来定制当前系统，在instack-undercloud中，指定了多个elements来执行，主要是为后面安装undercloud做些准备工作，比如生成os-refresh-config需要的脚本，生成hieradata等等；而os-refresh-config则在安装undercloud过程中起到了整体的编排作用，它会去配置当前系统，跑puppet安装OpenStack组件，然后建立安装overcloud使用的网络等；puppet是在os-refresh-config过程中被执行的，使用puppet apply在本地执行puppet代码，安装undercloud用到的各个OpenStack组件。
+
+下面来详细介绍下instack-undercloud安装undercloud中的主要步骤：
+
+
 
 
 
