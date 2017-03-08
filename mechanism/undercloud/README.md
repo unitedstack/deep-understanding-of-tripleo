@@ -150,7 +150,7 @@ instack通过执行这些elements，大概做了几下几件事情：
 
 * 98-undercloud-setup，在安装好OpenStack组件之后，调用os-cloud-config提供的命令setup-neutron去创建安装OverCloud需要使用的管理网络。此外，如果enable了mistral功能，还会去创建workbook。
 
-除此之外，就是配置一些iptables规则，比如允许ip forwarding，可以让overcloud节点能访问外网，配置169.254.169.254的NAT规则，打通虚拟机访问metadata的通道等等。
+除此之外，就是配置一些iptables规则，比如允许ip forwarding，可以让overcloud节点能访问外网，配置169.254.169.254的NAT规则，打通虚拟机访问metadata的通道等等，最终建立出来的undercloud网络拓扑如下：![](/assets/tripleo-undercloud-topology2.png)经过上面这几步，就完成了undercloud的安装，整体来看undercloud采用了脚本+puppet的方式进行安装，安装过程非常复杂，定制化主要也是写elements，需要非常了解其中的原理才能定制undercloud，在现在的master分支，也就是Pike版本的TripleO中，采用了新的方法去安装undercloud，即也采用heat去部署，见[这里](https://github.com/openstack/python-tripleoclient/commit/5f58088ff52636724d53f5b0590eefb8de55434c)，不再依赖instack-undercloud中的各种elements，这样undercloud和overcloud的安装方法就统一了。
 
-经过这几步，就完成了undercloud的安装，整体来看undercloud采用了脚本+puppet的方式进行安装，安装过程非常复杂，定制化主要也是写elements，需要非常了解其中的原理才能定制undercloud，在现在的master分支，也就是Pike版本的TripleO中，采用了新的方法去安装undercloud，即也采用heat去部署，见[这里](https://github.com/openstack/python-tripleoclient/commit/5f58088ff52636724d53f5b0590eefb8de55434c)，不再依赖instack-undercloud中的各种elements，这样undercloud和overcloud的安装方法就统一了。
+
 
