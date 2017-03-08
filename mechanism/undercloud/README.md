@@ -29,7 +29,66 @@ instack和os-refresh-config的具体细节请参见本章“依赖组件”一�
 
 ### 执行instack
 
+在instack-undercloud中指定了一些elements去执行，这些elements分别来自不同的项目，有tripleo-image-elements中定义的，有instack-undercloud中定义的，还有diskimage-builder中定义的，这些信息都被配置在一个json格式的配置文件中，执行的命令如下：
 
+```
+sudo -E instack \
+    -p /usr/share/tripleo-puppet-elements:/usr/share/instack-undercloud:/usr/share/tripleo-image-elements:/usr/share/diskimage-builder/elements \
+    -j /usr/share/instack-undercloud/json-files/centos-7-undercloud-packages.json
+```
 
+centos-7-undercloud-packages.json文件的内容如下：
 
+```
+[
+  {
+    "name": "Installation",
+    "element": [
+      "install-types",
+      "undercloud-install",
+      "enable-packages-install",
+      "element-manifest",
+      "puppet-stack-config"
+    ],
+    "hook": [
+      "extra-data",
+      "pre-install",
+      "install",
+      "post-install"
+    ],
+    "exclude-element": [
+      "pip-and-virtualenv",
+      "os-collect-config",
+      "svc-map",
+      "pip-manifest",
+      "package-installs",
+      "pkg-map",
+      "puppet",
+      "cache-url",
+      "dib-python",
+      "os-svc-install",
+      "install-bin"
+    ],
+    "blacklist": [
+      "99-refresh-completed"
+    ]
+  }
+]
+```
+
+即指定了instack-types, undercloud-install, enable-packages-install, element-manifest, puppet-stack-config这几个elements，因为每一个elements都有依赖，所以最终处理完依赖，要执行的elements全量为：
+
+* install-types，
+* element-manifest
+* manifests
+* source-repositories
+* puppet-modules
+* hiera
+* enable-packages-install
+* os-apply-config
+* os-refresh-config
+* undercloud-install
+* puppet-stack-config
+
+每一个elements都包含了一些hook，instack的配置文件指定了只执行extra-data, pre-install, install, post-install这4个hook，这些hook以及hook中的脚本请参见附录3，
 
