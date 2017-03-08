@@ -9,16 +9,16 @@ instack是一个用来在当前系统中执行diskimage-builder格式的elements
 ```
 .
 ├── element1
-│   ├── hook1
-│   │   ├── 01-scritp
-│   │   └── 03-scritp
-│   └── hook2
-│       ├── 06-script
-│       └── 08-script
+│   ├── hook1
+│   │   ├── 01-scritp
+│   │   └── 03-scritp
+│   └── hook2
+│       ├── 06-script
+│       └── 08-script
 └── element2
     ├── hook1
-    │   ├── 02-script
-    │   └── 04-script
+    │   ├── 02-script
+    │   └── 04-script
     └── hook2
         ├── 05-script
         └── 07-script
@@ -29,10 +29,10 @@ instack是一个用来在当前系统中执行diskimage-builder格式的elements
 ```
 .
 ├── hook1
-│   ├── 01-scritp
-│   ├── 02-scritp
-│   ├── 03-scritp
-│   └── 04-scritp
+│   ├── 01-scritp
+│   ├── 02-scritp
+│   ├── 03-scritp
+│   └── 04-scritp
 └── hook2
     ├── 05-scritp
     ├── 06-scritp
