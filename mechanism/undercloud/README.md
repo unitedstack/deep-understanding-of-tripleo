@@ -21,7 +21,15 @@ instack和os-refresh-config的具体细节请参见本章“依赖组件”一�
 
 ### 生成环境变量
 
-在安装undercloud之前，先要在stack用户的home目录下创建一个undercloud.conf配置文件，在该文件中定义了安装undercloud需要用的配置项，因为在安装时，本质上是在跑各种脚本，在脚本中会用到各种变量，这些变量的值需要从环境变量中获取，因此instack-install-undercloud命令先要将读取undercloud.conf中的配置项，然后将其转化为环境变量，方便后面的脚本使用，当然，脚本使用的环境变量不仅仅是在这个阶段生成的，在各个elements中，也定义了各种环境变量，在执行elemenets之前，会先被导出来。
+在安装undercloud之前，先要在stack用户的home目录下创建一个undercloud.conf配置文件，在该文件中定义了安装undercloud需要用的配置项，因为在安装时，本质上是在跑各种脚本，在脚本中会用到各种变量，这些变量的值需要从环境变量中获取，因此instack-install-undercloud命令先要将读取undercloud.conf中的配置项，然后将其转化为环境变量，方便后面的脚本使用，当然，脚本使用的环境变量不仅仅是在这个阶段生成的，在各个elements中，也定义了各种环境变量，在执行elemenets之前，会先被导出来。在安装undercloud时，生成的环境变量见附录1.
+
+### 生成Metadata配置文件
+
+在后面的步骤中会执行os-apply-config，os-apply-config需要用到一个json格式的metadata配置文件，用来渲染模板，生成系统中的配置，这个json格式的metadata配置文件就是在这个阶段生成的，里面包括了hieradata的配置，neutron的配置，os-net-config的配置等等，该文件的保存路径为：`/var/lib/heat-cfntools/cfn-init-data`，可能是由于历史原因，是以cfn命名的，这也是os-apply-config最低优先级去找的配置文件，该文件的示例请参见附录2.
+
+### 执行instack
+
+
 
 
 

@@ -2,7 +2,45 @@
 
 instack是一个用来在当前系统中执行diskimage-builder格式的elements的工具。elements最初是在diskimage-builder中出现的，diskimage-builder是一个制作镜像的工具，因为定制镜像，需要安装各种各样的东西，elements就是它抽象出来的一个个功能的集合，这有点类似于ansible中role的概念，需要在镜像中加入什么功能，那么指定相应的element就可以了，diskimage-builder按顺序执行elements中的脚本，从而定制镜像，因此elements是可以分发的，每个人都可以写自己的elements，然后供别人使用。
 
-这种抽象机制非常不错，因此也被应用到tripleo中，但是并没有使用diskimage-builder来执行elements，而是使用instack来执行，instack底层又是使用的dib-run-parts工具来执行的，并且加上了自己的一些逻辑。instack是一个相对底层的工具，在tripleo中，被封装在instack-undercloud中，在部署undercloud时被用到。
+这种抽象机制非常不错，因此也被应用到tripleo中，但是并没有使用diskimage-builder来执行elements，而是使用instack来执行，instack底层又是使用的dib-run-parts工具来执行的，并且加上了自己的一些逻辑。在每一个element中，都按照约定定义了相同的hook，如extra-data, pre-install, install, post-install，在每一个hook中放置了一些脚本，这些脚本的名称上都进行了编号，在instack执行elements时，先把所有elements中相同hook中的脚本放到同一个hook下，然后由dib-run-parts去依次执行每一个hook中的脚本，编号靠前的就先执行，通过这种机制，每个elements可以控制自己hook中的脚本执行的顺序，举例如下：
+
+比如有两个elements，每个elements有两个hook，每个hook又有两个脚本：
+
+```
+.
+├── element1
+│   ├── hook1
+│   │   ├── 01-scritp
+│   │   └── 03-scritp
+│   └── hook2
+│       ├── 06-script
+│       └── 08-script
+└── element2
+    ├── hook1
+    │   ├── 02-script
+    │   └── 04-script
+    └── hook2
+        ├── 05-script
+        └── 07-script
+```
+
+在instack执行hook之前，先要进行合并，如下：
+
+```
+.
+├── hook1
+│   ├── 01-scritp
+│   ├── 02-scritp
+│   ├── 03-scritp
+│   └── 04-scritp
+└── hook2
+    ├── 05-scritp
+    ├── 06-scritp
+    ├── 07-scritp
+    └── 08-scritp
+```
+
+然后使用dib-run-parts依次去执行某个hook下的脚本，instack可以指定执行哪些hook，没有被指定的将会被跳过。instack是一个相对底层的工具，在tripleo中，被封装在instack-undercloud中，在部署undercloud时被用到。
 
 instack使用方法如下：
 
@@ -42,8 +80,6 @@ optional arguments:
   -l LOGFILE, --logfile LOGFILE
                         Logfile to log all actions
 ```
-
-需要说明的是hook，hook用来指定要执行elements中的哪些脚本，因为在每一个element中，都按照格式定义了一些目录，如extra-data, pre-install, install, post-install，在这些目录中放置了一些脚本，hook就是用来执行要执行哪些目录中的脚本，没有被指定的目录，将会被跳过。
 
 可以在命令行中直接指定elements，和相应的hook来执行，如下：
 
