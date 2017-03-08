@@ -153,6 +153,7 @@ instack通过执行这些elements，大概做了几下几件事情：
 除此之外，就是配置一些iptables规则，比如允许ip forwarding，可以让overcloud节点能访问外网，配置169.254.169.254的NAT规则，打通虚拟机访问metadata的通道等等，最终建立出来的undercloud网络拓扑如下：![](/assets/tripleo-undercloud-topology2.png)经过上面这几步，就完成了undercloud的安装，整体来看undercloud采用了脚本+puppet的方式进行安装，安装过程非常复杂，定制化主要也是写elements，需要非常了解其中的原理才能定制undercloud，在现在的master分支，也就是Pike版本的TripleO中，采用了新的方法去安装undercloud，即也采用heat去部署，见[这里](https://github.com/openstack/python-tripleoclient/commit/5f58088ff52636724d53f5b0590eefb8de55434c)，不再依赖instack-undercloud中的各种elements，这样undercloud和overcloud的安装方法就统一了。
 
 ### 附录1
+
 安装undercloud时，生成的环境变量示例：
 
 ```
@@ -312,6 +313,7 @@ instack通过执行这些elements，大概做了几下几件事情：
 ```
 
 ### 附录2
+
 os-apply-config使用的metadata配置文件示例：
 
 ```
@@ -377,7 +379,9 @@ os-apply-config使用的metadata配置文件示例：
 ```
 
 ### 附录3
+
 instack-undercloud中使用到的elements以及其中hook和脚本示例：
+
 ```
         * install-types(diskimage-builder)
             * extra-data.d
@@ -467,6 +471,7 @@ instack-undercloud中使用到的elements以及其中hook和脚本示例：
 ```
 
 ### 附录4
+
 instack-undercloud中使用到的elements以及其中hook和脚本，在instack中被合并之后的示例：
 
 ```
@@ -484,11 +489,14 @@ instack-undercloud中使用到的elements以及其中hook和脚本，在instack�
     98-source-repositories*
     99-enable-install-types*
 ▾ install.d/
-  ▸ os-apply-config-source-install/
-  ▸ os-refresh-config-source-install/
+  ▾ os-apply-config-source-install/
+      10-os-apply-config*
+  ▾ os-refresh-config-source-install/
+      10-os-refresh-config*
   ▾ puppet-modules-package-install/
       75-puppet-modules-package*
-  ▸ puppet-modules-source-install/
+  ▾ puppet-modules-source-install/
+      75-puppet-modules-source*
     02-puppet-stack-config*
     10-hiera-yaml-symlink*
     10-puppet-stack-config-puppet-module*
@@ -497,3 +505,6 @@ instack-undercloud中使用到的elements以及其中hook和脚本，在instack�
     99-os-refresh-config-install-scripts*
     package-installs-hiera
 ```
+
+
+
