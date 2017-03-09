@@ -47,6 +47,7 @@
   * [依赖组件](mechanism/dependencies/README.md)
     * [os-apply-config](mechanism/dependencies/os_apply_config.md)
     * [os-refresh-config](mechanism/dependencies/os_refresh_config.md)
+    * [os-cloud-config](mechanism/dependencies/os_cloud_config.md)
     * [os-net-config](mechanism/dependencies/os_net_config.md)
     * [instack](mechanism/dependencies/instack.md)
     * [diskimage-builder](mechanism/dependencies/dib.md)
