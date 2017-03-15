@@ -41,8 +41,6 @@ wget http://mirror.centos.org/centos/7/cloud/x86_64/openstack-newton/centos-rele
 yum install centos-release-openstack-newton-1-1.el7.noarch.rpm
 ```
 
-
-
 ### 2. 安装yum-plugin-priorites
 
 ```
