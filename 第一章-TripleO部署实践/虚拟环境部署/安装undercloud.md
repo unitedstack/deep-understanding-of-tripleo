@@ -8,6 +8,14 @@
 
 ### 1. 添加Newton的repo
 
+需要有这些repository
+
+* CentOS Base
+* CentOS EPEL
+* Openstack repository
+* Ceph jewel repository
+
+####内网安装
 我们默认使用UniedStack的内部源:
 
 ```
@@ -25,22 +33,15 @@ priority=1
 10.0.100.250 tripleo.ustack.com
 ```
 
-如果通过公网安装：
-
+####公网安装：
 ```
-sudo curl -L -o /etc/yum.repos.d/delorean-newton.repo https://trunk.rdoproject.org/centos7-newton/current/delorean.repo
-sudo curl -L -o /etc/yum.repos.d/delorean-deps-newton.repo http://trunk.rdoproject.org/centos7-newton/delorean-deps.repo
-sudo yum -y install --enablerepo=extras centos-release-ceph-jewel
-sudo sed -i -e 's%gpgcheck=.*%gpgcheck=0%' /etc/yum.repos.d/CentOS-Ceph-Jewel.repo
+curl http://mirrors.aliyun.com/repo/Centos-7.repo > /etc/yum.repos.d/Centos-7.repo
+curl http://mirrors.aliyun.com/repo/epel-7.repo > /etc/yum.repos.d/epel-7.repo
+wget http://mirror.centos.org/centos/7/cloud/x86_64/openstack-newton/centos-release-openstack-newton-1-1.el7.noarch.rpm
+yum install centos-release-openstack-newton-1-1.el7.noarch.rpm
 ```
 
-如果通过内网安装，需要有这些repository
 
-* CentOS Base
-* CentOS EPEL
-* RDO Trunk Delorean repository
-* Newton Delorean Deps repository
-* Ceph jewel repository
 
 ### 2. 安装yum-plugin-priorites
 

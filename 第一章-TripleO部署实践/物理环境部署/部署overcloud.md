@@ -100,6 +100,7 @@ openstack baremetal create nodes.yaml
 ```
 
 为 nodes 分配ramdisk 和kernal
+
 ```
 DEPLOY_KERNEL=$(openstack image show bm-deploy-kernel -f value -c id)
 DEPLOY_RAMDISK=$(openstack image show bm-deploy-ramdisk -f value -c id)
@@ -111,7 +112,6 @@ do
         --driver-info deploy_ramdisk=$DEPLOY_RAMDISK
 done
 ```
-
 
 进行introspection收集overcloud node 的信息
 

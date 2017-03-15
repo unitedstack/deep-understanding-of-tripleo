@@ -21,6 +21,7 @@
     * [部署OverCloud](第一章-TripleO部署实践/物理环境部署/部署overcloud.md)
   * [TripleO UI](第一章-TripleO部署实践/tripleo-ui.md)
   * [镜像制作](镜像制作.md)
+  * [IP 规划](ip.md)
 * [第二章 - TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
   * [参数配置](自定义Overcloud部署/基本配置参数定义.md)
   * [Hook设置](自定义Overcloud部署/hook设置.md)
