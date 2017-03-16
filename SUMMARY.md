@@ -35,7 +35,7 @@
   * [节点伸缩](SCALING/删除计算节点.md)
 * [第四章 - TripleO升级实践](Upgrade/升级.md)
   * [模块升级](Upgrade/模块升级.md)
-  * [M版本升级N版](Upgrade/升级undercloud.md)
+  * [N版本升级O版](Upgrade/升级undercloud.md)
   * [Partial update](Upgrade/partial-update.md)
 * [第五章 - TripleO自动化流程](Automation/automation.md)
   * [TripleO Quickstart自动化部署](Automation/tripleo-quickstart.md)
