@@ -52,6 +52,7 @@
     * [instack](mechanism/dependencies/instack.md)
     * [diskimage-builder](mechanism/dependencies/dib.md)
   * [UnderCloud](mechanism/undercloud/README.md)
+    * [原理解析](mechanism/undercloud/introduction.md)
   * [OverCloud](mechanism/overcloud/README.md)
 
 ## KnowledgeBase
