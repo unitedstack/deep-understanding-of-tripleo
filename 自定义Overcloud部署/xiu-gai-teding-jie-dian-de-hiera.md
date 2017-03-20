@@ -14,9 +14,22 @@ EOF
 openstack overcloud deploy -e compute_params.yaml
 ```
 
+修改其他节点的参数：
+
 - ExtraConfig: 传递hieradata到所有role。
 - NovaComputeExtraConfig: 传递hieradata到所有计算节点。
 - ControllerExtraConfig: 传递hieradata到所有控制节点。
 - BlockStorageExtraConfig: 传递hieradata到所有Cinder节点。
 - ObjectStorageExtraConfig: 传递hieradata到所有swift节点。
 - CephStorageExtraConfig: 传递hieradata到所有Ceph节点。
+- {role}ExtraConfig: 其他自定义节点，把{role}替换成自定义名称，比如:ZabbixExtraConfig。
+
+如果你要修改的参数的类没有被include，也可以在这里include。
+这段代码会创建一个pp文件，并且在里面include ::nova::scheduler::filter。
+```
+parameter_defaults:
+  NovaComputeExtraConfig:
+    'nova::scheduler::filter::cpu_allocation_ratio': '11.0'
+    compute_classes:
+    - '::nova::scheduler::filter'
+```
