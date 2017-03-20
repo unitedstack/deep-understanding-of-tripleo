@@ -23,6 +23,7 @@
   * [镜像制作](镜像制作.md)
   * [IP 规划](ip.md)
 * [第二章 - TripleO自定义架构部署](自定义Overcloud部署/自定义Overcloud部署.md)
+  * [修改特定节点的Hiera](自定义Overcloud部署/xiu-gai-teding-jie-dian-de-hiera.md)
   * [参数配置](自定义Overcloud部署/基本配置参数定义.md)
   * [Hook设置](自定义Overcloud部署/hook设置.md)
   * [SSL\TLS配置](自定义Overcloud部署/ssltls配置.md)
