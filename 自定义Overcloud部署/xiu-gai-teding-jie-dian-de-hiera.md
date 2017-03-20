@@ -33,3 +33,6 @@ parameter_defaults:
     compute_classes:
     - '::nova::scheduler::filter'
 ```
+
+
+ref:https://docs.openstack.org/developer/tripleo-docs/advanced_deployment/node_config.html
