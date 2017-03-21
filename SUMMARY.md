@@ -61,4 +61,5 @@
 * [部署Overcloud 失败](KB/部署overcloud-失败.md)
 * [TripleO 部署中的排错方法和思路](KB/TripleO部署Overcloud排错方法和思路.md)
 * [沙河环境部署问题记录](沙河环境部署问题记录.md)
+* [cinder volume 的backend为lvm时，重启后cinder volume报错](KB/cinder-volume-de-backend-wei-lvm-shi-ff0c-zhong-qi-hou-cinder-volume-bao-cuo.md)
 
