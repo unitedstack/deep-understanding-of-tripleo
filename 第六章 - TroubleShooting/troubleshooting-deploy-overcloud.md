@@ -40,10 +40,12 @@ systemctl restart openstack-ironic*
 
 
 ## 如何停止stack update
-有的时候我们可能需要停止一个stack的update状态，而在TripleO的stack中，不建议使用stack cancel，因为这会导致stack rollback，而rollback很可能会一直卡住。所以，正确的停止stack update的方法是在undercloud上停止heat-engine。
+有的时候我们可能需要停止一个stack的update状态，而在TripleO的stack中，不建议使用stack cancel，因为这会导致stack rollback，而rollback很可能会一直卡住。所以，正确的停止stack update的方法是在undercloud上停止heat-engine，当stack update的状态为failed时，再启动heat-engine。
 
 ```
 sudo systemctl stop openstack-heat-engine
+sleep 10
+sudo systemctl start openstack-heat-engine
 ```
 
 
