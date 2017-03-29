@@ -5,7 +5,7 @@
 在某些情况下，我们可能会需要删除undercloud openstack 或者删除overcloud openstack 环境。  
 那么，How？
 
-## 删除undercloud
+## 1. 删除undercloud
 
 1. 在undercloud上删除所有openstack包
 2. 删除mariadb 数据库文件
@@ -47,7 +47,7 @@ ovs-vsctl del-br <br-name>
 rm -rf /etc/swift
 ```
 
-## 删除overcloud
+## 2. 删除overcloud
 
 相比删除undercloud，overcloud的删除过程简单的多。一条命令即可
 ```bash
