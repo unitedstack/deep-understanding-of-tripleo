@@ -54,5 +54,11 @@ rm -rf /etc/swift
 openstack stack delete overcloud --yes
 ```
 
+但是，有时可能会出现无法删除stack的情况，请具体问题具体分析。通过abandon stack可以在不删除任何resource的情况下删除整个stack。
+1.在`/etc/heat/heat.conf`[default]中将`enable_stack_abandon = true`这个参数设置为true
+2.重启openstack-heat-engine 服务。
+3.`openstack stack abandon overcloud`
+4. 删除stack后手动执行nova delete、neutron port-delete、neutron net-delete。注意不要删除ctlplane的网络以及ctlplane的metadata地址。通常以.5结尾。
+
 
 
