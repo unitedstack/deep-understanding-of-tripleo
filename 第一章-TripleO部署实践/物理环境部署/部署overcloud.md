@@ -164,7 +164,7 @@ list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]} ;do op
 ### 如果sda是我们想要的根磁盘:
 
 ```bash
-list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do ironic node-update $i add properties/root_device='{"name": "/dev/sda"}';done
+list=(`ironic node-list|grep power|awk '{print $2}'`);for i in ${list[*]};do openstack baremetal node set --property root_device='{"name":"/dev/sda"}' $i;done
 ```
 
 ### 如果sda不是我们想要的根磁盘
