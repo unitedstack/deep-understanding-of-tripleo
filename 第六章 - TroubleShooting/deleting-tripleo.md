@@ -11,12 +11,14 @@
 2. 删除mariadb 数据库文件
 3. 删除所有ovs port 以及ovs
 4. 删除/etc/swift 目录
+5. 删除所有undercloud的网络配置
 
 ### 删除openstack 包
 
 ```bash
 $ sudo yum remove openstack*
-$  sudo yum remove mariadb*
+$ sudo yum remove mariadb*
+sudo yum remove openvswitch
 ```
 
 ### 删除mariadb 数据库文件
@@ -47,6 +49,11 @@ ovs-vsctl del-br <br-name>
 
 ```
 rm -rf /etc/swift
+```
+
+### 删除undercloud的网络配置
+```
+
 ```
 
 ## 2. 删除overcloud
