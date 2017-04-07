@@ -56,6 +56,9 @@ rm -rf /etc/swift
 
 ```
 
+
+ref:https://access.redhat.com/solutions/2210421
+
 ## 2. 删除overcloud
 
 相比删除undercloud，overcloud的删除过程简单的多。一条命令即可
