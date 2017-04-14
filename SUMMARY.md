@@ -55,6 +55,9 @@
   * [UnderCloud](mechanism/undercloud/README.md)
     * [原理解析](mechanism/undercloud/introduction.md)
   * [OverCloud](mechanism/overcloud/README.md)
+    * [Introspection原理](mechanism/overcloud/introspection.md)
+    * [OverCloud部署原理(1)](mechanism/overcloud/overcoud1.md)
+    * [OverCloud部署原理(2)](mechanism/overcloud/overcoud2.md)
 * [第八章- Artemis](第八章 - Artemis/第八章- Artemis.md)
 
 ## KnowledgeBase
