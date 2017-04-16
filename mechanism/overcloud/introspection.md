@@ -118,7 +118,11 @@ Introspection操作非常简单，首先需要将node置为manageable状态：
 [stack@pre4-undercloud ~]$ openstack baremetal introspection data save 5a58fe7c-f04a-43dc-a9ba-48c6da1abced
 ```
 
-因为收集来的数据是保存在Swift里的，该命令就是从swift中下载下来的。
+因为收集来的数据是保存在Swift里的，该命令就是从swift中下载下来的。可以通过swift的命令查看到这些数据：
+
+```
+[stack@pre4-undercloud ~]$ swift list ironic-inspector
+```
 
 TripleO也提供了批量introspection的操作，但是因为ironic-inspector只提供了对一台机器进行introspection的接口，所以批量操作被集成到了Mistral的workflow中，该命令如下：
 
