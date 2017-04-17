@@ -24,8 +24,8 @@
   * [镜像制作](镜像制作.md)
   * [IP 规划](ip.md)
 * [第二章 - TripleO自定义](第二章 - TripleO自定义/自定义Overcloud部署.md)
+  * [自定义Overcloud Roles](第二章 - TripleO自定义/zi-ding-yi-overcloud-roles.md)
   * [修改特定节点的Hiera](第二章 - TripleO自定义/xiu-gai-teding-jie-dian-de-hiera.md)
-  * [Hook设置](第二章 - TripleO自定义/hook设置.md)
   * [SSL\TLS配置](第二章 - TripleO自定义/ssltls配置.md)
   * [主机配置](第二章 - TripleO自定义/定义主机.md)
   * [网络配置](第二章 - TripleO自定义/自定义网络.md)
@@ -56,8 +56,8 @@
     * [原理解析](mechanism/undercloud/introduction.md)
   * [OverCloud](mechanism/overcloud/README.md)
     * [Introspection原理](mechanism/overcloud/introspection.md)
-    * [OverCloud部署原理(1)](mechanism/overcloud/overcoud1.md)
-    * [OverCloud部署原理(2)](mechanism/overcloud/overcoud2.md)
+    * [OverCloud部署原理\(1\)](mechanism/overcloud/overcoud1.md)
+    * [OverCloud部署原理\(2\)](mechanism/overcloud/overcoud2.md)
 * [第八章- Artemis](第八章 - Artemis/第八章- Artemis.md)
 
 ## KnowledgeBase
