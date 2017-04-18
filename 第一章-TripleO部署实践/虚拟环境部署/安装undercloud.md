@@ -47,24 +47,29 @@ yum install centos-release-openstack-newton-1-1.el7.noarch.rpm
 # echo "stack ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/stack
 
 #修改stack 用户的密码
-passwd stack
+$ passwd stack
+```
+
+切换到stack用户下进行一下操作
+```
+su stack
 ```
 
 
 
-### 2. 安装yum-plugin-priorites
+### 3. 安装yum-plugin-priorites
 
 ```
 sudo yum -y install yum-plugin-priorities
 ```
 
-### 3. 安装 TripleO CLI
+### 4. 安装 TripleO CLI
 
 ```
 sudo yum install -y python-tripleoclient
 ```
 
-### 4. 通过环境变量定义安装参数
+### 5. 通过环境变量定义安装参数
 
 ```vim
 #指定undercloud vm 使用centos7
@@ -92,14 +97,10 @@ export LIBVIRT_VOL_POOL=tripleo
 export LIBVIRT_VOL_POOL_TARGET=/home/vm_storage_pool
 ```
 
-### 5. 安装undercloud vm
+### 6. 安装undercloud vm
 
 这一步安装的并不是undercloud，这里安装的仅仅是运行undercloud的虚拟机。运行安装命令时，我们需要建立一个普通用户，用以运行安装undercloud。
 
-```
-# useradd stack
-# echo "stack ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/stack
-```
 
 切换到这个普通用户下面开始安装：
 
