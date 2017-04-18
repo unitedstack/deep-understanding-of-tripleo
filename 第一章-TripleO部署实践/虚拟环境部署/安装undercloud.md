@@ -41,6 +41,17 @@ wget http://mirror.centos.org/centos/7/cloud/x86_64/openstack-newton/centos-rele
 yum install centos-release-openstack-newton-1-1.el7.noarch.rpm
 ```
 
+### 2. 创建stack用户
+```
+# useradd stack
+# echo "stack ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/stack
+
+#修改stack 用户的密码
+passwd stack
+```
+
+
+
 ### 2. 安装yum-plugin-priorites
 
 ```
@@ -60,8 +71,8 @@ sudo yum install -y python-tripleoclient
 export NODE_DIST=centos7
 
 #指定有多少个overcloud vm，以及他们的配置
-export NODE_COUNT=2
-export NODE_CPU=1
+export NODE_COUNT=6
+export NODE_CPU=2
 export NODE_MEM=6144
 export NODE_DISK=40
 
