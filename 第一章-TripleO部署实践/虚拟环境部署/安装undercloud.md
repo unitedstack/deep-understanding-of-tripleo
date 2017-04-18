@@ -121,7 +121,7 @@ $ ssh root@instack
 
 ```
 $ su - stack
-$ sudo yum -y install yum-plugin-prioritiessudo
+$ sudo yum -y install yum-plugin-priorities
 $ sudo yum install -y python-tripleoclient
 ```
 
