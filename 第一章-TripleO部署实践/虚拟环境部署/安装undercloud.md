@@ -55,8 +55,6 @@ $ passwd stack
 su stack
 ```
 
-
-
 ### 3. 安装yum-plugin-priorites
 
 ```
