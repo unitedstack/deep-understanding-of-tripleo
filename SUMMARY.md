@@ -55,7 +55,7 @@
   * [UnderCloud](mechanism/undercloud/README.md)
     * [原理解析](mechanism/undercloud/introduction.md)
   * [OverCloud](mechanism/overcloud/README.md)
-    * [概览](mechanism/overcloud/overcoud.md)
+    * [概览](mechanism/overcloud/overcloud.md)
     * [Introspection原理](mechanism/overcloud/introspection.md)
     * [OverCloud部署解析](mechanism/overcloud/overcloud_deploy.md)
     * [Tripleo-Heat-Templates解析](mechanism/overcloud/tripleo_heat_templates.md)
