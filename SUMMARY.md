@@ -15,6 +15,7 @@
     * [介绍](tripleo-quickstart/introduction.md)
     * [解析](tripleo-quickstart/analysis.md)
     * [部署](tripleo-quickstart/deploy.md)
+    * [临时](tripleo-quickstart/lin-shi.md)
   * [物理环境部署](第一章-TripleO部署实践/物理环境部署/物理环境部署.md)
     * [部署前准备](第一章-TripleO部署实践/物理环境部署/部署前准备.md)
     * [部署UnderCloud](第一章-TripleO部署实践/物理环境部署/部署undercloud.md)
