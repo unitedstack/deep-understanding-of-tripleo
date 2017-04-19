@@ -27,7 +27,7 @@ Neutron为TripleO提供网络服务，在TripleO中抽象出了多种网络，�
 
 Zaqar在OpenStack里是一个消息队列服务，同时也可以提供消息通知服务，在TripleO的部署过程中，部署的结果，成功或者失败都可以发送相关的消息到消息队列中，其他程序可以消费这些消息进行debug，或者异步推送到前端面板做更好的展示。
 
-综上，可以看到整个OpenStack的部署，全都是用OpenStack自己的组件部署出来的，理解OpenStack的原理才能理解TripleO的部署，
+综上，可以看到整个OpenStack的部署，全都是用OpenStack自己的组件部署出来的，理解OpenStack的原理才能理解TripleO的部署，这不仅没有提高OpenStack的部署难度，反而是降低了难度，因为本身OpenStack的部署就非常复杂，TripleO没有引入一个复杂的系统去部署另外一个更加复杂的系统，而是用自己的技术去解决自己的问题，把知识面控制在大家熟知的范围内，有种Stack in Stack的感觉。
 
 
 
