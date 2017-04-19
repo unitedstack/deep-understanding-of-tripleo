@@ -7,7 +7,8 @@ undercloud_image_url="url"
 
 ###使用undercloud image cache
 部署时指定以下4个参数，可以使用cached image。
-```
+
+```yaml
 force_cached_images=true
 image_cache_dir=<location on undercloud>
 image.name=<image name>
