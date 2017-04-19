@@ -1,1 +1,33 @@
 ## 概览
+
+OverCloud部署是要搭建起最终的OpenStack集群，本质上这个部署是利用OpenStack的各个组件，也就是UnderCloud，协调部署出来的，这也是TripleO的核心思想：OpenStack on OpenStack，这种做法其实。OverCloud部署用到的OpenStack组件，主要有以下几个：
+
+* Mistral
+* Swift
+* Heat
+* Ironic
+* Nova
+* Neutron
+* Zaqar
+
+整体的部署架构如下图所示：
+![](/assets/overcloud.png)
+
+TripleO提供了CLI和GUI两个客户端工具作为部署界面，TripleO GUI的易用性还不是很好，用的比较多的还是CLI工具，CLI工具是python-tripleoclient这个项目提供的，它是python-openstackclient的一个插件，在tripleclient里封装了部署overcloud的上层逻辑，负责做些准备工作，以及调用下层的API。
+
+Mistral在OpenStack里提供Workflow服务，把一些操作封装成一个工作流，执行这个工作流，就可以做一系列指定的操作，并且可以指定处理结果的后续操作，以及错误处理。Mistral里默认集成了OpenStack各个项目的操作，当然也可以制定自己的workflow。在TripleO里引入Mistral，是为了给TripleO提供一个统一的API，因为TripleO的部署涉及到很多项目，每个项目都有自己的API，这样一些操作逻辑就必须在客户端处理，这加重了客户端的逻辑，也使得像triple-ui这样的项目很难做。TripleO用到的workflow都写在了[tripleo-common](/github.com/openstack/tripleo-common)这个项目中，定义了像`tripleo.plan.create`, `tripleo.deployment.deploy`，这样的workflow，还有相应的action，客户端只要传递相应的参数，执行相应的workflow就可以做一系列指定的操作，这个操作过程是可以异步的，客户端可以异步的等待执行的结果。
+
+Heat是整个TripleO部署中最核心的部分，Heat是一个编排服务，它的核心理念其实是实现了`基础设施即代码`的思想，通过使用描述式语言，将整个基础设施描述出来，执行这个描述式语言，就可以得到一个特定的结果，这是TripleO能够稳定部署的基础。在目前的实现中，TripleO制定了一个非常复杂的Heat Template来描述将要部署的整个OpenStack集群，也即OverCloud，这些Template是在[tripleo-heat-templates](/github.com/openstack/tripleo-heat-templates)这个项目中实现的，部署OverCloud的过程，就是执行Heat Template的过程。在TripleO的Template中，为每个角色的机器制定了不同的Template，当然也可以根据自己的需求，制定特定角色的Template，每个角色的Template又被抽象出了不同的Service，一个Service就代表将要部署的一个OpenStack服务，当然也包括其他非OpenStack服务，比如数据库，消息队列等，也可以制定自己的Service，通过组合这些不同的Service，组成不同的Role，来达到灵活部署的目的。
+
+Ironic是裸机管理服务，在TripleO中，通过Nova和Ironic来管理部署OverCloud里用到的裸机，通过IPMI或其他管理接口，可以实现对裸机的开机，关机，重启等操作，还有通过PXE进行装机，Nova和Ironic的这些操作都被编排在了Heat的Template里。
+
+Swift是对象存储服务，在TripleO中有很多作用，在UnderCloud里，会存储部署OverCloud里用到的镜像，在Introspection里会用来存储收集回来的各个服务器的数据，在OverCloud里则主要用来存储Heat Template，因为Template并没有写死，而是定义了一些模板变量，方便定制，这些变量的值是存储在Mistral里的environment的，当然Heat里用到的变量不仅仅是从Mistral environment里来的，这些template和environment，在TripleO里一起被称作Plan，顾名思义，就是为部署一个OverCloud而制定的一个plan。除此之外，Swift还有一个重要作用，就是用来作为UnderCloud和OverCloud的交互的纽带，在跑Heat的Template时，会在Swift里为每一个服务器创建container，里面存储了这个服务器所需要配置的全部信息，每一个服务器里会有一个agent来拉取这些配置，经过处理之后，生成相应的配置文件，这在TripleO里叫做Metadata。
+
+Neutron为TripleO提供网络服务，在TripleO中抽象出了多种网络，比如管理网，存储网，存储管理网，租户网络等等，基本上满足了OpenStack要求的各种网络需求，在Neutron里，为每一种网络创建了相同的Network，类型都是Flat模式的网络，通过在交换机中配置不同的VLAN，将不同的网络隔离开，通过DHCP服务，可以自动分配IP，当然也可以指定固定的IP。
+
+Zaqar在OpenStack里是一个消息队列服务，同时也可以提供消息通知服务，在TripleO的部署过程中，部署的结果，成功或者失败都可以发送相关的消息到消息队列中，其他程序可以消费这些消息进行debug，或者异步推送到前端面板做更好的展示。
+
+综上，可以看到整个OpenStack的部署，全都是用OpenStack自己的组件部署出来的，理解OpenStack的原理才能理解TripleO的部署，
+
+
+
