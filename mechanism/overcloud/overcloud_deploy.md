@@ -9,7 +9,7 @@ openstack overcloud deploy --templates /usr/share/openstack-tripleo-heat-templat
   -e /home/stack/templates/environments/environment.yaml
 ```
 
-这条命令背后到底发生了什么？在前面概览中介绍了部署OverCloud的过程其实是在跑Heat Template的过程，反映到Heat里，就是要创建一个stack，创建这个stack的过程，就是在跑Heat Template的过程，所以这个命令做的大部分工作都是在为创建这个stack做准备，创建环境变量，解析Template，生成自定义的Role，传递各种参数，然后创建stack，整体的数据流如下图：
+这条命令背后到底发生了什么？在前面概览中介绍了部署OverCloud的过程其实是在跑Heat Template的过程，反映到Heat里，就是要创建一个stack，所以这个命令做的大部分工作都是在为创建这个stack做准备，创建环境变量，解析Template，生成自定义的Role，传递各种参数，然后创建stack，整体的数据流如下图：
 
 ![](/assets/overcloud_dataflow.png)
 
