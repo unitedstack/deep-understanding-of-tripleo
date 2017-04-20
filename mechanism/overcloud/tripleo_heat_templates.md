@@ -6,7 +6,7 @@ TripleO的Heat Template是整个TripleO的核心，它定义了一系列复杂�
 
 在TripleO中使用到了很多Heat中的语法，需要理解这些基本的语法才能够理解Heat Template。Heat中自定义了一套描述式语言，称为HOT\(Heat Orchestration Template\)，用来描述整个软件栈，包括如何创建资源，如何配置资源等等，HOT中描述的软件栈被抽象成`stack`，可以定义输入，输出，参数，资源等等，一个stack还可以嵌套其他stack，Heat默认集成了OpenStackh很多组件，可以通过HOT来管理OpenStack资源，此外，还集成了Puppet/Ansible等配置管理工具，形成了一套完整的体系，功能十分强大，这里就主要介绍下部署TripleO过程中用到的Heat一些基础知识。
 
-#### 什么是Stack
+#### 什么是Stack以及嵌套Stack
 
 一个Stack可以说是一个模板描述的软件栈的一个实例，在一个Stack中定义了输入，输出，以及资源这3个主要属性，给出特定的输入，这个Stack会创建定义的资源，然后给出特定的输出，一个包含了输入，输出以及资源的模板，就可以实例化出一个Stack。在TripleO里，充分运用了嵌套stack的概念，只有理解什么是一个Stack，才能够更好的界定TripleO的中定义的模板。比如有如下模板：
 
