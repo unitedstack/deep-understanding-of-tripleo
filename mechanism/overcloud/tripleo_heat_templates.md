@@ -131,7 +131,13 @@ openstack stack create -t test_security.yaml test_security
 
 从以上的例子中可以看到，只要一个模板定义了输入，输出，以及资源，那它就是一个stack，一个stack的输出是保存在Heat的数据库中的，生成的output类型可以是字符串，可以是对象，还可以是数组等等。Heat中还定义了一些内置的方法，用来执行一些特定任务，比如该例子中用到的str\_template，就是定义了一个模板，然后传递了模板变量，在Heat中渲染成了一个字符串，这些内置方法只能在resources的properties字段和outputs字段使用。
 
+知道了一个Stack的构成之后，我们重点介绍几个Resource，这几个Resource是在TripleO中频繁使用的，对理解TripleO Heat Template非常重要。
+
 #### OS::Heat::RandomString
+
+这个是生成一个随机字符串，这在上面的例子中已经介绍过了。
+
+
 
 
 
