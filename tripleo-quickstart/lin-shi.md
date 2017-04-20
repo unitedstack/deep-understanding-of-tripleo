@@ -16,5 +16,13 @@ image.type=<image type>
 
 #镜像需要放在 image_cache_dir 目录中，并以 latest-{{ image.name }}.{{ image.type }} 格式命名
 # 例如/var/cache/tripleo-quickstart/images/latest-undercloud.qcow2
-{{ image_cache_dir }}/latest-{{ image.name }}.{{ image.type }}
+image_cache_dir=/var/cache/tripleo-quickstart/images
+image.name=undercloud
+image.type=qcow2
+
+```
+
+### 离线环境不使用在线repo
+```
+repo_run_live=false
 ```
