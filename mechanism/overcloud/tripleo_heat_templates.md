@@ -51,11 +51,60 @@ Aodh:
 
 ##### ServiceChain
 
+ServiceChain主要是在Heat中创建各个服务的stack，如下图：
+![](/assets/overcloud3.png)
 
+每个服务对应的stack中的output字段都定义了role_data值，role_data是一个dict对象，该对象包含了以下几个属性：
 
+* service_name，服务的名称
+* monitoring_subscription，监控信息
+* config_settings，该服务的配置信息
+* service_config_settings，该服务所依赖的服务的配置信息，比如keystone, mysql
+* step_config，该服务的puppet配置入口
 
+在TripleO中的服务配置是采用Puppet+Hieradata的方式进行配置的，每个服务对应的stack中的role_data中的config_settings和service_config_settings最终会被转换成hieradata中的配置，然后step_config中的puppet入口代码最终会被整合到服务器中的puppet代码入口中，然后采用puppet apply的方式运行，完成该服务的配置。
+
+下面为AodhApi这个服务的service模板：
+
+```
+outputs:
+  role_data:
+    description: Role data for the Aodh API service.
+    value:
+      service_name: aodh_api
+      monitoring_subscription: {get_param: MonitoringSubscriptionAodhApi}
+      config_settings:
+        map_merge:
+          - get_attr: [AodhBase, role_data, config_settings]
+          - get_attr: [ApacheServiceBase, role_data, config_settings]
+          - aodh::wsgi::apache::ssl: false
+            aodh::wsgi::apache::servername:
+              str_replace:
+                template:
+                  '"%{::fqdn_$NETWORK}"'
+                params:
+                  $NETWORK: {get_param: [ServiceNetMap, AodhApiNetwork]}
+            aodh::api::service_name: 'httpd'
+            aodh::api::enable_proxy_headers_parsing: true
+            tripleo.aodh_api.firewall_rules:
+              '128 aodh-api':
+                dport:
+                  - 8042
+                  - 13042
+            aodh::api::host: {get_param: [ServiceNetMap, AodhApiNetwork]}
+            aodh::wsgi::apache::bind_host: {get_param: [ServiceNetMap, AodhApiNetwork]}
+            tripleo::profile::base::aodh::api::enable_combination_alarms: {get_param: EnableCombinationAlarms}
+      service_config_settings:
+        get_attr: [AodhBase, role_data, service_config_settings]
+      step_config: |
+        include tripleo::profile::base::aodh::api
+
+```
+TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/puppet-tripleo)，是一个Puppet的转发层，里面集成了所有服务的Puppet入口，如上面的`include tripleo::profile::base::aodh::api`，就是指向的aodh api的puppet入口代码，在服务器上跑该代码时，会去hieradata中找该服务的配置信息，进行配置。
 
 #### 创建服务器阶段
+
+
 
 #### 配置阶段
 
