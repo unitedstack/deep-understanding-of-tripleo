@@ -52,6 +52,7 @@
     * [os-net-config](mechanism/dependencies/os_net_config.md)
     * [instack](mechanism/dependencies/instack.md)
     * [diskimage-builder](mechanism/dependencies/dib.md)
+    * [heat-basics](mechanism/dependencies/heat_basics.md)
   * [UnderCloud](mechanism/undercloud/README.md)
     * [原理解析](mechanism/undercloud/introduction.md)
   * [OverCloud](mechanism/overcloud/README.md)
