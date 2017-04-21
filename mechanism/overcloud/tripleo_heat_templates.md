@@ -137,7 +137,31 @@ openstack stack create -t test_security.yaml test_security
 
 这个是生成一个随机字符串，这在上面的例子中已经介绍过了。
 
+#### OS::Heat::ResourceChain
 
+使用相同的配置创建一个或多个资源，这些资源是通过一个列表来指定的，由`resources`参数指定，此外还可以加上`concurrent`参数，并发的创建这些资源，如果不指定`concurrent`或者设置为false，那么就会按照顺序一个一个创建。
+
+#### OS::Heat::ResourceGroup
+
+也是创建一组配置相同的资源，但是这个和ResourceChain不同的是，它指定的是创建数量，由`count`参数指定，而不是一个列表，并且是并发创建的，不能控制顺序。它在TripleO里面用来创建Nova里面的Server，即一次性创建指定数量的节点。
+
+#### OS::Heat::SoftwareConfig
+
+SoftwareConfig在TripleO里面作用很重要，是用来定义配置信息的，有两个参数比较重要：一个是`config`，用来指定配置信息，比如一段脚本，或者Puppet代码，一个是`group`，用来指定是哪种类型的配置信息，如果`config`指定的是一段脚本，那么`group`就是`script`，如果`config`是一段`puppet`代码，那么`group`就是`puppet`，根据`group`的不同，在应用这段配置的时候，会相应的选择不同的策略去执行。需要注意的是`config`里指定的配置信息是一段字符串，当创建了SoftwareConfig这个resource时，并没有应用这个配置，而仅仅是把配置信息保存在了Heat的数据库中，会被其他的resource引用。
+
+#### OS::Heat::StructuredConfig
+
+StructuredConfig和SoftwareConfig的作用是一样的，不同的是SoftwareConfig中的config指定的是一段字符串，而StructuredConfig中的config指定的是一个结构化的数据，即是一个Map，这对一些使用YAML或者JSON作为配置语言的配置工具来说是有用的。
+
+#### OS::Heat::SoftwareDeployment
+
+SoftwareDeployment就是真正的将上面定义的配置信息部署到某个Server上，需要指定两个参数：一个是`config`，即对上面定义的SoftwareConfig或者是StructuredConfig的引用，一个是`server`，是对某个资源的引用，通常是一个Nova Server的ID。这里可能会有一个疑问：Heat到底是怎么把一段配置最终配置到服务器上的呢？其实创建一个SoftwareDeployment主要做了两件事：一个是在Heat的数据库中产生相应的记录，一个是会将这些配置信息上传到外部的一个Metadata服务器上，而在将要配置的服务器上，即server里，会安装相应的heat agent，这个agent会去Metadata服务器上拉取本节点的配置信息，进行配置。
+
+#### OS::Heat::StructuredDeployment
+
+#### OS::Heat::SoftwareDeploymentGroup
+
+#### OS::Heat::StructuredDeploymentGroup
 
 
 
