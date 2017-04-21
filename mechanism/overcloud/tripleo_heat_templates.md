@@ -161,9 +161,15 @@ SoftwareDeployment就是真正的将上面定义的配置信息部署到某个Se
 
 #### OS::Heat::StructuredDeployment
 
+StructuredDeployment跟SoftwareDeployment的作用类似，只不过`config`参数引用的需要是StructuredConfig定义的资源。
+
 #### OS::Heat::SoftwareDeploymentGroup
+
+SoftwareDeploymentGroup跟StructuredDeployment类似，但是它可以指定一组服务器进行配置，即指定了`servers`参数，来指定多个服务器。
 
 #### OS::Heat::StructuredDeploymentGroup
 
+StructuredDeploymentGroup跟SoftwareDeploymentGroup类似，除了可以指定一组服务器进行配置外，`config`参数引用的需要是StructuredConfig定义的资源。
 
+以上介绍的这些资源都是在TripleO中使用到的，这里仅仅是简单介绍了下作用，更多的参数以及使用方法请参考Heat的[模板文档](https://docs.openstack.org/developer/heat/template_guide/index.html)。
 
