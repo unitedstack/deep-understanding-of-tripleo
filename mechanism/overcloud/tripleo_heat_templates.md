@@ -213,3 +213,5 @@ metadata_url = http://10.0.141.2:8080/v1/AUTH_c1ca7a85e40e440080a610aed86a2cdc/o
 ![](/assets/overcloud5.png)
 
 这个阶段最重要的操作是执行puppet，配置各个服务，在TripleO中把Puppet的执行过程分为了5个步骤，每一个步骤依赖于前面的一个步骤执行完成，在hieradata中为每一个步骤分别生成了一个配置文件，这种把puppet分开步骤执行的设计，非常好的解决了因为各个服务的依赖问题而导致可能出现的各种问题。比如在step 2时，先安装好Ceph，而在Step 4时，去创建Ceph Pool。
+
+从上面的过程可以看到，TripleO的整个模板部署过程非常复杂，但是也进行了很好的抽象，有很多可圈可点的地方。
