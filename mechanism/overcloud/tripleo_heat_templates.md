@@ -155,7 +155,7 @@ StructuredConfig和SoftwareConfig的作用是一样的，不同的是SoftwareCon
 
 #### OS::Heat::SoftwareDeployment
 
-SoftwareDeployment就是真正的将上面定义的配置信息部署到某个Server上，需要指定两个参数：一个是`config`，即对上面定义的SoftwareConfig或者是StructuredConfig的引用，一个是`server`，是对某个资源的引用，通常是一个Nova Server的ID。这里可能会有一个疑问：Heat到底是怎么把一段配置最终配置到服务器上的呢？其实创建一个SoftwareDeployment主要做了两件事：一个是在Heat的数据库中产生相应的记录，一个是会将这些配置信息上传到外部的一个Metadata服务器上，而在将要配置的服务器上，即server里，会安装相应的heat agent，这个agent会去Metadata服务器上拉取本节点的配置信息，进行配置。
+SoftwareDeployment就是真正的将上面定义的配置信息部署到某个Server上，需要指定两个参数：一个是`config`，即对上面定义的SoftwareConfig或者是StructuredConfig的引用，一个是`server`，是对某个资源的引用，通常是一个Nova Server的ID。这里可能会有一个疑问：Heat到底是怎么把一段配置最终配置到服务器上的呢？其实创建一个SoftwareDeployment主要做了两件事：一个是在Heat的数据库中产生相应的记录，一个是会将这些配置信息上传到外部的一个Metadata服务器上，而在将要配置的服务器上，即server里，会安装相应的heat agent，这个agent会去Metadata服务器上拉取本节点的配置信息，然后进行配置，在TripleO里，这个Metadata服务器是Swift。
 
 #### OS::Heat::StructuredDeployment
 
