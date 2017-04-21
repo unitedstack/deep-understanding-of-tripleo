@@ -11,5 +11,7 @@ openstack overcloud deploy --templates /usr/share/openstack-tripleo-heat-templat
   -e /home/stack/templates/environments/environment.yaml
 ```
 
-`openstack overcloud deploy`命令最终是要创建一个stack，这个stack对应的上层模板文件为`overcloud.yaml`，为整个模板的入口，该模板文件是由`overcloud.j2.yaml`这个模板文件渲染过来的，模板变量来自于`roles_data.yaml`文件，该文件定义了要部署哪种角色的节点，以及每个角色都包含哪些服务。
+`openstack overcloud deploy`命令最终是要创建一个stack，这个stack对应的上层模板文件为`overcloud.yaml`，为整个模板的入口，该模板文件是由`overcloud.j2.yaml`这个模板文件渲染过来的，此外还有`overcloud-resource-registry-puppet.yaml`文件，该文件指定了Heat的环境变量，主要映射了各种自定义的resource对应的模板，该文件也是由`overcloud-resource-registry-puppet.j2.yaml`整个模板文件渲染过来的，模板变量来自于`roles_data.yaml`文件，该文件定义了要部署哪种角色的节点，以及每个角色都包含哪些服务。
+
+
 
