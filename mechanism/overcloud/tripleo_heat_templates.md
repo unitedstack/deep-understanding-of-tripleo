@@ -48,21 +48,20 @@ Aodh:
     port: 8042
 ```
 
-
 ##### ServiceChain
 
-ServiceChain主要是在Heat中创建各个服务的stack，如下图：
+ServiceChain主要是在Heat中创建各个服务的stack，如下图：  
 ![](/assets/overcloud3.png)
 
-每个服务对应的stack中的output字段都定义了role_data值，role_data是一个dict对象，该对象包含了以下几个属性：
+每个服务对应的stack中的output字段都定义了role\_data值，role\_data是一个dict对象，该对象包含了以下几个属性：
 
-* service_name，服务的名称
-* monitoring_subscription，监控信息
-* config_settings，该服务的配置信息
-* service_config_settings，该服务所依赖的服务的配置信息，比如keystone, mysql
-* step_config，该服务的puppet配置入口
+* service\_name，服务的名称
+* monitoring\_subscription，监控信息
+* config\_settings，该服务的配置信息
+* service\_config\_settings，该服务所依赖的服务的配置信息，比如keystone, mysql
+* step\_config，该服务的puppet配置入口
 
-在TripleO中的服务配置是采用Puppet+Hieradata的方式进行配置的，每个服务对应的stack中的role_data中的config_settings和service_config_settings最终会被转换成hieradata中的配置，然后step_config中的puppet入口代码最终会被整合到服务器中的puppet代码入口中，然后采用puppet apply的方式运行，完成该服务的配置。
+在TripleO中的服务配置是采用Puppet+Hieradata的方式进行配置的，每个服务对应的stack中的role\_data中的config\_settings和service\_config\_settings最终会被转换成hieradata中的配置，然后step\_config中的puppet入口代码最终会被整合到服务器中的puppet代码入口中，然后采用puppet apply的方式运行，完成该服务的配置。
 
 下面为AodhApi这个服务的service模板：
 
@@ -98,8 +97,8 @@ outputs:
         get_attr: [AodhBase, role_data, service_config_settings]
       step_config: |
         include tripleo::profile::base::aodh::api
-
 ```
+
 TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/puppet-tripleo)，是一个Puppet的转发层，里面集成了所有服务的Puppet入口，如上面的`include tripleo::profile::base::aodh::api`，就是指向的aodh api的puppet入口代码，在服务器上跑该代码时，会去hieradata中找该服务的配置信息，进行配置。
 
 #### 创建服务器阶段
@@ -134,7 +133,6 @@ TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/pup
       scheduler_hints: {get_param: ControllerSchedulerHints}
 ```
 
-
 `OS::TripleO::Server`这个resource type会被映射成`OS::Nova::Server`，注意上面metadata字段配置的为os-collect-config，该字段在Heat里会被处理成为userdata的一部分，在系统安装好之后，会启动os-collect-config服务，并且进行配置，该服务充当了运行在每一个服务器中的agent，它会从我们前面提到过的Metadata服务器中收集Metadata配置信息，然后进行配置，即和Heat的SoftwareDeployment配合工作，它会周期性的检查Metadata服务器中的配置信息，如果有变化，则会调用相应的程序执行这些配置。
 
 当服务器装机完成之后，会创建`UpdateDeployment`来更新系统中的包，并且配置该服务器的网络，对服务器的网络配置，定义在`NetworkConfig`中，在服务器上，会调用os-net-config来配置网卡，可以配置bond，linux-bridge等信息。
@@ -143,7 +141,51 @@ TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/pup
 
 #### 配置阶段
 
-在该阶段主要是跑Puppet，即对各个服务进行配置，在介绍相关模板之前，先来介绍下在服务器上，是如何进行配置的。
+在该阶段主要是跑Puppet，即对各个服务进行配置，在介绍相关模板之前，先来介绍下在服务器上，是如何进行配置的。主要使用了下面几个组件：
 
+* os-collect-config
+* os-apply-config
+* os-refresh-config
+* heat-agent
 
+os-collect-config是一个周期运行的daemon进程，它的配置文件如下：
 
+```
+[DEFAULT]
+command = os-refresh-config --timeout 14400
+collectors = ec2
+collectors = request
+collectors = local
+
+[request]
+metadata_url = http://10.0.141.2:8080/v1/AUTH_c1ca7a85e40e440080a610aed86a2cdc/ov-6p7e5ekmrx7-0-si2dtcgirg4m-Controller-2gftczryrcla/1695b2a0-0245-4d04-8406-1b169920fef4?temp_url_sig=8a36df7706992216c101e8ee2c88f1287a3fa2e0&temp_url_expires=2147483586
+```
+
+在os-collect-config中定义了3个collector，起主要作用的是request这个collector，在它的section中定义了metadata\_url，它指向的是Swift中的地址，在部署时，Heat会为每一个节点在Swift中生成一个Container，该Container中保存了本节点的配置，os-collect-config使用request collector周期性的从swift中拉取配置，如果发现配置有变化，则会运行command中指定的命令，这里配置的为os-refresh-config，os-refresh-config中则指定了一系列HOOK，会按照顺序执行这些Hook，这些Hook是被直接安装好在镜像中的，存放的路径为：`/usr/libexec/os-refresh-config/configure.d`，有如下HOOK：
+
+* 20-os-apply-config，执行os-apply-config命令，生成配置文件
+* 20-os-net-config，执行os-net-config配置网络
+* 25-set-network-gateway
+* 40-hiera-datafiles，生成hieradata文件
+* 40-truncate-nova-config
+* 51-hosts，配置hosts文件
+* 55-heat-config，执行puppet apply
+
+在os-apply-config主要是从模板生成配置文件，模板存放的路径为`/usr/libexec/os-apply-config/templates`：
+```
+[heat-admin@overcloud-novacompute-0 os-apply-config]$ tree
+.
+└── templates
+    ├── etc
+    │   ├── os-collect-config.conf
+    │   ├── os-collect-config.conf.oac
+    │   ├── os-net-config
+    │   │   └── config.json
+    │   └── puppet
+    │       └── hiera.yaml
+    └── var
+        └── run
+            └── heat-config
+                └── heat-config
+```
+可以看到生成了/etc/os-net-config/config.json文件，该文件保存对网卡的配置，/etc/puppet/hiera.yaml文件，该文件为hieradata的配置文件，还有
