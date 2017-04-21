@@ -143,7 +143,7 @@ TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/pup
 
 #### 配置阶段
 
-
+在该阶段主要是跑Puppet，即对各个服务进行配置，在介绍相关模板之前，先来介绍下在服务器上，是如何进行配置的。
 
 
 
