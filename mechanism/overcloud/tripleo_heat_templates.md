@@ -104,6 +104,39 @@ TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/pup
 
 #### 创建服务器阶段
 
+在该阶段，主要是创建服务器，安装系统，并且进行系统配置，如下图：
+
+![](/assets/overcloud4.png)
+
+创建服务器采用`OS::Heat::ResourceGroup`资源类型，一次创建多个Nova的Server，在UnderCloud上配置的Nova的Driver是Ironic，这里会调用Ironic去创建服务器，进行装机操作。在创建服务器之前，会先创建userdata，对服务器做一些初始化操作，该模板如下：
+
+```
+  Controller:
+    type: OS::TripleO::Server
+    metadata:
+      os-collect-config:
+        command: {get_param: ConfigCommand}
+    properties:
+      image: {get_param: controllerImage}
+      image_update_policy: {get_param: ImageUpdatePolicy}
+      flavor: {get_param: OvercloudControlFlavor}
+      key_name: {get_param: KeyName}
+      networks:
+        - network: ctlplane
+      user_data_format: SOFTWARE_CONFIG
+      user_data: {get_resource: UserData}
+      name:
+        str_replace:
+            template: {get_param: Hostname}
+            params: {get_param: HostnameMap}
+      software_config_transport: {get_param: SoftwareConfigTransport}
+      metadata: {get_param: ServerMetadata}
+      scheduler_hints: {get_param: ControllerSchedulerHints}
+```
+
+
+`OS::TripleO::Server`这个resource type会被映射成`OS::Nova::Server`，
+
 
 
 #### 配置阶段
