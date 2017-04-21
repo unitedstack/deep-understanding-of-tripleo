@@ -135,9 +135,11 @@ TripleO中还有一个项目，[puppet-tripleo](https://github.com/openstack/pup
 ```
 
 
-`OS::TripleO::Server`这个resource type会被映射成`OS::Nova::Server`，
+`OS::TripleO::Server`这个resource type会被映射成`OS::Nova::Server`，注意上面metadata字段配置的为os-collect-config，该字段在Heat里会被处理成为userdata的一部分，在系统安装好之后，会启动os-collect-config服务，并且进行配置，该服务充当了运行在每一个服务器中的agent，它会从我们前面提到过的Metadata服务器中收集Metadata配置信息，然后进行配置，即和Heat的SoftwareDeployment配合工作，它会周期性的检查Metadata服务器中的配置信息，如果有变化，则会调用相应的程序执行这些配置。
 
+当服务器装机完成之后，会创建`UpdateDeployment`来更新系统中的包，并且配置该服务器的网络，对服务器的网络配置，定义在`NetworkConfig`中，在服务器上，会调用os-net-config来配置网卡，可以配置bond，linux-bridge等信息。
 
+然后在`ControllerDeployment`会在服务器上生成本节点的hieradata数据，为后面的配置阶段准备好配置信息。
 
 #### 配置阶段
 
