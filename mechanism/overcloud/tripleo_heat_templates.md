@@ -13,5 +13,53 @@ openstack overcloud deploy --templates /usr/share/openstack-tripleo-heat-templat
 
 `openstack overcloud deploy`命令最终是要创建一个stack，这个stack对应的上层模板文件为`overcloud.yaml`，为整个模板的入口，该模板文件是由`overcloud.j2.yaml`这个模板文件渲染过来的，此外还有`overcloud-resource-registry-puppet.yaml`文件，该文件指定了Heat的环境变量，主要映射了各种自定义的resource对应的模板，该文件也是由`overcloud-resource-registry-puppet.j2.yaml`整个模板文件渲染过来的，模板变量来自于`roles_data.yaml`文件，该文件定义了要部署哪种角色的节点，以及每个角色都包含哪些服务。
 
+下面我们以定义Controller和Compute两个角色为例，来解析这些模板的关系。创建stack的过程就是创建该stack中定义的resource的过程，而这些resource有可能又嵌套了子stack，所以这些resource的创建是有一定依赖关系的，规则一般是使用`depends_on`显示的指定，或者是某个resource会引用到另外一个resource的输出值，这样必须先创建被依赖的resource。因此整个创建过程，我们大致可以分为三个阶段：
+
+#### 准备阶段
+
+在准备阶段主要是创建被依赖的resource，主要有3种：
+
+##### DefaultPasswords
+
+如下图，主要是创建了MySQL的Root密码，RabbitMQ Cooike等resource，这会在后面的配置阶段用到。这些resource的类型都是`OS::Heat::RandomString`，都是生成的随机变量。
+
+![](/assets/overcloud1.png)
+
+该图有点UML的类图的概念，但不是严格意义的类图，仅仅是为了说明resource之间的关系。第一行说明的是该资源的类型，第二行是该类型资源的一个实例，第三行是该实例的属性，实心箭头表示引用，空心箭头表示依赖。
+
+##### EndpointMap
+
+如下图，该resource主要是创建了各个服务的endpoint，即最终要配置到keystone中的endpoint：
+
+![](/assets/overcloud2.png)
+
+EndpointMap这个resource依赖于Network这个resource，Network中定义了TripleO中抽象出来的各种网络，有External, InternalApi，Storage, StorageMgmt等，该resource会在Neutron中创建相应的network以及subnet。
+
+EndpointMap中包含了各个服务的internal, public, admin这三种endpoint，被定义在一个yaml文件中，然后由一个脚本生成heat的template，因为该heat的template较为复杂，所以写了一个脚本进行转换，该yaml文件的格式为：
+
+```
+Aodh:
+    Internal:
+        net_param: AodhApi
+    Public:
+        net_param: Public
+    Admin:
+        net_param: AodhApi
+    port: 8042
+```
+
+
+##### ServiceChain
+
+
+
+
+
+#### 创建服务器阶段
+
+#### 配置阶段
+
+
+
 
 
