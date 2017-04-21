@@ -157,6 +157,8 @@ StructuredConfig和SoftwareConfig的作用是一样的，不同的是SoftwareCon
 
 SoftwareDeployment就是真正的将上面定义的配置信息部署到某个Server上，需要指定两个参数：一个是`config`，即对上面定义的SoftwareConfig或者是StructuredConfig的引用，一个是`server`，是对某个资源的引用，通常是一个Nova Server的ID。这里可能会有一个疑问：Heat到底是怎么把一段配置最终配置到服务器上的呢？其实创建一个SoftwareDeployment主要做了两件事：一个是在Heat的数据库中产生相应的记录，一个是会将这些配置信息上传到外部的一个Metadata服务器上，在TripleO里，这个Metadata服务器是Swift，而在将要配置的服务器上，即server里，会安装相应的Heat Agent，这个Agent会去Metadata服务器上拉取本节点的配置信息，然后进行配置，Heat Agent是在做OverCloud镜像的时候就安装进去了，这些Agent都被定义在[heat-agents](https://github.com/openstack/heat-agents)这个项目中。
 
+在创建了一个SoftwareDeployment时，这个resource会进入`IN_PROGRESS`状态，当服务器端配置完成后，会回调Heat的接口，告知配置的结果，以确定成功或者失败。
+
 #### OS::Heat::StructuredDeployment
 
 #### OS::Heat::SoftwareDeploymentGroup
