@@ -169,7 +169,7 @@ metadata_url = http://10.0.141.2:8080/v1/AUTH_c1ca7a85e40e440080a610aed86a2cdc/o
 * 40-hiera-datafiles，生成hieradata文件
 * 40-truncate-nova-config
 * 51-hosts，配置hosts文件
-* 55-heat-config，执行puppet apply
+* 55-heat-config，执行heat agent
 
 在os-apply-config主要是从模板生成配置文件，模板存放的路径为`/usr/libexec/os-apply-config/templates`：
 ```
@@ -188,4 +188,31 @@ metadata_url = http://10.0.141.2:8080/v1/AUTH_c1ca7a85e40e440080a610aed86a2cdc/o
             └── heat-config
                 └── heat-config
 ```
-可以看到生成了/etc/os-net-config/config.json文件，该文件保存对网卡的配置，/etc/puppet/hiera.yaml文件，该文件为hieradata的配置文件，还有
+可以看到生成了/etc/os-net-config/config.json文件，该文件保存对网卡的配置，/etc/puppet/hiera.yaml文件，该文件为hieradata的配置文件，还有/var/run/heat-config/heat-config，该文件保存从heat解析出来的针对本节点的各种配置信息。
+
+40-hiera-datafiles会从/var/run/heat-config/heat-config读取配置信息，然后生成Hieradata数据文件：
+```
+-rw-r--r--. 1 root root 27454 Apr 10 13:33 all_nodes.yaml
+-rw-r--r--. 1 root root    75 Apr 10 13:33 bootstrap_node.yaml
+-rw-r--r--. 1 root root   125 Apr 10 13:33 controller_extraconfig.yaml
+-rw-r--r--. 1 root root   154 Apr 10 13:33 controller.yaml
+-rw-r--r--. 1 root root   414 Apr 10 13:33 extraconfig.yaml
+-rw-------. 1 root root   833 Apr 10 13:16 heat_config_ControllerDeployment_Step1.json
+-rw-------. 1 root root   831 Apr 10 13:18 heat_config_ControllerDeployment_Step2.json
+-rw-------. 1 root root   839 Apr 10 13:20 heat_config_ControllerDeployment_Step3.json
+-rw-------. 1 root root   839 Apr 10 13:23 heat_config_ControllerDeployment_Step4.json
+-rw-------. 1 root root   831 Apr 10 13:27 heat_config_ControllerDeployment_Step5.json
+-rw-r--r--. 1 root root 40365 Apr 10 13:33 service_configs.yaml
+-rw-r--r--. 1 root root  2275 Apr 10 13:33 service_names.yaml
+-rw-r--r--. 1 root root  1652 Apr 10 13:33 vip_data.yaml
+```
+55-heat-config会去根据SoftwareConfig中的group信息选择不同的heat-agent执行不同的hook，如果group信息为puppet，则会从/var/run/heat-config/heat-config读取step_config信息，生成puppet代码，生成的puppet代码存放的路径为：/var/lib/heat-config/heat-config-puppet，会生成一个以该节点的node——id为名称的pp文件，然后使用puppet apply执行这个pp文件；如果group信息为script，则执行相应的脚本。调用这些程序执行的结果被保存在/var/run/heat-config/deployed目录下。
+
+明白了配置的原理之后，来看下配置阶段的模板，如下图：
+
+![](/assets/overcloud5.png)
+
+这个阶段最重要的操作是执行puppet，配置各个服务，在TripleO中把Puppet的执行过程分为了5个步骤，每一个步骤依赖于前面的一个步骤执行完成，在hieradata中为每一个步骤分别生成了一个配置文件，这种把puppet分开步骤执行的设计，非常好的解决了因为各个服务的依赖问题而导致可能出现的各种问题。
+
+
+
