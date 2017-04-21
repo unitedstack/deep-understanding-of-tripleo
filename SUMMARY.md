@@ -59,7 +59,7 @@
   * [OverCloud](mechanism/overcloud/README.md)
     * [概览](mechanism/overcloud/overcloud.md)
     * [OverCloud部署解析](mechanism/overcloud/overcloud_deploy.md)
-    [Introspection原理](mechanism/overcloud/introspection.md)
+    * [Introspection原理](mechanism/overcloud/introspection.md)
     * [Tripleo-Heat-Templates解析](mechanism/overcloud/tripleo_heat_templates.md)
 * [第八章- Artemis](第八章 - Artemis/第八章- Artemis.md)
 
