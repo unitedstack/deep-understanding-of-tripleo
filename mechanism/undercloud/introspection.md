@@ -147,5 +147,3 @@ node重启之后，从PXE启动，IPA被加载进ramdisk开始执行，其内部
 ![](/assets/introspection_2.png)
 
 IPA通过collector插件收集本机的物理信息，收集完成之后，回调由ironic-inspector提供的回调接口：`POST /v1/continue` 将收集到的数据回传给ironic-inspector，ironic-inspector收到数据之后，就开始通过Hook去处理数据，Hook的执行分为两个阶段，在`_run_pre_hooks`中主要进行一些检查工作，在`_run_post_hooks`中主要是处理数据，然后更新ironic中的node属性，随后将处理之后的数据保存到Swift中，然后调用ironic接口将该node关机，完成introspection。
-
-
